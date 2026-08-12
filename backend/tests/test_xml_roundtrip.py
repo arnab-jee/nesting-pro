@@ -9,7 +9,12 @@ from optimizer.model import Margin, OptResult
 from .conftest import SAMPLE_DATA_DIR
 from .fcc_golden import load_golden_fcc
 
-GOLDEN_FILE = SAMPLE_DATA_DIR / "26Y111T1F1 (1 FLOOR BEDROOM)-FccForNesting-FccPattern.xml"
+NON_EMPTY_GOLDEN_FILES = [
+    "26Y111T1F1 (1 FLOOR BEDROOM)-FccForNesting-FccPattern.xml",
+    "26Y111T1F2 (2 FLOOR BEDROOM-FccForNesting-FccPattern.xml",
+    "26Y111T1F4 (4 FLOOR BEDROOM-FccForNesting-FccPattern.xml",
+    "26Y117T1F1A1(BEDROOM 1-2)-FccForNesting-FccPattern.xml",
+]
 EMPTY_GOLDEN_FILE = SAMPLE_DATA_DIR / "26Y111T1F3 (3 FLOOR BEDROOM-FccForNesting-FccPattern.xml"
 NUM_TOL = 0.05
 
@@ -22,27 +27,16 @@ def _points_close(a: tuple[float, float], b: tuple[float, float]) -> bool:
     return abs(a[0] - b[0]) <= NUM_TOL and abs(a[1] - b[1]) <= NUM_TOL
 
 
-def _same_rectangle(a_corners: list[tuple[float, float]], b_corners: list[tuple[float, float]]) -> bool:
-    """True if two 4-corner closed-rectangle point lists describe the same rectangle,
-    tolerant of which corner is listed first. Golden data itself starts the winding at a
-    different corner whenever RotationAngle=-90 (observed on ~38% of workpieces in this
-    file, both on Lineament and FccOutline, tied to a rotation convention Appendix A
-    doesn't document) — same shape, same winding direction, different start index. That's
-    a serialization-order variant, not a geometry defect, so it shouldn't fail a fidelity
-    test the way a wrong coordinate would.
-    """
-    for shift in range(4):
-        rotated = a_corners[shift:] + a_corners[:shift]
-        if all(_points_close(r, b) for r, b in zip(rotated, b_corners)):
-            return True
-    return False
-
-
 def compare_points(a_el, b_el, label: str):
+    """Strict positional comparison — M6 found and implemented the exact rule for which
+    corner a polygon winding starts at (RotationAngle=-90 exactly when CutWidth>CutLength
+    and the part isn't grain-locked), so this is no longer tolerant of a shifted start.
+    """
     a_pts = [(float(p.get("X")), float(p.get("Y"))) for p in a_el.findall("Points/Point")]
     b_pts = [(float(p.get("X")), float(p.get("Y"))) for p in b_el.findall("Points/Point")]
     assert len(a_pts) == len(b_pts) == 5, f"{label}: expected 5-point closed rectangles"
-    assert _same_rectangle(a_pts[:4], b_pts[:4]), f"{label}: point sets describe different rectangles: {a_pts} vs {b_pts}"
+    for i, (a, b) in enumerate(zip(a_pts, b_pts)):
+        assert _points_close(a, b), f"{label} point {i}: {a} != {b}"
 
 
 def compare_cut_infos(a_el, b_el, label: str, flag_stats: list[bool] | None = None):
@@ -54,7 +48,7 @@ def compare_cut_infos(a_el, b_el, label: str, flag_stats: list[bool] | None = No
         assert a_c.get(attr) == b_c.get(attr), f"{label} CutInfo.{attr}"
 
 
-def compare_workpiece(golden_wp, regen_wp, flag_stats: list[bool]):
+def compare_workpiece(golden_wp, regen_wp, flag_stats: list[bool], tool_point_list_stats: list[bool]):
     label = f"Workpiece {golden_wp.get('WorkpieceId')}"
     for attr in ("WorkpieceId", "Name", "Material", "Grain", "ProdutionNo", "ProductionName",
                  "HasFace5", "HasFace6", "OnlyHasFace6", "EBL1", "EBL2", "EBW1", "EBW2"):
@@ -68,16 +62,15 @@ def compare_workpiece(golden_wp, regen_wp, flag_stats: list[bool]):
     for attr in ("Length", "Width", "Thickness", "CutLength", "CutWidth"):
         assert_num_close(golden_wp.get(attr), regen_wp.get(attr), f"{label}.{attr}")
 
-    # Appendix A.3: rotated parts are ~83% MachiningPoint=3, ~17% an accepted "7" variant —
-    # only assert the documented default when golden isn't using that variant.
-    if golden_wp.get("MachiningPoint") != "7":
-        assert golden_wp.get("MachiningPoint") == regen_wp.get("MachiningPoint"), label
+    # M6 found the exact rule (Appendix A.3 only documents it as "~83%/~17%"): MachiningPoint
+    # is 1 unrotated, else 3 unless CutWidth>CutLength AND the part isn't grain-locked, in
+    # which case 7 — verified zero exceptions across all 4 non-empty golden files (1039 parts).
+    assert golden_wp.get("MachiningPoint") == regen_wp.get("MachiningPoint"), label
 
-    # face order shifts with an undocumented secondary rotation (Lineament.RotationAngle,
-    # independent of Workpiece.RotateAngle) not fully reverse-engineered here; every Edge's
-    # actual content (Thickness/Pre_Milling/X/Y/CentralAngle) is a constant zero regardless
-    # of order in this data, so the order itself carries no information worth enforcing —
-    # just confirm all four faces are present.
+    # face order shifts with the same secondary rotation as Lineament/FccOutline winding;
+    # every Edge's actual content (Thickness/Pre_Milling/X/Y/CentralAngle) is a constant zero
+    # regardless of order in this data, so the order itself carries no information worth
+    # enforcing — just confirm all four faces are present.
     golden_faces = {e.get("Face") for e in golden_wp.findall("EdgeGroup/Edge")}
     regen_faces = {e.get("Face") for e in regen_wp.findall("EdgeGroup/Edge")}
     assert golden_faces == regen_faces == {"1", "2", "3", "4"}, f"{label} EdgeGroup faces"
@@ -86,10 +79,15 @@ def compare_workpiece(golden_wp, regen_wp, flag_stats: list[bool]):
     compare_points(golden_wp.find("Lineament2"), regen_wp.find("Lineament2"), f"{label} Lineament2")
     compare_cut_infos(golden_wp.find("Lineament"), regen_wp.find("Lineament"), f"{label} Workpiece CutInfos", flag_stats)
 
+    golden_tpl = golden_wp.find("Lineament/CutInfos").get("ToolPointList")
+    regen_tpl = regen_wp.find("Lineament/CutInfos").get("ToolPointList")
+    tool_point_list_stats.append(golden_tpl == regen_tpl)
+
     golden_outline = [(float(p.get("X")), float(p.get("Y"))) for p in golden_wp.findall("FccOutline/FccOutlinePoint")]
     regen_outline = [(float(p.get("X")), float(p.get("Y"))) for p in regen_wp.findall("FccOutline/FccOutlinePoint")]
     assert len(golden_outline) == len(regen_outline) == 5, f"{label} FccOutline point count"
-    assert _same_rectangle(golden_outline[:4], regen_outline[:4]), f"{label} FccOutline: {golden_outline} vs {regen_outline}"
+    for i, (g, r) in enumerate(zip(golden_outline, regen_outline)):
+        assert _points_close(g, r), f"{label} FccOutline point {i}: {g} != {r}"
 
     golden_bench, regen_bench = golden_wp.find("BenchmarkInfo"), regen_wp.find("BenchmarkInfo")
     assert_num_close(golden_bench.get("ProLength"), regen_bench.get("ProLength"), f"{label} BenchmarkInfo.ProLength")
@@ -104,11 +102,12 @@ def compare_oddments(golden_odd, regen_odd, flag_stats: list[bool]):
     compare_cut_infos(golden_odd.find("Lineament"), regen_odd.find("Lineament"), f"{label} Oddments CutInfos", flag_stats)
 
 
-@pytest.fixture(scope="module")
-def golden_and_regenerated():
-    parts_by_id, result, margin, tool_diameter, part_spacing = load_golden_fcc(GOLDEN_FILE)
+@pytest.fixture(scope="module", params=NON_EMPTY_GOLDEN_FILES)
+def golden_and_regenerated(request):
+    golden_file = SAMPLE_DATA_DIR / request.param
+    parts_by_id, result, margin, tool_diameter, part_spacing = load_golden_fcc(golden_file)
     regenerated = generate_fcc_xml(result, parts_by_id, margin, tool_diameter, part_spacing)
-    golden_root = etree.parse(str(GOLDEN_FILE)).getroot()
+    golden_root = etree.parse(str(golden_file)).getroot()
     regen_root = etree.fromstring(regenerated)
     return golden_root, regen_root
 
@@ -139,6 +138,15 @@ def test_patterns_structure_and_counts_match(golden_and_regenerated):
 # regenerated output to that same documented tolerance instead of 100%.
 MIN_SMALL_WORKPIECE_FLAG_MATCH_RATE = 0.90
 
+# ToolPointList: M6 found and implemented the exact base formula (Appendix A.5), the
+# corner-clamping rule for edges shorter than SlopeLen, and the secondary winding shift —
+# but a residual gap remains (observed 88.1-96.4% exact match across the 4 golden files,
+# with individual mismatches looking like isolated real-world adjustments rather than a
+# missed rule, e.g. a single corner off by 6.8mm on one otherwise-perfectly-matching
+# workpiece). Appendix A.5 itself expects this to need machine dry-run refinement, so this
+# is tracked the same tolerant way as SamllWorkpieceFlg rather than asserted exactly.
+MIN_TOOL_POINT_LIST_MATCH_RATE = 0.80
+
 
 def test_every_workpiece_matches(golden_and_regenerated):
     golden_root, regen_root = golden_and_regenerated
@@ -147,12 +155,15 @@ def test_every_workpiece_matches(golden_and_regenerated):
     assert len(golden_wps) == len(regen_wps)
     regen_by_id = {wp.get("WorkpieceId"): wp for wp in regen_wps}
     flag_stats: list[bool] = []
+    tool_point_list_stats: list[bool] = []
     for golden_wp in golden_wps:
         wp_id = golden_wp.get("WorkpieceId")
         assert wp_id in regen_by_id, f"regenerated XML is missing workpiece {wp_id}"
-        compare_workpiece(golden_wp, regen_by_id[wp_id], flag_stats)
+        compare_workpiece(golden_wp, regen_by_id[wp_id], flag_stats, tool_point_list_stats)
     match_rate = sum(flag_stats) / len(flag_stats)
     assert match_rate >= MIN_SMALL_WORKPIECE_FLAG_MATCH_RATE, f"Workpiece SamllWorkpieceFlg match rate {match_rate:.1%}"
+    tpl_match_rate = sum(tool_point_list_stats) / len(tool_point_list_stats)
+    assert tpl_match_rate >= MIN_TOOL_POINT_LIST_MATCH_RATE, f"ToolPointList match rate {tpl_match_rate:.1%}"
 
 
 def test_every_oddment_matches(golden_and_regenerated):

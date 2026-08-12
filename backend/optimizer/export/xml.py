@@ -24,9 +24,9 @@ PRO_OFFSET = 3.0
 
 # Fields deliberately NOT reproduced here, because their derivation isn't specified by
 # instructions.md/Appendix A and guessing risks a file the machine's parser mis-trusts:
-#   - Workpiece.CutInfos ToolPoint / ToolPointList (the lead-in ramp geometry) — that's
-#     M6's job, sequenced after this milestone specifically because it needs machine
-#     dry-run byte-diffing per Appendix A.5.
+#   - Workpiece.CutInfos ToolPoint — always emitted as "0" (Appendix A.5's own stated
+#     default). No rule for which of the 4 lead-in points is actually best was found in the
+#     golden data; a machine dry-run is needed before trusting a non-default choice.
 #   - Workpiece.IsIntersectsWith — observed on <2% of real workpieces with no documented
 #     trigger condition.
 #   - Workpiece.Info1 / Info2 — present on every real workpiece but their relationship to
@@ -68,8 +68,22 @@ def _serialize(root: _El) -> bytes:
     return "\r\n".join(lines).encode("utf-8")
 
 
-def _rect_points(minx: float, miny: float, maxx: float, maxy: float) -> list[tuple[float, float]]:
-    return [(minx, miny), (maxx, miny), (maxx, maxy), (minx, maxy), (minx, miny)]
+def _rect_corners(minx: float, miny: float, maxx: float, maxy: float, shifted: bool = False) -> list[tuple[float, float]]:
+    """The 4 corners of a rectangle, starting bottom-left and winding counter-clockwise —
+    or, when `shifted`, starting one corner later (bottom-right). Every golden workpiece
+    with CutWidth > CutLength winds its Lineament/Lineament2/FccOutline polygons — and its
+    ToolPointList lead-in points — starting one corner later than everything else; verified
+    against real data, not documented in Appendix A.
+    """
+    corners = [(minx, miny), (maxx, miny), (maxx, maxy), (minx, maxy)]
+    if shifted:
+        corners = corners[1:] + corners[:1]
+    return corners
+
+
+def _rect_points(minx: float, miny: float, maxx: float, maxy: float, shifted: bool = False) -> list[tuple[float, float]]:
+    corners = _rect_corners(minx, miny, maxx, maxy, shifted)
+    return corners + [corners[0]]
 
 
 def _points_element(points: list[tuple[float, float]]) -> _El:
@@ -80,9 +94,43 @@ def _points_element(points: list[tuple[float, float]]) -> _El:
     return _El("Points", children=children)
 
 
-def _cut_infos(small_flag: bool) -> _El:
+def _tool_points(minx: float, miny: float, maxx: float, maxy: float, shifted: bool) -> list[tuple[float, float]]:
+    """Appendix A.5's 4 lead-in ramp candidates, each SlopeLen from a corner along an edge.
+    When an edge is shorter than SlopeLen itself, golden data clamps both of that edge's
+    candidates to its midpoint instead of the raw corner-offset formula — verified against
+    several golden strips on both axes: spans >= SlopeLen use the raw (sometimes
+    corner-crossing, once the span is under 2*SlopeLen) formula unclamped, spans <
+    SlopeLen always clamp. When the same `shifted` flag that reorders the polygon winding
+    applies, the idx->corner assignment shifts by the same one position (verified against 3
+    golden workpieces spanning both RotateAngle values).
+    """
+    sl = SLOPE_LEN
+    width, height = maxx - minx, maxy - miny
+    mid_x, mid_y = (minx + maxx) / 2, (miny + maxy) / 2
+    x_from_right = mid_x if width < sl else maxx - sl
+    x_from_left = mid_x if width < sl else minx + sl
+    y_from_top = mid_y if height < sl else maxy - sl
+    y_from_bottom = mid_y if height < sl else miny + sl
+    candidates = [
+        (x_from_right, miny),
+        (maxx, y_from_top),
+        (x_from_left, maxy),
+        (minx, y_from_bottom),
+    ]
+    if shifted:
+        candidates = candidates[1:] + candidates[:1]
+    return candidates
+
+
+def _cut_infos(small_flag: bool, tool_points: list[tuple[float, float]] | None = None) -> _El:
+    attrs = {"SamllWorkpieceFlg": "true" if small_flag else "false"}
+    if tool_points is not None:
+        # Appendix A.5: default ToolPoint=0, refine after a test cut — no rule found for
+        # which idx is actually best; all four are geometrically valid entry points.
+        attrs["ToolPoint"] = "0"
+        attrs["ToolPointList"] = ";".join(f"{fmt_num(x)},{fmt_num(y)},{i}$" for i, (x, y) in enumerate(tool_points))
     cut_info = _El("CutInfo", {"CutNo": "1", "ToolDirection": "0", "SlopeLen": str(SLOPE_LEN)})
-    return _El("CutInfos", {"SamllWorkpieceFlg": "true" if small_flag else "false"}, children=[cut_info])
+    return _El("CutInfos", attrs, children=[cut_info])
 
 
 def _edge_group(rotated: bool) -> _El:
@@ -99,8 +147,18 @@ def _workpiece_element(part: Part, placed: PlacedPart, workpiece_id: int, cuttin
     minx, miny = placed.x - PRO_OFFSET, placed.y - PRO_OFFSET
     maxx, maxy = placed.x + placed.w + PRO_OFFSET, placed.y + placed.h + PRO_OFFSET
     rotated = placed.rotated
-    board_points = _rect_points(minx, miny, maxx, maxy)
+    # drives both the secondary winding shift (Lineament.RotationAngle) and the MachiningPoint=7
+    # variant — verified deterministic against real data, not documented as such in Appendix A.
+    # Grain-locked parts (Grain="L"/"W") never shift even when CutWidth>CutLength, confirmed
+    # against a golden file with 207 grain-directional workpieces (all unrotated, so this
+    # doesn't interact with the MachiningPoint=7 case, which only fires when rotated).
+    shifted = part.cutWidth > part.cutLength and part.grain == "none"
+    board_points = _rect_points(minx, miny, maxx, maxy, shifted)
     small = min(part.cutLength, part.cutWidth) <= SMALL_WORKPIECE_THRESHOLD
+    if rotated:
+        machining_point = "7" if shifted else "3"
+    else:
+        machining_point = "1"
 
     attrs = {
         "ID": str(workpiece_id),
@@ -114,7 +172,7 @@ def _workpiece_element(part: Part, placed: PlacedPart, workpiece_id: int, cuttin
         "Thickness": fmt_num(part.thickness),
         "CutLength": fmt_num(part.cutLength),
         "CutWidth": fmt_num(part.cutWidth),
-        "MachiningPoint": "3" if rotated else "1",
+        "MachiningPoint": machining_point,
         "Grain": WORKPIECE_GRAIN_CODE.get(part.grain, "N"),
         "ProdutionNo": part.posId,
         "ProductionName": part.name,
@@ -128,13 +186,20 @@ def _workpiece_element(part: Part, placed: PlacedPart, workpiece_id: int, cuttin
         "EBW2": part.edges.get("w2", ""),
         "RotateAngle": "90" if rotated else "0",
     }
+    tool_points = _tool_points(minx, miny, maxx, maxy, shifted)
     lineament = _El(
         "Lineament",
-        {"RotationAngle": "0", "X": fmt_num(minx), "Y": fmt_num(miny), "ProOffsetX": "3", "ProOffsetY": "3"},
-        children=[_points_element(board_points), _cut_infos(small)],
+        {
+            "RotationAngle": "-90" if shifted else "0",
+            "X": fmt_num(minx),
+            "Y": fmt_num(miny),
+            "ProOffsetX": "3",
+            "ProOffsetY": "3",
+        },
+        children=[_points_element(board_points), _cut_infos(small, tool_points)],
     )
     lineament2 = _El("Lineament2", children=[_points_element(board_points)])
-    outline_points = _rect_points(0.0, 0.0, part.cutLength, part.cutWidth)
+    outline_points = _rect_points(0.0, 0.0, part.cutLength, part.cutWidth, shifted)
     fcc_outline = _El(
         "FccOutline",
         children=[

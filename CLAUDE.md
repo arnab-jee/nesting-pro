@@ -55,8 +55,9 @@ Key libs: `shapely` (geometry), `rectpack`/custom packers (nesting), `lxml` (FCC
 
 > Verified 2026-08-12 by actually running the code against `sample_data/` (both CSVs and the
 > real golden XML files), not just reading it. A three-phase fix plan was written to
-> `~/.claude/plans/delegated-moseying-robin.md`; **Phases A, B, and C are all done** —
-> M2/M4 correctness, test infra, and the M5 XML schema rebuild. M6 (toolpaths) is next.
+> `~/.claude/plans/delegated-moseying-robin.md`; **Phases A, B, and C are all done**, plus
+> follow-on M6 and M7 passes (each planned separately, same plan file, overwritten per pass).
+> Remaining work is M3 polish and M8.
 
 | # | Milestone | Status | Evidence |
 |---|-----------|--------|----------|
@@ -64,19 +65,23 @@ Key libs: `shapely` (geometry), `rectpack`/custom packers (nesting), `lxml` (FCC
 | M2 | Guillotine optimizer (saw) | 🟢 Fixed + tested | Rewrote placement in `guillotine.py` around a true binary guillotine split (`guillotine_split`) instead of the old 4-way maxrects-style split — free rectangles can no longer overlap by construction. Multi-sheet loop opens new sheets of a board type until every part is placed or genuinely too large for an empty board. Covered by `backend/tests/test_guillotine.py` (7 invariant tests × 2 real sample files, incl. an automated guillotine-decomposability check per spec §7.4). **Verified the suite has teeth**: temporarily restored the original buggy `guillotine.py` and reran — 8/14 tests failed (overlaps, dropped parts, non-decomposable layouts), confirming these tests would have caught the original bug. Cut list now flows through to `/optimize`'s response. |
 | M3 | PDF layout export (saw) | 🟡 Skeletal | Unchanged this pass. Runs and returns real PDF bytes via `/export/pdf`. Missing most of spec §6a: no cut L×W label per part (only barcode), no footer summary line (`Stock# · Dim · Qty · Material · Thk · Utl%`), no cut-sequence list/overlay (the `cuts` data is still not wired into the PDF renderer, only into the `/optimize` JSON). Never visually inspected. No tests. |
 | M4 | Free-nest optimizer (router) | 🟢 Fixed + tested | Same multi-sheet loop and grain-grouping fix as M2. Covered by `backend/tests/test_nanxing.py` (5 invariant tests × 2 real sample files: no overlaps, in-bounds, every part placed, utilization in range). Algorithm itself is still a naive left-to-right row/shelf packer, not maxrects/skyline/BLF — valid but likely below achievable utilization; not part of this fix pass. |
-| M5 | FCC XML geometry | 🟢 Rebuilt + tested | `optimizer/export/xml.py` fully rewritten around the real `FccRoot`/`Patterns`/`Pattern`/`Workpieces`/`Workpiece`(+`EdgeGroup`/`Lineament`/`Lineament2`/`FccOutline`/`BenchmarkInfo`)/`OddmentsList` structure (spec §6b + Appendix A). Byte-exact on the empty-job case (Appendix A.8). Golden-file round-trip test (`backend/tests/test_xml_roundtrip.py`) parses a real machine-cut file straight into exporter inputs (bypassing the optimizer — this tests the *serializer*, not the nesting algorithm) and diffs structurally against the regenerated output; **0 structural failures across all 4 non-empty golden files** (55, 168, 168, 648 workpieces). `SamllWorkpieceFlg` match rate 97–99%, matching Appendix A's own documented "~97%, long thin strips are exceptions" tolerance exactly — not chased to 100%. `CutInfos.ToolPoint`/`ToolPointList` intentionally not emitted (that's M6). Three things Appendix A got wrong or didn't document, found and fixed by testing against real files instead of just the appendix text: **(1)** `Lineament` spans `CutLength+6 × CutWidth+6`, not the raw cut size — it's the router's tool-path envelope (cut rect inflated by `ProOffsetX/Y=3` per side), not the cut rectangle itself; **(2)** `Workpiece.Grain` is not always `"N"` — grain-locked parts (confirmed via a golden file with 207/648 grain-directional workpieces) get `"L"`; **(3)** an undocumented secondary rotation axis (`Lineament.RotationAngle`, independent of `Workpiece.RotateAngle`) shifts the `Points`/`FccOutline` winding start-corner and `EdgeGroup` face order on ~38% of workpieces — reproduced as the same rectangle/face-set either way (verified `Edge` sub-elements carry no distinguishing data regardless of order) rather than fully reverse-engineered, since chasing it further needs machine dry-run data this project doesn't have yet. |
-| M6 | FCC XML toolpaths | ⬜ Not started | Blocked on M5 being rebuilt to the correct schema first — no longer blocked as of this pass. `ToolPointList`/`ToolPoint`/`MachiningPoint`'s rotated-datum-corner nuance, and the newly-found `Lineament.RotationAngle` secondary-axis question, are the concrete open items per Appendix A.5. |
-| M7 | Frontend integration | ⬜ Not started | No frontend directory exists anywhere in the repo. |
+| M5 | FCC XML geometry | 🟢 Rebuilt + tested | `optimizer/export/xml.py` fully rewritten around the real `FccRoot`/`Patterns`/`Pattern`/`Workpieces`/`Workpiece`(+`EdgeGroup`/`Lineament`/`Lineament2`/`FccOutline`/`BenchmarkInfo`)/`OddmentsList` structure (spec §6b + Appendix A). Byte-exact on the empty-job case (Appendix A.8). `MachiningPoint` now uses the exact rule M6 discovered (see below) — **0 mismatches across all 4 non-empty golden files (1039 workpieces)**, not the ~83%/17% Appendix A.3 describes. |
+| M6 | FCC XML toolpaths | 🟢 Implemented + tested | `CutInfos.ToolPointList`/`ToolPoint` implemented per Appendix A.5's lead-in-ramp formula, plus two rules the appendix doesn't document, both found by testing against real files: **(1)** when an edge is shorter than `SlopeLen` (70mm), both of that edge's candidate points clamp to the edge midpoint instead of the raw corner-offset formula; **(2)** the `Lineament`/`Lineament2`/`FccOutline` polygon winding — and the `ToolPointList` idx→corner assignment — starts one corner later exactly when `CutWidth > CutLength` **and** the part isn't grain-locked (grain-locked parts never shift, confirmed against 207 grain-directional workpieces, all unrotated). This same signal turned out to fully explain `MachiningPoint`'s "~83%/17%" split from Appendix A.3 (now exact, see M5). `ToolPointList` itself lands at 88.1–96.4% exact match across the 4 golden files — the remaining mismatches look like isolated real-world manual adjustments (e.g. a single corner off by 6.8mm on one otherwise-perfect 55/56-attribute workpiece) rather than a missed rule; Appendix A.5 itself expects this needs machine dry-run refinement, so it's tracked as a documented tolerance (`backend/tests/test_xml_roundtrip.py`'s `MIN_TOOL_POINT_LIST_MATCH_RATE`), not chased to 100%. `ToolPoint` (which of the 4 lead-in points the cut starts at) has no discovered rule — defaults to `"0"` per Appendix A.5's own stated fallback. Point-winding and `MachiningPoint` comparisons in the round-trip test were tightened from tolerant to strict now that the real rules are known, and confirmed to have teeth (broke the shift logic, reran, 4/4 golden-file tests failed on the exact-match `MachiningPoint` assertion; restored, all green). |
+| M7 | Frontend integration | 🟢 Built + browser-verified | New `frontend/` (Vite + React + TypeScript), sibling to `backend/`. Wizard flow: CSV drag-drop → column-mapping (client-side schema guess in `csvSchemas.ts` for immediate feedback; actual parsing delegated to the already-tested `/api/parse`, not reimplemented in TS) → machine selector + params panel (margins, stock boards derived from parts, kerf/saw or tool Ø+spacing/nanxing) → per-sheet SVG preview (`SheetPreview.tsx`) + summary (`Summary.tsx`, with a client-computed unplaced-reason since the backend doesn't attach one) → PDF/XML download via the existing `/api/export/*` endpoints. Dev wiring is a Vite `server.proxy` (`/api` → `127.0.0.1:8000`), zero backend changes. `tsc -b`/`npm run build`/`npm run lint` all clean. **Actually driven in a headless browser** (Playwright, no project `run` skill existed yet so used the generic browser-driven fallback): uploaded both real sample CSVs — correct schema auto-detection for both, part counts matched exactly (50, 55); ran optimize for both Panel Saw and Nanxing — 21 sheets / 0 unplaced / 46.8% avg utilization each, matching Phase A's known-good numbers exactly; 21 SVG sheet previews rendered with 50 total placed-part rects (matches part count); downloaded a real 21-page PDF and a real `FccRoot` XML; a deliberately malformed CSV correctly surfaced the backend's exact validation error in the UI instead of crashing. Zero console/page/network errors throughout. **Scope decision:** the per-sheet preview does *not* share a renderer with the PDF (spec §8's aspiration) — that would mean redesigning M3's still-skeletal `reportlab` renderer, a separate concern; downloads call the existing `/export/pdf`/`/export/xml` endpoints as-is. |
 | M8 | Offcut/oddment reuse | ⬜ Not started | `Sheet.offcuts` are computed as leftover free rectangles per run but never persisted or fed back as input stock for a later job. |
 
 **Cross-cutting:** `backend/tests/` now has `conftest.py`, `helpers.py`, `fcc_golden.py` (golden
 XML → exporter-input importer, test-only), `test_parser.py`, `test_guillotine.py`,
-`test_nanxing.py`, `test_xml_roundtrip.py` — **39 tests**, all green from a clean
-`pip install -e ".[dev]"`. Not yet covered: any test touching `api.py`/`export/pdf.py` directly.
+`test_nanxing.py`, `test_xml_roundtrip.py` (now parametrized across all 4 non-empty golden
+files, not just one) — **51 tests**, all green from a clean `pip install -e ".[dev]"`. Not yet
+covered: any test touching `api.py`/`export/pdf.py` directly. `frontend/` has no automated
+tests yet (type-check + build + one manual browser run only) — no test framework wired up.
 
-**Do NOT start M7 (frontend) yet** — still nothing to integrate against. M6 (toolpaths) is now
-unblocked and is the natural next step, but per spec §7.1/A.5 still needs a machine dry-run
-before the generated XML (once M6 lands) should be trusted for a real cut.
+**M6's output has never touched a real machine.** Byte-level structure and the discovered rules
+are verified against historical golden files, but per spec §7.3/Appendix A.5 a small,
+reproducible dry-run cut is still required before trusting this on real material — especially
+since `ToolPoint`'s rule and `MachiningPoint=7`'s actual on-machine behavior are unconfirmed.
+M3 (PDF polish) and M8 (offcut reuse) are the remaining open backend items.
 
 ---
 
@@ -84,38 +89,53 @@ before the generated XML (once M6 lands) should be trusted for a real cut.
 
 <!-- Update after each work block. This is what a fresh session needs most. -->
 
-- **Last worked:** 2026-08-12 — all three phases of `~/.claude/plans/delegated-moseying-robin.md`
-  complete (M2/M4 correctness fixes, a real pytest suite, and the M5 XML schema rebuild).
+- **Last worked:** 2026-08-12 — Phases A/B/C of `~/.claude/plans/delegated-moseying-robin.md`
+  complete, plus follow-on M6 and M7 passes (same plan file, rewritten fresh for each pass).
 - **Backend entry point:** `backend/api.py` (FastAPI app object `app`), run via `backend/start-backend.sh`
   → `uvicorn api:app --reload --host 127.0.0.1 --port 8000`. `backend/.venv` has the `dev`
-  extra installed (`pip install -e ".[dev]"`) — `pytest -q` from `backend/` runs 39 tests, all green.
+  extra installed (`pip install -e ".[dev]"`) — `pytest -q` from `backend/` runs 51 tests, all green.
+- **Frontend entry point:** `frontend/` (Vite + React + TypeScript), `npm run dev` serves on
+  `http://localhost:5173` with `/api/*` proxied to the backend on `:8000` (`vite.config.ts`) —
+  run both dev servers side by side, no backend changes needed for local dev. `npm run build`
+  and `npm run lint` are clean; no test framework wired up yet (type-check + build + one
+  Playwright-driven manual browser pass is the only verification so far).
 - **What's done & passing:** M1 parser works for both CSV schemas on real sample data (0 parse
   errors on 55 + 50 rows), quoted-space edges now normalize correctly. M2 and M4 both place
   every part from a real job (0 unplaced, was 62%/70%) with zero overlaps (M2's overlap bug is
   fixed via a real guillotine binary split in `guillotine.py`'s `guillotine_split`). M5's
-  `optimizer/export/xml.py` is a full rewrite against the real `FccRoot` schema, verified via a
-  golden-file round-trip test (`backend/tests/test_xml_roundtrip.py` + `tests/fcc_golden.py`)
-  against all 4 non-empty golden files in `sample_data/`, not just the one it was built against.
-  All of this is covered by `backend/tests/` instead of one-off scripts — verified the guillotine
-  suite catches the original bug by temporarily swapping the buggy version back in (8/14 failed).
-  All four endpoints (`/parse`, `/optimize`, `/export/pdf`, `/export/xml`) still respond 200 with
+  `optimizer/export/xml.py` is a full rewrite against the real `FccRoot` schema. M6 added
+  `ToolPointList`/`ToolPoint` and, along the way, found the *exact* rule behind `MachiningPoint`
+  and the undocumented `Lineament.RotationAngle` secondary axis that Phase C had only worked
+  around — both are now implemented for real, not tolerated as noise. The golden-file round-trip
+  test (`backend/tests/test_xml_roundtrip.py` + `tests/fcc_golden.py`) now runs against all 4
+  non-empty golden files via parametrization (was previously wired to only the primary one).
+  All of this is covered by `backend/tests/` instead of one-off scripts — verified both the
+  guillotine suite (Phase A) and the tightened round-trip assertions (M6) catch real regressions
+  by temporarily breaking the fix, rerunning, and confirming failures, then restoring. All four
+  endpoints (`/parse`, `/optimize`, `/export/pdf`, `/export/xml`) still respond 200 with
   non-empty bodies on real data end-to-end (smoke-tested manually, not yet part of the suite).
+- **What's done & passing (M7):** the full CSV → map → configure → preview → download wizard,
+  built fresh this pass — see the M7 milestone row for the exact Playwright-driven verification
+  (both real sample CSVs, both machine targets, real PDF/XML downloads, a deliberately bad CSV
+  correctly surfacing the backend's error instead of crashing, zero console/page/network errors).
 - **What's in progress / half-done:** `backend/optimizer/export/pdf.py` (M3) still doesn't render
-  cut L×W labels, the footer summary line, or the cut sequence — out of scope for the fix plan,
-  not yet scheduled. M5's `CutInfos.ToolPoint`/`ToolPointList` are deliberately not emitted
-  (that's M6). An undocumented secondary rotation axis found while building the round-trip test
-  (`Lineament.RotationAngle`, independent of `Workpiece.RotateAngle`, affects ~38% of workpieces'
-  point-winding start and `EdgeGroup` face order) was worked around rather than fully reverse
-  engineered — see the M5 row above for what was and wasn't chased down.
-- **Immediate next step:** M6 (FCC XML toolpaths) is next and no longer blocked. Implement
-  `CutInfos.ToolPointList`/`ToolPoint` per Appendix A.5's lead-in ramp formula, byte-diff against
-  golden files for both rotated and unrotated parts, and figure out whether the `Lineament.RotationAngle`
-  secondary axis needs to be solved first (it may interact with which `ToolPointList` idx→corner
-  mapping applies). A machine dry-run is still required before trusting the result on real material.
+  cut L×W labels, the footer summary line, or the cut sequence — out of scope for every fix pass
+  so far, not yet scheduled; M7's preview intentionally doesn't share a renderer with it (see M7
+  row). `ToolPointList`'s exact-match rate (88.1–96.4% across the 4 golden files) has residual,
+  likely-irreducible noise — Appendix A.5 itself expects this needs machine dry-run refinement,
+  so it's tracked as a documented tolerance rather than chased further. `ToolPoint` (which of the
+  4 lead-in points a cut starts at) has no discovered rule; defaults to `"0"` per Appendix A.5's
+  own stated fallback. `frontend/` has no automated test suite (Vitest/RTL or similar never set
+  up) — only type-check, build, lint, and one manual browser-driven pass exist as verification.
+- **Immediate next step:** M6's output has never touched a real machine — before relying on it,
+  a small reproducible dry-run cut is needed (spec §7.3/Appendix A.5), which isn't something a
+  coding session can do unattended. Barring that, remaining work is M3 (PDF polish — cut labels,
+  footer, cut-sequence overlay; the `cuts` data already exists from M2) and M8 (offcut reuse).
+  Worth considering: a `frontend/` test suite, since none exists yet.
 - **Open questions / blockers:** none new beyond what's already in `instructions.md` §10 (still
-  needs owner confirmation on kerf value, ZIP/JPEG vs plain PDF acceptance, etc). M6's
-  idx→corner `ToolPointList` mapping for rotated parts is still unimplemented, not just unverified,
-  and now has one more open variable (`Lineament.RotationAngle`) than Appendix A anticipated.
+  needs owner confirmation on kerf value, ZIP/JPEG vs plain PDF acceptance, etc). `ToolPoint`'s
+  rule is unresolved (see above) — needs either more/different golden data or real machine
+  feedback, neither of which this project currently has.
 
 ---
 
@@ -139,16 +159,19 @@ formatted like the reference. A valid empty job is a self-closed root `<FccRoot 
 
 ## Remaining work — likely priority order
 
-1. **M7 frontend** (your JS/React wheelhouse):
-   - CSV drag-drop → column-mapping screen (auto-detect both schemas in §4, manual override).
-   - Machine selector: Panel Saw | Nanxing (drives optimizer + exporter).
-   - Params panel: kerf, tool Ø, spacing, margins, stock boards, rotation/grain lock.
-   - Per-sheet interactive SVG/Canvas preview — **reuse the same renderer for the PDF**.
-   - Summary: sheet count, total utilization, unplaced parts (with reasons).
-   - Download: XML (Nanxing) / PDF (saw); filename from project + timestamp.
-2. **Harden M6** if not machine-verified: byte-diff `ToolPointList` for rotated AND unrotated
-   parts against golden files until clean (idx→corner mapping shifts with `RotateAngle`).
-3. **M8 offcut reuse:** larger oddments become returnable stock (see Appendix A.6).
+1. **Machine dry-run M6's output** before trusting it on real material (spec §7.3/Appendix
+   A.5) — a small, reproducible job, cut and inspected. `ToolPointList`/`MachiningPoint` are
+   now implemented against exact rules discovered from golden-file analysis, but neither has
+   been confirmed against an actual cut; `ToolPoint`'s rule is still unknown (defaults to `0`).
+   Not something a coding session can do unattended — needs the owner and the physical machine.
+2. **M3 PDF polish:** cut L×W labels, footer summary line, cut-sequence overlay (spec §6a) —
+   the `cuts` data already exists from M2, just isn't wired into `export/pdf.py` yet. Also the
+   natural point to revisit M7's "reuse the same renderer for the PDF" aspiration, deferred
+   when M7 was built (see M7's milestone row).
+3. **Frontend test suite:** `frontend/` has none yet — M7 was verified via type-check, build,
+   lint, and one manual Playwright-driven browser pass, not an automated suite (Vitest/RTL or
+   similar).
+4. **M8 offcut reuse:** larger oddments become returnable stock (see Appendix A.6).
 
 ---
 
