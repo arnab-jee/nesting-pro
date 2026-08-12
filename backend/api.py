@@ -70,7 +70,14 @@ def export_xml(request: dict = Body(...)) -> Response:
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
         result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)))
-        xml_data = generate_fcc_xml(result, tool_diameter=request.get("toolDiameter", 6.0), part_spacing=request.get("partSpacing", 6.0))
+        parts_by_id = {part.id: part for part in parts}
+        xml_data = generate_fcc_xml(
+            result,
+            parts_by_id,
+            margin,
+            tool_diameter=request.get("toolDiameter", 6.0),
+            part_spacing=request.get("partSpacing", 6.0),
+        )
         return Response(content=xml_data, media_type="application/xml")
     except Exception as exc:
         raise HTTPException(status_code=400, detail=[str(exc)])
