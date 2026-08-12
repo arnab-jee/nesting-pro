@@ -1,0 +1,21 @@
+[project]
+name = "nesting_pro_backend"
+version = "0.1.0"
+description = "Wood panel optimization core and API for saw and nanxing nesting."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.24.0",
+    "pydantic>=2.8.0",
+    "reportlab>=4.0.0",
+    "shapely>=2.0.0",
+    "lxml>=4.0.0"
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"

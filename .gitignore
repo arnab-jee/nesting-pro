@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Node / frontend (future)
+node_modules/
+dist/
+
+# Editor / OS
+.DS_Store
