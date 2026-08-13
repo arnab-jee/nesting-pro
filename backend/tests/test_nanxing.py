@@ -48,7 +48,7 @@ def test_utilization_in_range(nanxing_result):
         assert 0 < sheet.utilizationPct <= 100
 
 
-# Regression guard for the free-rectangle best-fit engine (backend/optimizer/packing.py):
+# Regression guard for the free-rectangle best-fit engine (backend/optimizer/nanxing_packing.py):
 # the previous single-row shelf packer's defining failure mode was "many parts crammed onto
 # one sheet at low density" — e.g. on nesting_machine_data.csv it produced a 21-part sheet at
 # only 21.4% utilization, because a shelf packer can never backfill a gap in an earlier row

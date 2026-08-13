@@ -1,4 +1,4 @@
-import type { Margin, StockBoard, TargetMachine } from "../types";
+import type { Margin, StockBoard, TargetMachine, WasteStrategy } from "../types";
 
 interface Props {
   target: TargetMachine;
@@ -14,6 +14,8 @@ interface Props {
   onPartSpacingChange: (v: number) => void;
   allowRotation: boolean;
   onAllowRotationChange: (v: boolean) => void;
+  wasteStrategy: WasteStrategy;
+  onWasteStrategyChange: (v: WasteStrategy) => void;
 }
 
 export function ParamsPanel({
@@ -30,6 +32,8 @@ export function ParamsPanel({
   onPartSpacingChange,
   allowRotation,
   onAllowRotationChange,
+  wasteStrategy,
+  onWasteStrategyChange,
 }: Props) {
   function updateStockDim(index: number, field: "length" | "width", value: number) {
     const next = stock.slice();
@@ -86,6 +90,19 @@ export function ParamsPanel({
           </div>
         </fieldset>
       )}
+
+      <fieldset className="params-section">
+        <legend className="params-section__title">Wastage</legend>
+        <div className="field-grid field-grid--2">
+          <label className="field">
+            <span className="field__label">Waste placement</span>
+            <select value={wasteStrategy} onChange={(e) => onWasteStrategyChange(e.target.value as WasteStrategy)}>
+              <option value="balanced">Balanced (tightest local fit)</option>
+              <option value="edge">Push wastage to edges</option>
+            </select>
+          </label>
+        </div>
+      </fieldset>
 
       <fieldset className="params-section">
         <legend className="params-section__title">Stock boards</legend>

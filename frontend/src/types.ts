@@ -2,6 +2,7 @@
 
 export type Grain = "none" | "length" | "width";
 export type TargetMachine = "saw" | "nanxing";
+export type WasteStrategy = "balanced" | "edge";
 
 export interface EdgeSet {
   l1: string;
@@ -53,6 +54,7 @@ export interface OptRequest {
   margin: Margin;
   allowRotation: boolean;
   target: TargetMachine;
+  wasteStrategy: WasteStrategy;
 }
 
 export interface PlacedPart {

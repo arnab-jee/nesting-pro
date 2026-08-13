@@ -1,7 +1,15 @@
 from __future__ import annotations
 from dataclasses import dataclass
 
-from .model import Margin, Part, PlacedPart, Sheet, StockBoard, Offcut
+from .model import Margin, Part, PlacedPart, Sheet, StockBoard, Offcut, WasteStrategy
+
+# This is the Panel Saw's own copy of the free-rectangle guillotine placement engine.
+# optimizer/nanxing_packing.py holds an independent copy for the router (Updates/update_003.md:
+# "maintain separate packers" — the two machines previously shared one implementation via
+# optimizer/packing.py; that consolidation was undone deliberately so each machine's packer can
+# evolve on its own, even though the starting logic is currently the same).
+
+EPS = 1e-6
 
 
 @dataclass
@@ -18,16 +26,30 @@ class Rectangle:
         return width <= self.w + 1e-9 and height <= self.h + 1e-9
 
 
-def guillotine_split(free: Rectangle, pw: float, ph: float) -> list[Rectangle]:
+def guillotine_split(free: Rectangle, pw: float, ph: float, waste_strategy: WasteStrategy = "balanced") -> list[Rectangle]:
     """Split `free` into up to two children after placing a pw x ph part in its
-    bottom-left corner, using a single straight cut across the whole free rect
-    (the "shorter leftover axis" rule). This guarantees the result is always a
-    valid guillotine partition: no two free rectangles in the tree ever overlap.
+    bottom-left corner, using a single straight cut across the whole free rect.
+    This guarantees the result is always a valid guillotine partition: no two free
+    rectangles in the tree ever overlap.
+
+    `waste_strategy` picks which axis that cut runs along:
+    - "balanced" (default): cut along whichever axis leaves the *shorter* leftover strip,
+      so each individual placement fits as tightly as possible. This is locally greedy and
+      can fragment leftover space into many small pieces scattered across the sheet.
+    - "edge": always cut vertically, so the "right" child always keeps the free rect's full
+      height and the "top" child is only ever as wide as the part just placed. Leftover
+      space then keeps accumulating into one shrinking strip per free region instead of
+      being sliced into a new top-strip on every placement — consolidating wastage toward
+      fewer, larger, edge-aligned regions.
     """
     remain_w = free.w - pw
     remain_h = free.h - ph
+    if waste_strategy == "edge":
+        horizontal_cut = False
+    else:
+        horizontal_cut = remain_w <= remain_h
     children: list[Rectangle] = []
-    if remain_w <= remain_h:
+    if horizontal_cut:
         # horizontal cut across the full width, above the part
         right = Rectangle(free.x + pw, free.y, remain_w, ph)
         top = Rectangle(free.x, free.y + ph, free.w, remain_h)
@@ -42,8 +64,50 @@ def guillotine_split(free: Rectangle, pw: float, ph: float) -> list[Rectangle]:
     return children
 
 
+def merge_free_rects(rects: list[Rectangle]) -> list[Rectangle]:
+    """Repeatedly merges pairs of free rectangles that share a full edge into one larger
+    rectangle. guillotine_split alone can leave two freshly-created (or older) free
+    rectangles sitting flush against each other — merging them keeps wastage consolidated
+    into fewer, larger regions instead of staying fragmented, independent of which
+    waste_strategy produced them."""
+    rects = list(rects)
+    merged = True
+    while merged:
+        merged = False
+        for i in range(len(rects)):
+            a = rects[i]
+            for j in range(i + 1, len(rects)):
+                b = rects[j]
+                if abs(a.x - b.x) < EPS and abs(a.w - b.w) < EPS:
+                    if abs((a.y + a.h) - b.y) < EPS:
+                        rects[i] = Rectangle(a.x, a.y, a.w, a.h + b.h)
+                        rects.pop(j)
+                        merged = True
+                        break
+                    if abs((b.y + b.h) - a.y) < EPS:
+                        rects[i] = Rectangle(a.x, b.y, a.w, a.h + b.h)
+                        rects.pop(j)
+                        merged = True
+                        break
+                if abs(a.y - b.y) < EPS and abs(a.h - b.h) < EPS:
+                    if abs((a.x + a.w) - b.x) < EPS:
+                        rects[i] = Rectangle(a.x, a.y, a.w + b.w, a.h)
+                        rects.pop(j)
+                        merged = True
+                        break
+                    if abs((b.x + b.w) - a.x) < EPS:
+                        rects[i] = Rectangle(b.x, a.y, a.w + b.w, a.h)
+                        rects.pop(j)
+                        merged = True
+                        break
+            if merged:
+                break
+    return rects
+
+
 def place_parts_on_board(
-    parts: list[Part], board: StockBoard, margin: Margin, gap: float, allow_rotation: bool, sheet_index: int
+    parts: list[Part], board: StockBoard, margin: Margin, gap: float, allow_rotation: bool, sheet_index: int,
+    waste_strategy: WasteStrategy = "balanced",
 ) -> tuple[Sheet, list[Part]]:
     """Best-short-side-fit placement against a tracked list of free rectangles: every part
     is matched against every currently free rectangle on the sheet (not just the most
@@ -89,7 +153,8 @@ def place_parts_on_board(
                 grain=part.grain,
             )
         )
-        free_rects.extend(guillotine_split(target_rect, pw + gap, ph + gap))
+        free_rects.extend(guillotine_split(target_rect, pw + gap, ph + gap, waste_strategy))
+        free_rects = merge_free_rects(free_rects)
     board_area = width * height
     placed_area = sum(p.w * p.h for p in placed_parts)
     utilization = 0.0 if board_area <= 0 else round(placed_area / board_area * 100.0, 2)

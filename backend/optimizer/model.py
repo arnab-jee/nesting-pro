@@ -5,6 +5,13 @@ from typing import Literal, Optional, TypedDict
 Grain = Literal["none", "length", "width"]
 Orientation = Literal["horizontal", "vertical"]
 TargetMachine = Literal["saw", "nanxing"]
+# "balanced": current default (shorter-leftover-axis guillotine split) — maximizes fit locally
+# per placement, at the cost of leftover space fragmenting into many small pieces scattered
+# across the sheet. "edge": always splits along the same fixed axis (vertical), so leftover
+# space keeps accumulating into fewer, larger, edge-aligned free rectangles instead of thin
+# slivers wedged between parts (Updates/update_003.md, prompted by a real Nanxing layout
+# screenshot showing scattered slivers between placed drawer parts).
+WasteStrategy = Literal["balanced", "edge"]
 
 class EdgeSet(TypedDict):
     l1: str
@@ -62,6 +69,7 @@ class OptRequest:
     margin: Margin
     allowRotation: bool
     target: TargetMachine
+    wasteStrategy: WasteStrategy = "balanced"
 
 @dataclass
 class PlacedPart:

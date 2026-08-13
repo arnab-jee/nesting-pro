@@ -24,10 +24,11 @@ def optimize_route(request: dict = Body(...)) -> dict:
         margin = Margin(**request.get("margin", {}))
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
+        waste_strategy = request.get("wasteStrategy", "balanced")
         if request.get("target") == "saw":
-            result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True))
+            result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True), waste_strategy=waste_strategy)
         else:
-            result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)))
+            result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=waste_strategy)
         return {
             "sheets": [
                 {
@@ -54,10 +55,11 @@ def export_pdf(request: dict = Body(...)) -> Response:
         margin = Margin(**request.get("margin", {}))
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
+        waste_strategy = request.get("wasteStrategy", "balanced")
         if request.get("target") == "saw":
-            result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True))
+            result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True), waste_strategy=waste_strategy)
         else:
-            result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)))
+            result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=waste_strategy)
         pdf_data = render_layout_pdf(result)
         return Response(content=pdf_data, media_type="application/pdf")
     except Exception as exc:
@@ -69,7 +71,7 @@ def export_xml(request: dict = Body(...)) -> Response:
         margin = Margin(**request.get("margin", {}))
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
-        result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)))
+        result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=request.get("wasteStrategy", "balanced"))
         parts_by_id = {part.id: part for part in parts}
         xml_data = generate_fcc_xml(
             result,

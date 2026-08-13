@@ -8,7 +8,7 @@ import { ParamsPanel } from "./components/ParamsPanel";
 import { SheetPreview } from "./components/SheetPreview";
 import { Stepper } from "./components/Stepper";
 import { Summary } from "./components/Summary";
-import type { Margin, OptRequest, OptResult, Part, StockBoard, TargetMachine } from "./types";
+import type { Margin, OptRequest, OptResult, Part, StockBoard, TargetMachine, WasteStrategy } from "./types";
 
 export type Step = "upload" | "map" | "configure" | "results";
 
@@ -37,6 +37,7 @@ function App() {
   const [toolDiameter, setToolDiameter] = useState(6);
   const [partSpacing, setPartSpacing] = useState(6.1);
   const [allowRotation, setAllowRotation] = useState(true);
+  const [wasteStrategy, setWasteStrategy] = useState<WasteStrategy>("balanced");
 
   const [optResult, setOptResult] = useState<OptResult | null>(null);
   const [optimizing, setOptimizing] = useState(false);
@@ -46,7 +47,7 @@ function App() {
   const projectName = parts[0]?.customer?.replace(/\s+/g, "-") ?? "nesting-job";
 
   function currentRequest(): OptRequest {
-    return { parts, stock, kerf, toolDiameter, partSpacing, margin, allowRotation, target };
+    return { parts, stock, kerf, toolDiameter, partSpacing, margin, allowRotation, target, wasteStrategy };
   }
 
   async function handleMappingConfirmed(finalCsvText: string) {
@@ -151,6 +152,8 @@ function App() {
             onPartSpacingChange={setPartSpacing}
             allowRotation={allowRotation}
             onAllowRotationChange={setAllowRotation}
+            wasteStrategy={wasteStrategy}
+            onWasteStrategyChange={setWasteStrategy}
           />
           <ErrorAlert errors={optimizeErrors} />
           <div className="actions">
