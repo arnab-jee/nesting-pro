@@ -56,14 +56,14 @@ Key libs: `shapely` (geometry), `rectpack`/custom packers (nesting), `lxml` (FCC
 > Verified 2026-08-12 by actually running the code against `sample_data/` (both CSVs and the
 > real golden XML files), not just reading it. A three-phase fix plan was written to
 > `~/.claude/plans/delegated-moseying-robin.md`; **Phases A, B, and C are all done**, plus
-> follow-on M6 and M7 passes (each planned separately, same plan file, overwritten per pass).
-> Remaining work is M3 polish and M8.
+> follow-on M6, M7, and M3-redesign passes (each planned separately, same plan file, overwritten
+> per pass). Remaining work is M8 and the frontend/PDF orientation mismatch noted below.
 
 | # | Milestone | Status | Evidence |
 |---|-----------|--------|----------|
 | M1 | Parser + normalized model | 🟢 Fixed + tested | Parses both real CSVs cleanly (55 + 50 parts, 0 errors). Quoted-space edge codes (`""" """` → `'" "'`) now normalize to `""` (`normalize_edge_value` in `parser.py`). Job grouping now splits by `(material, thickness, grain)` as independent nesting jobs (both optimizers). `GRAIN_MAP` in `parser.py` now maps raw CSV codes `1`/`2` to `"length"`/`"width"` (`Business Logic/grain_logic.md`'s spec: 0=free, 1=part's length parallel to grain, 2=length perpendicular to grain i.e. width parallel to grain) — previously `1`/`2` fell through the `.get()` default to `"none"`, silently treating grain-locked parts as rotatable in both the packer (`can_rotate()`) and the exported FCC `Grain` attribute. No real sample CSV has ever contained `1`/`2` (only `0` observed), so this had never surfaced in the test suite until now. Covered by `backend/tests/test_parser.py` (12 tests, +2 this pass). |
 | M2 | Guillotine optimizer (saw) | 🟢 Fixed + tested | Rewrote placement around a true binary guillotine split (`guillotine_split`) instead of the old 4-way maxrects-style split — free rectangles can no longer overlap by construction. Multi-sheet loop opens new sheets of a board type until every part is placed or genuinely too large for an empty board. **The placement engine (`Rectangle`, `guillotine_split`, `place_parts_on_board`) now lives in shared `optimizer/packing.py`**, extracted so M4's fix (below) could reuse it — `guillotine.py` keeps only the saw-specific cut-list builder and its own `optimize()`; behavior unchanged. Covered by `backend/tests/test_guillotine.py` (7 invariant tests × 2 real sample files, incl. an automated guillotine-decomposability check per spec §7.4). **Verified the suite has teeth**: temporarily restored the original buggy version and reran — 8/14 tests failed (overlaps, dropped parts, non-decomposable layouts), confirming these tests would have caught the original bug. Cut list now flows through to `/optimize`'s response. |
-| M3 | PDF layout export (saw) | 🟡 Skeletal | Unchanged this pass. Runs and returns real PDF bytes via `/export/pdf`. Missing most of spec §6a: no cut L×W label per part (only barcode), no footer summary line (`Stock# · Dim · Qty · Material · Thk · Utl%`), no cut-sequence list/overlay (the `cuts` data is still not wired into the PDF renderer, only into the `/optimize` JSON). Never visually inspected. No tests. |
+| M3 | PDF layout export (saw) | 🟢 Redesigned + tested | `optimizer/export/pdf.py` went through two full redesigns this project. **Rev 1** (`Updates/update_002.md` → moved to `Business Logic/grain_logic.md`, unrelated to grain — see below) matched `sample_data/NirvanaTec Plus2D Optimization Drawing PDFs/`: landscape board (transposed render axes), colored panels, 2-per-page. **Rev 2, current** (a *second, different* `Updates/update_002.md` — the filename was reused for an unrelated spec; see the "reused filenames" note above) replaces Rev 1 entirely, following `sample_data/Max Cut Optimization Drawings/max_cut.pdf` instead: a left sidebar (material + sheet size, a per-sheet "Cutting List" grouped by `(name, nominal L, nominal W)` with running Symbol numbers via `_cutting_list()`, an "Occurrences ×N" box, a "Grain Direction" arrow box) beside a main area (a "Job Layout" header, a Client/Job/Sheet/Job stats grid, the board diagram). Board draws **portrait** this time (`board.length` vertical) — the *opposite* of Rev 1's landscape, and matching the packer's native axes directly, so no render-axis transform is needed (removed `_render_sheet_area`/`_render_offcut_area` along with it). Per the update's explicit instructions: (1) **occurrence deduplication** — `_deduplicate_layouts()` collapses physically-identical sheets (same board + same placed-part positions) into one printed page with an `×N` badge instead of N near-duplicate pages (real-data result: the 21-sheet saw sample collapses to **9** printed pages, one page alone absorbing 9 duplicate sheets); "Job Sheets"/"Job Panels"/etc. still count the *physical*, un-deduplicated sheet list. (2) **date format** `DD-MMM-YYYY hh:mm:ss` in the footer via `datetime.now().strftime(...)`. (3) **grain-direction arrow**: empty box for `grain="none"` (per the update's literal instruction — the reference itself shows an ambiguous always-on 4-way icon that didn't reliably indicate this, see below); a single vertical double-headed arrow for `grain="length"`, horizontal for `"width"` — **this mapping was NOT derivable from the reference alone** (same material showed different icons across different sheets in the reference, ruling out a simple per-material constant, and MaxCut's own internal packing-axis convention doesn't visibly match ours) and was confirmed directly with the project owner via `AskUserQuestion` rather than guessed, given the real risk (wrong grain direction → scrapped material). (4) **kept colored panels** (palette cycling by placement order, same approach as Rev 1) — the one explicit departure from the reference, which is plain black-and-white. (5) **reverted to 1 layout per page** (Rev 1's 2-per-page doesn't fit this denser layout, per the update). Client Name/Job Reference/Phone/Fax/Cell No/Date Required are left blank (labels only) — no such data exists in this app, and the reference's own sample pages leave them blank too, so this isn't a fabrication gap. "Sheet/Job Cut Length" reuse `OptResult.cuts` (already computed by M2's guillotine cut-list builder); "Job Wastage" is an area-weighted average of each sheet's own utilization (no per-sheet margin data is stored on `Sheet` to compute it more precisely — documented approximation, not a fabrication). Covered by `backend/tests/test_pdf.py` (10 tests, fully rewritten for Rev 2: dedup-page-count, page-text sanity, empty-result, dedup grouping + signature equality, cutting-list grouping/symbol assignment incl. the nominal-vs-rotated-footprint distinction, the confirmed grain-direction mapping, palette-cycling, and a sidebar/footer-overlap geometry regression — see next). **Found and fixed one real bug via visual inspection** (not caught by any test until added after the fact): the Occurrences/Grain Direction sidebar boxes extended down to the page's true bottom margin instead of stopping above the footer strip, so they visually overlapped the footer text — full pages were rendered and eyeballed, not just computed from geometry math, which is what caught it. Fixed via a `_sidebar_bottom_boxes()` helper now covered by a dedicated regression test; verified that test fails against the pre-fix geometry and passes after restoring the fix. Still open from spec §6a: no cut-sequence list/overlay (neither reference PDF shows one). |
 | M4 | Free-nest optimizer (router) | 🟢 Fixed + tested | Same multi-sheet loop and grain-grouping fix as M2. **The naive shelf packer flagged in earlier passes is gone**: prompted by `update_001` comparing our output against the real Nanxing machine's own software on the same job (identical board/margin/spacing — a real efficiency benchmark), found the shelf packer's root cause (once a row wraps, its leftover space is never reconsidered by later, smaller parts) and replaced it with the same free-rectangle best-fit engine `guillotine.py` already uses, extracted into shared `optimizer/packing.py`. Real-data result: the sheet holding the most parts in `nesting_machine_data.csv` went from 21 parts at 21.4% utilization to 29 parts at 73.8% — still below the real machine's 78–92% (true non-guillotine maxrects/skyline would likely close more of that gap; noted as a possible future refinement, not done here). Covered by `backend/tests/test_nanxing.py` (7 tests incl. a new dominant-sheet-utilization regression guard) + `test_guillotine.py` (unchanged, still passing against the now-shared engine). Verified the new test has teeth the same way as always: reverted to the old shelf packer, confirmed it fails (21.4% < 55% threshold), restored. |
 | M5 | FCC XML geometry | 🟢 Rebuilt + tested | `optimizer/export/xml.py` fully rewritten around the real `FccRoot`/`Patterns`/`Pattern`/`Workpieces`/`Workpiece`(+`EdgeGroup`/`Lineament`/`Lineament2`/`FccOutline`/`BenchmarkInfo`)/`OddmentsList` structure (spec §6b + Appendix A). Byte-exact on the empty-job case (Appendix A.8). `MachiningPoint` now uses the exact rule M6 discovered (see below) — **0 mismatches across all 4 non-empty golden files (1039 workpieces)**, not the ~83%/17% Appendix A.3 describes. |
 | M6 | FCC XML toolpaths | 🟢 Implemented + tested | `CutInfos.ToolPointList`/`ToolPoint` implemented per Appendix A.5's lead-in-ramp formula, plus two rules the appendix doesn't document, both found by testing against real files: **(1)** when an edge is shorter than `SlopeLen` (70mm), both of that edge's candidate points clamp to the edge midpoint instead of the raw corner-offset formula; **(2)** the `Lineament`/`Lineament2`/`FccOutline` polygon winding — and the `ToolPointList` idx→corner assignment — starts one corner later exactly when `CutWidth > CutLength` **and** the part isn't grain-locked (grain-locked parts never shift, confirmed against 207 grain-directional workpieces, all unrotated). This same signal turned out to fully explain `MachiningPoint`'s "~83%/17%" split from Appendix A.3 (now exact, see M5). `ToolPointList` itself lands at 88.1–96.4% exact match across the 4 golden files — the remaining mismatches look like isolated real-world manual adjustments (e.g. a single corner off by 6.8mm on one otherwise-perfect 55/56-attribute workpiece) rather than a missed rule; Appendix A.5 itself expects this needs machine dry-run refinement, so it's tracked as a documented tolerance (`backend/tests/test_xml_roundtrip.py`'s `MIN_TOOL_POINT_LIST_MATCH_RATE`), not chased to 100%. `ToolPoint` (which of the 4 lead-in points the cut starts at) has no discovered rule — defaults to `"0"` per Appendix A.5's own stated fallback. Point-winding and `MachiningPoint` comparisons in the round-trip test were tightened from tolerant to strict now that the real rules are known, and confirmed to have teeth (broke the shift logic, reran, 4/4 golden-file tests failed on the exact-match `MachiningPoint` assertion; restored, all green). |
@@ -73,15 +73,30 @@ Key libs: `shapely` (geometry), `rectpack`/custom packers (nesting), `lxml` (FCC
 **Cross-cutting:** `backend/tests/` now has `conftest.py`, `helpers.py`, `fcc_golden.py` (golden
 XML → exporter-input importer, test-only), `test_parser.py`, `test_guillotine.py`,
 `test_nanxing.py`, `test_xml_roundtrip.py` (now parametrized across all 4 non-empty golden
-files, not just one) — **54 tests**, all green from a clean `pip install -e ".[dev]"`. Not yet
-covered: any test touching `api.py`/`export/pdf.py` directly. `frontend/` has no automated
-tests yet (type-check + build + one manual browser run only) — no test framework wired up.
+files, not just one), `test_pdf.py` — **64 tests**, all green from a clean
+`pip install -e ".[dev]"`. Not yet covered: any test touching `api.py` directly (the
+`export/pdf.py` gap is now closed). `frontend/` has no automated tests yet (type-check + build +
+one manual browser run only) — no test framework wired up.
+
+**Directory reorg (post-M7):** `sample_data/` now nests its CSVs under `CSV Files from IMOS/`
+and golden XMLs under `XML Data for Nanxing Nesting Machine/` (previously flat), and gained a
+`NirvanaTec Plus2D Optimization Drawing PDFs/` folder (M3 Rev 1's reference, now superseded)
+and a `Max Cut Optimization Drawings/` folder (M3 Rev 2's reference, current — see M3 row). A
+`results/` folder was also added holding this app's own prior exports side-by-side with a real
+Nanxing-software export, for comparison. `backend/tests/conftest.py` and `test_xml_roundtrip.py`
+were updated to the new nested paths (`CSV_SAMPLE_DIR`, `XML_GOLDEN_DIR`) — **if a fresh session
+sees `FileNotFoundError` from the test suite, check `sample_data/`'s actual layout before
+assuming it's a code bug**; it has moved before and may again. Also note: **`Updates/update_002.md`
+has been reused for two unrelated specs in this project** (first the grain-code fix, now moved to
+`Business Logic/grain_logic.md`; then this PDF redesign) — don't assume a filename identifies
+content across sessions, always re-read it.
 
 **M6's output has never touched a real machine.** Byte-level structure and the discovered rules
 are verified against historical golden files, but per spec §7.3/Appendix A.5 a small,
 reproducible dry-run cut is still required before trusting this on real material — especially
 since `ToolPoint`'s rule and `MachiningPoint=7`'s actual on-machine behavior are unconfirmed.
-M3 (PDF polish) and M8 (offcut reuse) are the remaining open backend items.
+M8 (offcut reuse) is the remaining open backend item; M3's cut-sequence overlay was deliberately
+not built (see M3 row).
 
 ---
 
@@ -89,22 +104,34 @@ M3 (PDF polish) and M8 (offcut reuse) are the remaining open backend items.
 
 <!-- Update after each work block. This is what a fresh session needs most. -->
 
-- **Last worked:** 2026-08-13 — applied `Business Logic/grain_logic.md` (raw CSV `Grain` codes
-  are `0`/`1`/`2`, not just `0`/`x`/`y`; `1`/`2` were previously unmapped and silently treated
-  as ungrained/rotatable). This file was originally `Updates/update_002.md`, then moved/renamed
-  by the user into a new `Business Logic/` folder mid-session — same content, same fix, just a
-  different home; code comments and this doc now cite the new path. Fixed in `GRAIN_MAP`
-  (`backend/optimizer/parser.py`), see M1 row. Before that: Phases A/B/C of
-  `~/.claude/plans/delegated-moseying-robin.md` complete, plus follow-on M6, M7, and
-  Nanxing-packer-efficiency passes (same plan file, rewritten fresh for each pass), prompted by
-  `update_001` (a user-supplied real-world comparison against the actual Nanxing machine
-  software's output for the same job) rather than by spec/milestone review — worth checking
-  both `Updates/` and `Business Logic/` for similar drop-in spec files in future sessions, since
-  they carry real-world ground-truth this project otherwise doesn't have, and don't assume the
-  `update_NNN.md` naming/location will hold (it already didn't, once).
+- **Last worked:** 2026-08-13 — three passes across two sessions. (1) Applied
+  `Business Logic/grain_logic.md` (raw CSV `Grain` codes are `0`/`1`/`2`, not just `0`/`x`/`y`;
+  `1`/`2` were previously unmapped and silently treated as ungrained/rotatable). Fixed in
+  `GRAIN_MAP` (`backend/optimizer/parser.py`), see M1 row. (2) Redesigned M3's PDF export to
+  match the NirvanaTec PLUS 2D reference (M3 Rev 1: colored panels, landscape orientation,
+  2-per-page) after the user reorganized `sample_data/`/`results/` and pointed at that
+  reference; the reorg also nested the CSV/XML fixture files the test suite reads, requiring a
+  `conftest.py`/`test_xml_roundtrip.py` path fix first (see "Directory reorg" above). (3) A new
+  `Updates/update_002.md` (reusing that filename for an unrelated spec — see the reused-filenames
+  note above) asked for a *second*, different PDF redesign matching MaxCut software's own
+  reference instead (`Max Cut Optimization Drawings/max_cut.pdf`) — sidebar with cutting
+  list/occurrence badge/grain arrow, portrait board orientation, occurrence deduplication, new
+  date format, back to 1-per-page. This **replaced** Rev 1 entirely (M3 row now describes both
+  revisions). One point needed the project owner's direct input rather than a guess: which
+  physical board axis the grain-direction arrow points along for grain-locked sheets — the
+  reference itself didn't unambiguously establish this (see M3 row), and guessing wrong on a
+  real job risks scrapped material, so this was resolved via `AskUserQuestion`, not inferred.
+  Before all three: Phases A/B/C of `~/.claude/plans/delegated-moseying-robin.md` complete, plus
+  follow-on M6, M7, and Nanxing-packer-efficiency passes (same plan file, rewritten fresh for
+  each pass), prompted by `update_001` (a user-supplied real-world comparison against the actual
+  Nanxing machine software's output for the same job) rather than by spec/milestone review —
+  worth checking both `Updates/` and `Business Logic/` for similar drop-in spec/reference files
+  in future sessions, since they carry real-world ground-truth this project otherwise doesn't
+  have.
 - **Backend entry point:** `backend/api.py` (FastAPI app object `app`), run via `backend/start-backend.sh`
   → `uvicorn api:app --reload --host 127.0.0.1 --port 8000`. `backend/.venv` has the `dev`
-  extra installed (`pip install -e ".[dev]"`) — `pytest -q` from `backend/` runs 54 tests, all green.
+  extra installed (`pip install -e ".[dev]"`, now including `pypdf` for PDF-export test
+  assertions) — `pytest -q` from `backend/` runs 59 tests, all green.
 - **Frontend entry point:** `frontend/` (Vite + React + TypeScript), `npm run dev` serves on
   `http://localhost:5173` with `/api/*` proxied to the backend on `:8000` (`vite.config.ts`) —
   run both dev servers side by side, no backend changes needed for local dev. `npm run build`
@@ -127,25 +154,31 @@ M3 (PDF polish) and M8 (offcut reuse) are the remaining open backend items.
   guillotine suite (Phase A) and the tightened round-trip assertions (M6) catch real regressions
   by temporarily breaking the fix, rerunning, and confirming failures, then restoring. All four
   endpoints (`/parse`, `/optimize`, `/export/pdf`, `/export/xml`) still respond 200 with
-  non-empty bodies on real data end-to-end (smoke-tested manually, not yet part of the suite).
+  non-empty bodies on real data end-to-end (smoke-tested manually; `/export/pdf`'s output is now
+  also asserted by `test_pdf.py`, see M3 row — `/parse`, `/optimize`, `/export/xml` still aren't
+  covered as HTTP endpoints, only their underlying `optimizer/` functions are).
 - **What's done & passing (M7):** the full CSV → map → configure → preview → download wizard,
   built fresh this pass — see the M7 milestone row for the exact Playwright-driven verification
   (both real sample CSVs, both machine targets, real PDF/XML downloads, a deliberately bad CSV
   correctly surfacing the backend's error instead of crashing, zero console/page/network errors).
-- **What's in progress / half-done:** `backend/optimizer/export/pdf.py` (M3) still doesn't render
-  cut L×W labels, the footer summary line, or the cut sequence — out of scope for every fix pass
-  so far, not yet scheduled; M7's preview intentionally doesn't share a renderer with it (see M7
-  row). `ToolPointList`'s exact-match rate (88.1–96.4% across the 4 golden files) has residual,
-  likely-irreducible noise — Appendix A.5 itself expects this needs machine dry-run refinement,
-  so it's tracked as a documented tolerance rather than chased further. `ToolPoint` (which of the
-  4 lead-in points a cut starts at) has no discovered rule; defaults to `"0"` per Appendix A.5's
-  own stated fallback. `frontend/` has no automated test suite (Vitest/RTL or similar never set
-  up) — only type-check, build, lint, and one manual browser-driven pass exist as verification.
+- **What's in progress / half-done:** M7's frontend `SheetPreview.tsx` SVG draws boards with
+  `boardW` horizontal / `boardL` vertical (portrait) — this briefly diverged from M3 Rev 1's
+  landscape PDF, but M3 Rev 2 switched the PDF back to portrait using the same native
+  (`x` along `board.width`, `y` along `board.length`) axes the packer and `SheetPreview.tsx`
+  already use, so **the preview and the PDF happen to agree again** — coincidentally, not
+  because anyone reconciled them; worth being aware this could drift apart again on a future
+  PDF-only change. They still don't share a renderer (M7's own aspiration, still deferred).
+  `ToolPointList`'s
+  exact-match rate (88.1–96.4% across the 4 golden files) has residual, likely-irreducible
+  noise — Appendix A.5 itself expects this needs machine dry-run refinement, so it's tracked as
+  a documented tolerance rather than chased further. `ToolPoint` (which of the 4 lead-in points
+  a cut starts at) has no discovered rule; defaults to `"0"` per Appendix A.5's own stated
+  fallback. `frontend/` has no automated test suite (Vitest/RTL or similar never set up) — only
+  type-check, build, lint, and one manual browser-driven pass exist as verification.
 - **Immediate next step:** M6's output has never touched a real machine — before relying on it,
   a small reproducible dry-run cut is needed (spec §7.3/Appendix A.5), which isn't something a
-  coding session can do unattended. Barring that, remaining work is M3 (PDF polish — cut labels,
-  footer, cut-sequence overlay; the `cuts` data already exists from M2) and M8 (offcut reuse).
-  Worth considering: a `frontend/` test suite, since none exists yet.
+  coding session can do unattended. Barring that, remaining work is M8 (offcut reuse), the
+  frontend/PDF board-orientation mismatch noted above, and possibly a `frontend/` test suite.
 - **Open questions / blockers:** none new beyond what's already in `instructions.md` §10 (still
   needs owner confirmation on kerf value, ZIP/JPEG vs plain PDF acceptance, etc). `ToolPoint`'s
   rule is unresolved (see above) — needs either more/different golden data or real machine
@@ -178,14 +211,23 @@ formatted like the reference. A valid empty job is a self-closed root `<FccRoot 
    now implemented against exact rules discovered from golden-file analysis, but neither has
    been confirmed against an actual cut; `ToolPoint`'s rule is still unknown (defaults to `0`).
    Not something a coding session can do unattended — needs the owner and the physical machine.
-2. **M3 PDF polish:** cut L×W labels, footer summary line, cut-sequence overlay (spec §6a) —
-   the `cuts` data already exists from M2, just isn't wired into `export/pdf.py` yet. Also the
-   natural point to revisit M7's "reuse the same renderer for the PDF" aspiration, deferred
-   when M7 was built (see M7's milestone row).
-3. **Frontend test suite:** `frontend/` has none yet — M7 was verified via type-check, build,
+2. **Share a renderer between `SheetPreview.tsx` and the PDF:** still two independent
+   implementations (M7's own deferred aspiration) — they currently happen to agree on board
+   orientation (both portrait, both using the packer's native axes) after M3 Rev 2 switched the
+   PDF back to portrait, but that's incidental, not enforced; a future PDF-only orientation
+   change could silently diverge them again (see M3/Current-state notes). M3's own remaining
+   gap — a cut-sequence overlay — was deliberately skipped since neither reference PDF (Rev 1
+   nor Rev 2) shows one; the `cuts` data still isn't wired into `export/pdf.py`, but nothing
+   currently calls for it to be.
+3. **Grain-direction arrow, real-world confirmation:** the length↔vertical/width↔horizontal
+   mapping in M3 Rev 2 was confirmed with the project owner (not derived from the MaxCut
+   reference, which was ambiguous — see M3 row), but still hasn't been checked against an
+   actual grain-locked job on real material. Low risk since it's a documented, deliberate
+   choice rather than a guess, but worth a sanity check if/when a grain-locked CSV shows up.
+4. **Frontend test suite:** `frontend/` has none yet — M7 was verified via type-check, build,
    lint, and one manual Playwright-driven browser pass, not an automated suite (Vitest/RTL or
    similar).
-4. **M8 offcut reuse:** larger oddments become returnable stock (see Appendix A.6).
+5. **M8 offcut reuse:** larger oddments become returnable stock (see Appendix A.6).
 
 ---
 

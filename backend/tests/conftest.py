@@ -7,10 +7,12 @@ from optimizer.model import Margin
 from optimizer.parser import parse_csv_text
 
 SAMPLE_DATA_DIR = Path(__file__).resolve().parent.parent.parent / "sample_data"
+CSV_SAMPLE_DIR = SAMPLE_DATA_DIR / "CSV Files from IMOS"
+XML_GOLDEN_DIR = SAMPLE_DATA_DIR / "XML Data for Nanxing Nesting Machine"
 
 
 def _read_sample(name: str) -> str:
-    return (SAMPLE_DATA_DIR / name).read_text(encoding="utf-8-sig")
+    return (CSV_SAMPLE_DIR / name).read_text(encoding="utf-8-sig")
 
 
 @pytest.fixture

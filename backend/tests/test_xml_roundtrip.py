@@ -6,7 +6,7 @@ from lxml import etree
 from optimizer.export.xml import generate_fcc_xml
 from optimizer.model import Margin, OptResult
 
-from .conftest import SAMPLE_DATA_DIR
+from .conftest import XML_GOLDEN_DIR
 from .fcc_golden import load_golden_fcc
 
 NON_EMPTY_GOLDEN_FILES = [
@@ -15,7 +15,7 @@ NON_EMPTY_GOLDEN_FILES = [
     "26Y111T1F4 (4 FLOOR BEDROOM-FccForNesting-FccPattern.xml",
     "26Y117T1F1A1(BEDROOM 1-2)-FccForNesting-FccPattern.xml",
 ]
-EMPTY_GOLDEN_FILE = SAMPLE_DATA_DIR / "26Y111T1F3 (3 FLOOR BEDROOM-FccForNesting-FccPattern.xml"
+EMPTY_GOLDEN_FILE = XML_GOLDEN_DIR / "26Y111T1F3 (3 FLOOR BEDROOM-FccForNesting-FccPattern.xml"
 NUM_TOL = 0.05
 
 
@@ -104,7 +104,7 @@ def compare_oddments(golden_odd, regen_odd, flag_stats: list[bool]):
 
 @pytest.fixture(scope="module", params=NON_EMPTY_GOLDEN_FILES)
 def golden_and_regenerated(request):
-    golden_file = SAMPLE_DATA_DIR / request.param
+    golden_file = XML_GOLDEN_DIR / request.param
     parts_by_id, result, margin, tool_diameter, part_spacing = load_golden_fcc(golden_file)
     regenerated = generate_fcc_xml(result, parts_by_id, margin, tool_diameter, part_spacing)
     golden_root = etree.parse(str(golden_file)).getroot()
