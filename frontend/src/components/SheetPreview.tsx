@@ -12,10 +12,13 @@ const FONT_SIZE = 24;
 
 export function SheetPreview({ sheet }: Props) {
   return (
-    <div className="sheet-preview">
-      <h3>
-        Sheet {sheet.index} — {sheet.material} ({sheet.thickness}mm) — {sheet.utilizationPct.toFixed(1)}% used
-      </h3>
+    <div className="card sheet-preview">
+      <div className="sheet-preview__header">
+        <h3>
+          Sheet {sheet.index} <span className="sheet-preview__material">— {sheet.material} ({sheet.thickness}mm)</span>
+        </h3>
+        <span className="badge">{sheet.utilizationPct.toFixed(1)}% used</span>
+      </div>
       <svg viewBox={`0 0 ${sheet.boardW} ${sheet.boardL}`} className="sheet-svg">
         <rect x={0} y={0} width={sheet.boardW} height={sheet.boardL} className="board-outline" />
         {sheet.offcuts.map((o, i) => (

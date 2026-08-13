@@ -44,10 +44,29 @@ def test_grain_zero_maps_to_none(nesting_parts):
 
 def test_parse_grain_mapping():
     assert parse_grain("0") == "none"
+    assert parse_grain("1") == "length"
+    assert parse_grain("2") == "width"
     assert parse_grain("x") == "length"
     assert parse_grain("y") == "width"
     assert parse_grain("") == "none"
     assert parse_grain("bogus") == "none"
+
+
+def test_grain_1_and_2_lock_rotation_end_to_end():
+    # Business Logic/grain_logic.md: raw Grain values are 0 (free), 1 (length parallel to
+    # grain), 2 (length perpendicular to grain).
+    # 1 and 2 must both disallow rotation (part.can_rotate() False), not silently fall back to
+    # "none"/rotatable like an unrecognized code would.
+    row_parallel = "Mr. Vijay,01.X,X,Part,100,200,1,100,200,17,MAT,,,,,,,,1\n"
+    row_perp = "Mr. Vijay,01.Y,Y,Part,100,200,1,100,200,17,MAT,,,,,,,,2\n"
+    parts, errors = parse_csv_text(NESTING_HEADER + row_parallel + row_perp)
+    assert errors == []
+    parallel_part = next(p for p in parts if p.id == "X")
+    perp_part = next(p for p in parts if p.id == "Y")
+    assert parallel_part.grain == "length"
+    assert perp_part.grain == "width"
+    assert parallel_part.can_rotate() is False
+    assert perp_part.can_rotate() is False
 
 
 def test_rejects_non_positive_dimensions():

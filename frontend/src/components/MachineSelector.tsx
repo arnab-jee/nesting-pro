@@ -8,13 +8,15 @@ interface Props {
 export function MachineSelector({ target, onChange }: Props) {
   return (
     <div className="machine-selector">
-      <label>
+      <label className="machine-option">
         <input type="radio" checked={target === "saw"} onChange={() => onChange("saw")} />
-        Panel Saw
+        <span className="machine-option__title">Panel Saw</span>
+        <span className="machine-option__desc">Guillotine cuts, edge-to-edge</span>
       </label>
-      <label>
+      <label className="machine-option">
         <input type="radio" checked={target === "nanxing"} onChange={() => onChange("nanxing")} />
-        Nanxing (nesting router)
+        <span className="machine-option__title">Nanxing</span>
+        <span className="machine-option__desc">Free-shape nesting router</span>
       </label>
     </div>
   );

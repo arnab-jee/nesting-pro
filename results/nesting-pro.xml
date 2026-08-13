@@ -1,0 +1,2898 @@
+<?xml version="1.0"?>
+<FccRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="2" DataValid="5" CreateG="false" RefreshCuttingOrder="false" OptCreateFile="true">
+  <Patterns Index="1" ID="1" Name="CC_HDH17_8134_BS" Length="2440" Width="1220" Thickness="17" Grain="L">
+    <Pattern Index="1" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="1" WorkpieceId="26Y111T1F1B3_1083" CuttingOrderNo="1" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="355" Width="1449" Thickness="17" CutLength="353.8" CutWidth="1447.8" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1083" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="E3_2098_Fabric28_1MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="361.8" Y="-3" Angle="0" />
+              <Point Index="2" X="361.8" Y="1450.8" Angle="0" />
+              <Point Index="3" X="2" Y="1450.8" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="361.8" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="361.8,1380.8,0$;72,1450.8,1$;2,67,2$;291.8,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="361.8" Y="-3" Angle="0" />
+              <Point Index="2" X="361.8" Y="1450.8" Angle="0" />
+              <Point Index="3" X="2" Y="1450.8" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="361.8" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="353.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="353.8" Y="1447.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1447.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="353.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="353.8" ProWidth="1447.8" />
+        </Workpiece>
+        <Workpiece ID="2" WorkpieceId="26Y111T1F1B3_1005" CuttingOrderNo="2" Qty="1" Name="Bed Mid Side" Material="CC_HDH17_8134_BS" Length="355" Width="1254" Thickness="17" CutLength="353.8" CutWidth="1252.8" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1005" ProductionName="Bed Mid Side" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="E3_2098_Fabric28_1MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="361.9" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="721.7" Y="-3" Angle="0" />
+              <Point Index="2" X="721.7" Y="1255.8" Angle="0" />
+              <Point Index="3" X="361.9" Y="1255.8" Angle="0" />
+              <Point Index="4" X="361.9" Y="-3" Angle="0" />
+              <Point Index="5" X="721.7" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="721.7,1185.8,0$;431.9,1255.8,1$;361.9,67,2$;651.7,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="721.7" Y="-3" Angle="0" />
+              <Point Index="2" X="721.7" Y="1255.8" Angle="0" />
+              <Point Index="3" X="361.9" Y="1255.8" Angle="0" />
+              <Point Index="4" X="361.9" Y="-3" Angle="0" />
+              <Point Index="5" X="721.7" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="353.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="353.8" Y="1252.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1252.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="353.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="353.8" ProWidth="1252.8" />
+        </Workpiece>
+        <Workpiece ID="3" WorkpieceId="26Y111T1F1B3_1091" CuttingOrderNo="3" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="70" Width="1360" Thickness="17" CutLength="66.4" CutWidth="1356.4" MachiningPoint="1" Grain="N" ProdutionNo="03.26Y111T1F1B3_1091" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="721.8" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="794.2" Y="-3" Angle="0" />
+              <Point Index="2" X="794.2" Y="1359.4" Angle="0" />
+              <Point Index="3" X="721.8" Y="1359.4" Angle="0" />
+              <Point Index="4" X="721.8" Y="-3" Angle="0" />
+              <Point Index="5" X="794.2" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="794.2,1289.4,0$;791.8,1359.4,1$;721.8,67,2$;724.2,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="794.2" Y="-3" Angle="0" />
+              <Point Index="2" X="794.2" Y="1359.4" Angle="0" />
+              <Point Index="3" X="721.8" Y="1359.4" Angle="0" />
+              <Point Index="4" X="721.8" Y="-3" Angle="0" />
+              <Point Index="5" X="794.2" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="66.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="66.4" Y="1356.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1356.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="66.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="66.4" ProWidth="1356.4" />
+        </Workpiece>
+        <Workpiece ID="4" WorkpieceId="26Y111T1F1B3_1011" CuttingOrderNo="4" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="70" Width="1220" Thickness="17" CutLength="68.8" CutWidth="1217.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1011" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="794.3" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="869.1" Y="-3" Angle="0" />
+              <Point Index="2" X="869.1" Y="1220.6" Angle="0" />
+              <Point Index="3" X="794.3" Y="1220.6" Angle="0" />
+              <Point Index="4" X="794.3" Y="-3" Angle="0" />
+              <Point Index="5" X="869.1" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="869.1,1150.6,0$;864.3,1220.6,1$;794.3,67,2$;799.1,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="869.1" Y="-3" Angle="0" />
+              <Point Index="2" X="869.1" Y="1220.6" Angle="0" />
+              <Point Index="3" X="794.3" Y="1220.6" Angle="0" />
+              <Point Index="4" X="794.3" Y="-3" Angle="0" />
+              <Point Index="5" X="869.1" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="68.8" ProWidth="1217.6" />
+        </Workpiece>
+        <Workpiece ID="5" WorkpieceId="26Y111T1F1B3_1013" CuttingOrderNo="5" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="70" Width="1220" Thickness="17" CutLength="68.8" CutWidth="1217.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1013" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="869.2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="944" Y="-3" Angle="0" />
+              <Point Index="2" X="944" Y="1220.6" Angle="0" />
+              <Point Index="3" X="869.2" Y="1220.6" Angle="0" />
+              <Point Index="4" X="869.2" Y="-3" Angle="0" />
+              <Point Index="5" X="944" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="944,1150.6,0$;939.2,1220.6,1$;869.2,67,2$;874,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="944" Y="-3" Angle="0" />
+              <Point Index="2" X="944" Y="1220.6" Angle="0" />
+              <Point Index="3" X="869.2" Y="1220.6" Angle="0" />
+              <Point Index="4" X="869.2" Y="-3" Angle="0" />
+              <Point Index="5" X="944" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="68.8" ProWidth="1217.6" />
+        </Workpiece>
+        <Workpiece ID="6" WorkpieceId="26Y111T1F1B3_1022" CuttingOrderNo="6" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="70" Width="1220" Thickness="17" CutLength="68.8" CutWidth="1217.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1022" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="944.1" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1018.9" Y="-3" Angle="0" />
+              <Point Index="2" X="1018.9" Y="1220.6" Angle="0" />
+              <Point Index="3" X="944.1" Y="1220.6" Angle="0" />
+              <Point Index="4" X="944.1" Y="-3" Angle="0" />
+              <Point Index="5" X="1018.9" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1018.9,1150.6,0$;1014.1,1220.6,1$;944.1,67,2$;948.9,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1018.9" Y="-3" Angle="0" />
+              <Point Index="2" X="1018.9" Y="1220.6" Angle="0" />
+              <Point Index="3" X="944.1" Y="1220.6" Angle="0" />
+              <Point Index="4" X="944.1" Y="-3" Angle="0" />
+              <Point Index="5" X="1018.9" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="68.8" ProWidth="1217.6" />
+        </Workpiece>
+        <Workpiece ID="7" WorkpieceId="26Y111T1F1B3_1024" CuttingOrderNo="7" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="70" Width="1220" Thickness="17" CutLength="68.8" CutWidth="1217.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1024" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="1019" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1093.8" Y="-3" Angle="0" />
+              <Point Index="2" X="1093.8" Y="1220.6" Angle="0" />
+              <Point Index="3" X="1019" Y="1220.6" Angle="0" />
+              <Point Index="4" X="1019" Y="-3" Angle="0" />
+              <Point Index="5" X="1093.8" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1093.8,1150.6,0$;1089,1220.6,1$;1019,67,2$;1023.8,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1093.8" Y="-3" Angle="0" />
+              <Point Index="2" X="1093.8" Y="1220.6" Angle="0" />
+              <Point Index="3" X="1019" Y="1220.6" Angle="0" />
+              <Point Index="4" X="1019" Y="-3" Angle="0" />
+              <Point Index="5" X="1093.8" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="68.8" ProWidth="1217.6" />
+        </Workpiece>
+        <Workpiece ID="8" WorkpieceId="26Y111T1F1B3_1085" CuttingOrderNo="8" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="70" Width="1148" Thickness="17" CutLength="66.4" CutWidth="1144.4" MachiningPoint="1" Grain="N" ProdutionNo="05.26Y111T1F1B3_1085" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="1093.9" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1166.3" Y="-3" Angle="0" />
+              <Point Index="2" X="1166.3" Y="1147.4" Angle="0" />
+              <Point Index="3" X="1093.9" Y="1147.4" Angle="0" />
+              <Point Index="4" X="1093.9" Y="-3" Angle="0" />
+              <Point Index="5" X="1166.3" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1166.3,1077.4,0$;1163.9,1147.4,1$;1093.9,67,2$;1096.3,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1166.3" Y="-3" Angle="0" />
+              <Point Index="2" X="1166.3" Y="1147.4" Angle="0" />
+              <Point Index="3" X="1093.9" Y="1147.4" Angle="0" />
+              <Point Index="4" X="1093.9" Y="-3" Angle="0" />
+              <Point Index="5" X="1166.3" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="66.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="66.4" Y="1144.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1144.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="66.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="66.4" ProWidth="1144.4" />
+        </Workpiece>
+        <Workpiece ID="9" WorkpieceId="26Y111T1F1B3_1084" CuttingOrderNo="9" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="880" Width="70" Thickness="17" CutLength="876.4" CutWidth="66.4" MachiningPoint="3" Grain="N" ProdutionNo="05.26Y111T1F1B3_1084" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="2" Y="1450.9" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="2" Y="1450.9" Angle="0" />
+              <Point Index="2" X="74.4" Y="1450.9" Angle="0" />
+              <Point Index="3" X="74.4" Y="2333.3" Angle="0" />
+              <Point Index="4" X="2" Y="2333.3" Angle="0" />
+              <Point Index="5" X="2" Y="1450.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="4.4,1450.9,0$;74.4,2263.3,1$;72,2333.3,2$;2,1520.9,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="2" Y="1450.9" Angle="0" />
+              <Point Index="2" X="74.4" Y="1450.9" Angle="0" />
+              <Point Index="3" X="74.4" Y="2333.3" Angle="0" />
+              <Point Index="4" X="2" Y="2333.3" Angle="0" />
+              <Point Index="5" X="2" Y="1450.9" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="876.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="876.4" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="876.4" ProWidth="66.4" />
+        </Workpiece>
+        <Workpiece ID="10" WorkpieceId="26Y111T1F1B3_1086" CuttingOrderNo="10" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="880" Width="70" Thickness="17" CutLength="876.4" CutWidth="66.4" MachiningPoint="3" Grain="N" ProdutionNo="05.26Y111T1F1B3_1086" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="74.5" Y="1450.9" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="74.5" Y="1450.9" Angle="0" />
+              <Point Index="2" X="146.9" Y="1450.9" Angle="0" />
+              <Point Index="3" X="146.9" Y="2333.3" Angle="0" />
+              <Point Index="4" X="74.5" Y="2333.3" Angle="0" />
+              <Point Index="5" X="74.5" Y="1450.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="76.9,1450.9,0$;146.9,2263.3,1$;144.5,2333.3,2$;74.5,1520.9,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="74.5" Y="1450.9" Angle="0" />
+              <Point Index="2" X="146.9" Y="1450.9" Angle="0" />
+              <Point Index="3" X="146.9" Y="2333.3" Angle="0" />
+              <Point Index="4" X="74.5" Y="2333.3" Angle="0" />
+              <Point Index="5" X="74.5" Y="1450.9" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="876.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="876.4" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="876.4" ProWidth="66.4" />
+        </Workpiece>
+        <Workpiece ID="11" WorkpieceId="26Y111T1F1B3_1012" CuttingOrderNo="11" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="70" Width="716" Thickness="17" CutLength="68.8" CutWidth="713.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1012" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="147" Y="1450.9" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="221.8" Y="1450.9" Angle="0" />
+              <Point Index="2" X="221.8" Y="2170.5" Angle="0" />
+              <Point Index="3" X="147" Y="2170.5" Angle="0" />
+              <Point Index="4" X="147" Y="1450.9" Angle="0" />
+              <Point Index="5" X="221.8" Y="1450.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="221.8,2100.5,0$;217,2170.5,1$;147,1520.9,2$;151.8,1450.9,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="221.8" Y="1450.9" Angle="0" />
+              <Point Index="2" X="221.8" Y="2170.5" Angle="0" />
+              <Point Index="3" X="147" Y="2170.5" Angle="0" />
+              <Point Index="4" X="147" Y="1450.9" Angle="0" />
+              <Point Index="5" X="221.8" Y="1450.9" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="68.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="12" WorkpieceId="26Y111T1F1B3_1014" CuttingOrderNo="12" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="70" Width="716" Thickness="17" CutLength="68.8" CutWidth="713.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1014" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="221.9" Y="1450.9" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="296.7" Y="1450.9" Angle="0" />
+              <Point Index="2" X="296.7" Y="2170.5" Angle="0" />
+              <Point Index="3" X="221.9" Y="2170.5" Angle="0" />
+              <Point Index="4" X="221.9" Y="1450.9" Angle="0" />
+              <Point Index="5" X="296.7" Y="1450.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="296.7,2100.5,0$;291.9,2170.5,1$;221.9,1520.9,2$;226.7,1450.9,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="296.7" Y="1450.9" Angle="0" />
+              <Point Index="2" X="296.7" Y="2170.5" Angle="0" />
+              <Point Index="3" X="221.9" Y="2170.5" Angle="0" />
+              <Point Index="4" X="221.9" Y="1450.9" Angle="0" />
+              <Point Index="5" X="296.7" Y="1450.9" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="68.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="13" WorkpieceId="26Y111T1F1B3_1023" CuttingOrderNo="13" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="70" Width="716" Thickness="17" CutLength="68.8" CutWidth="713.6" MachiningPoint="7" Grain="N" ProdutionNo="01.26Y111T1F1B3_1023" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="296.8" Y="1450.9" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1016.4" Y="1450.9" Angle="0" />
+              <Point Index="2" X="1016.4" Y="1525.7" Angle="0" />
+              <Point Index="3" X="296.8" Y="1525.7" Angle="0" />
+              <Point Index="4" X="296.8" Y="1450.9" Angle="0" />
+              <Point Index="5" X="1016.4" Y="1450.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1016.4,1455.7,0$;366.8,1525.7,1$;296.8,1520.9,2$;946.4,1450.9,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1016.4" Y="1450.9" Angle="0" />
+              <Point Index="2" X="1016.4" Y="1525.7" Angle="0" />
+              <Point Index="3" X="296.8" Y="1525.7" Angle="0" />
+              <Point Index="4" X="296.8" Y="1450.9" Angle="0" />
+              <Point Index="5" X="1016.4" Y="1450.9" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="68.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="14" WorkpieceId="26Y111T1F1B3_1025" CuttingOrderNo="14" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="70" Width="716" Thickness="17" CutLength="68.8" CutWidth="713.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1025" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="296.8" Y="1525.8" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="371.6" Y="1525.8" Angle="0" />
+              <Point Index="2" X="371.6" Y="2245.4" Angle="0" />
+              <Point Index="3" X="296.8" Y="2245.4" Angle="0" />
+              <Point Index="4" X="296.8" Y="1525.8" Angle="0" />
+              <Point Index="5" X="371.6" Y="1525.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="371.6,2175.4,0$;366.8,2245.4,1$;296.8,1595.8,2$;301.6,1525.8,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="371.6" Y="1525.8" Angle="0" />
+              <Point Index="2" X="371.6" Y="2245.4" Angle="0" />
+              <Point Index="3" X="296.8" Y="2245.4" Angle="0" />
+              <Point Index="4" X="296.8" Y="1525.8" Angle="0" />
+              <Point Index="5" X="371.6" Y="1525.8" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="68.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="68.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="15" WorkpieceId="26Y111T1F1B3_1090" CuttingOrderNo="15" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="576" Width="70" Thickness="17" CutLength="572.4" CutWidth="66.4" MachiningPoint="1" Grain="N" ProdutionNo="03.26Y111T1F1B3_1090" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="371.7" Y="1525.8" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="371.7" Y="1525.8" Angle="0" />
+              <Point Index="2" X="950.1" Y="1525.8" Angle="0" />
+              <Point Index="3" X="950.1" Y="1598.2" Angle="0" />
+              <Point Index="4" X="371.7" Y="1598.2" Angle="0" />
+              <Point Index="5" X="371.7" Y="1525.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="880.1,1525.8,0$;950.1,1528.2,1$;441.7,1598.2,2$;371.7,1595.8,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="371.7" Y="1525.8" Angle="0" />
+              <Point Index="2" X="950.1" Y="1525.8" Angle="0" />
+              <Point Index="3" X="950.1" Y="1598.2" Angle="0" />
+              <Point Index="4" X="371.7" Y="1598.2" Angle="0" />
+              <Point Index="5" X="371.7" Y="1525.8" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="572.4" ProWidth="66.4" />
+        </Workpiece>
+        <Workpiece ID="16" WorkpieceId="26Y111T1F1B3_1092" CuttingOrderNo="16" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="576" Width="70" Thickness="17" CutLength="572.4" CutWidth="66.4" MachiningPoint="3" Grain="N" ProdutionNo="03.26Y111T1F1B3_1092" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="371.7" Y="1598.3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="371.7" Y="1598.3" Angle="0" />
+              <Point Index="2" X="444.1" Y="1598.3" Angle="0" />
+              <Point Index="3" X="444.1" Y="2176.7" Angle="0" />
+              <Point Index="4" X="371.7" Y="2176.7" Angle="0" />
+              <Point Index="5" X="371.7" Y="1598.3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="374.1,1598.3,0$;444.1,2106.7,1$;441.7,2176.7,2$;371.7,1668.3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="371.7" Y="1598.3" Angle="0" />
+              <Point Index="2" X="444.1" Y="1598.3" Angle="0" />
+              <Point Index="3" X="444.1" Y="2176.7" Angle="0" />
+              <Point Index="4" X="371.7" Y="2176.7" Angle="0" />
+              <Point Index="5" X="371.7" Y="1598.3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="572.4" ProWidth="66.4" />
+        </Workpiece>
+        <Workpiece ID="17" WorkpieceId="26Y111T1F1B3_1087" CuttingOrderNo="17" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="576" Width="70" Thickness="17" CutLength="572.4" CutWidth="66.4" MachiningPoint="1" Grain="N" ProdutionNo="04.26Y111T1F1B3_1087" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="444.2" Y="1598.3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="444.2" Y="1598.3" Angle="0" />
+              <Point Index="2" X="1022.6" Y="1598.3" Angle="0" />
+              <Point Index="3" X="1022.6" Y="1670.7" Angle="0" />
+              <Point Index="4" X="444.2" Y="1670.7" Angle="0" />
+              <Point Index="5" X="444.2" Y="1598.3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="952.6,1598.3,0$;1022.6,1600.7,1$;514.2,1670.7,2$;444.2,1668.3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="444.2" Y="1598.3" Angle="0" />
+              <Point Index="2" X="1022.6" Y="1598.3" Angle="0" />
+              <Point Index="3" X="1022.6" Y="1670.7" Angle="0" />
+              <Point Index="4" X="444.2" Y="1670.7" Angle="0" />
+              <Point Index="5" X="444.2" Y="1598.3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="572.4" ProWidth="66.4" />
+        </Workpiece>
+        <Workpiece ID="18" WorkpieceId="26Y111T1F1B3_1089" CuttingOrderNo="18" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="576" Width="70" Thickness="17" CutLength="572.4" CutWidth="66.4" MachiningPoint="3" Grain="N" ProdutionNo="04.26Y111T1F1B3_1089" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="444.2" Y="1670.8" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="444.2" Y="1670.8" Angle="0" />
+              <Point Index="2" X="516.6" Y="1670.8" Angle="0" />
+              <Point Index="3" X="516.6" Y="2249.2" Angle="0" />
+              <Point Index="4" X="444.2" Y="2249.2" Angle="0" />
+              <Point Index="5" X="444.2" Y="1670.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="446.6,1670.8,0$;516.6,2179.2,1$;514.2,2249.2,2$;444.2,1740.8,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="444.2" Y="1670.8" Angle="0" />
+              <Point Index="2" X="516.6" Y="1670.8" Angle="0" />
+              <Point Index="3" X="516.6" Y="2249.2" Angle="0" />
+              <Point Index="4" X="444.2" Y="2249.2" Angle="0" />
+              <Point Index="5" X="444.2" Y="1670.8" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="66.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="572.4" ProWidth="66.4" />
+        </Workpiece>
+        <Workpiece ID="19" WorkpieceId="26Y111T1F1B3_1006" CuttingOrderNo="19" Qty="1" Name="Bed Bottom Strip" Material="CC_HDH17_8134_BS" Length="40" Width="716" Thickness="17" CutLength="38.8" CutWidth="713.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1006" ProductionName="Bed Bottom Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="516.7" Y="1670.8" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="561.5" Y="1670.8" Angle="0" />
+              <Point Index="2" X="561.5" Y="2390.4" Angle="0" />
+              <Point Index="3" X="516.7" Y="2390.4" Angle="0" />
+              <Point Index="4" X="516.7" Y="1670.8" Angle="0" />
+              <Point Index="5" X="561.5" Y="1670.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="561.5,2320.4,0$;539.1,2390.4,1$;516.7,1740.8,2$;539.1,1670.8,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="561.5" Y="1670.8" Angle="0" />
+              <Point Index="2" X="561.5" Y="2390.4" Angle="0" />
+              <Point Index="3" X="516.7" Y="2390.4" Angle="0" />
+              <Point Index="4" X="516.7" Y="1670.8" Angle="0" />
+              <Point Index="5" X="561.5" Y="1670.8" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="38.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="20" WorkpieceId="26Y111T1F1B3_1008" CuttingOrderNo="20" Qty="1" Name="Bed Bottom Strip" Material="CC_HDH17_8134_BS" Length="40" Width="716" Thickness="17" CutLength="38.8" CutWidth="713.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1008" ProductionName="Bed Bottom Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="561.6" Y="1670.8" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="606.4" Y="1670.8" Angle="0" />
+              <Point Index="2" X="606.4" Y="2390.4" Angle="0" />
+              <Point Index="3" X="561.6" Y="2390.4" Angle="0" />
+              <Point Index="4" X="561.6" Y="1670.8" Angle="0" />
+              <Point Index="5" X="606.4" Y="1670.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="606.4,2320.4,0$;584,2390.4,1$;561.6,1740.8,2$;584,1670.8,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="606.4" Y="1670.8" Angle="0" />
+              <Point Index="2" X="606.4" Y="2390.4" Angle="0" />
+              <Point Index="3" X="561.6" Y="2390.4" Angle="0" />
+              <Point Index="4" X="561.6" Y="1670.8" Angle="0" />
+              <Point Index="5" X="606.4" Y="1670.8" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="38.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="21" WorkpieceId="26Y111T1F1B3_1017" CuttingOrderNo="21" Qty="1" Name="Bed Bottom Strip" Material="CC_HDH17_8134_BS" Length="40" Width="716" Thickness="17" CutLength="38.8" CutWidth="713.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1017" ProductionName="Bed Bottom Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="606.5" Y="1670.8" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="651.3" Y="1670.8" Angle="0" />
+              <Point Index="2" X="651.3" Y="2390.4" Angle="0" />
+              <Point Index="3" X="606.5" Y="2390.4" Angle="0" />
+              <Point Index="4" X="606.5" Y="1670.8" Angle="0" />
+              <Point Index="5" X="651.3" Y="1670.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="651.3,2320.4,0$;628.9,2390.4,1$;606.5,1740.8,2$;628.9,1670.8,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="651.3" Y="1670.8" Angle="0" />
+              <Point Index="2" X="651.3" Y="2390.4" Angle="0" />
+              <Point Index="3" X="606.5" Y="2390.4" Angle="0" />
+              <Point Index="4" X="606.5" Y="1670.8" Angle="0" />
+              <Point Index="5" X="651.3" Y="1670.8" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="38.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="22" WorkpieceId="26Y111T1F1B3_1019" CuttingOrderNo="22" Qty="1" Name="Bed Bottom Strip" Material="CC_HDH17_8134_BS" Length="40" Width="716" Thickness="17" CutLength="38.8" CutWidth="713.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1019" ProductionName="Bed Bottom Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="651.4" Y="1670.8" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="696.2" Y="1670.8" Angle="0" />
+              <Point Index="2" X="696.2" Y="2390.4" Angle="0" />
+              <Point Index="3" X="651.4" Y="2390.4" Angle="0" />
+              <Point Index="4" X="651.4" Y="1670.8" Angle="0" />
+              <Point Index="5" X="696.2" Y="1670.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="696.2,2320.4,0$;673.8,2390.4,1$;651.4,1740.8,2$;673.8,1670.8,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="696.2" Y="1670.8" Angle="0" />
+              <Point Index="2" X="696.2" Y="2390.4" Angle="0" />
+              <Point Index="3" X="651.4" Y="2390.4" Angle="0" />
+              <Point Index="4" X="651.4" Y="1670.8" Angle="0" />
+              <Point Index="5" X="696.2" Y="1670.8" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="38.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="23" WorkpieceId="26Y111T1F1B3_1062" CuttingOrderNo="23" Qty="1" Name="Bed Mid Side" Material="CC_HDH17_8134_BS" Length="51" Width="478" Thickness="17" CutLength="49.8" CutWidth="476.8" MachiningPoint="7" Grain="N" ProdutionNo="02.26Y111T1F1B3_1062" ProductionName="Bed Mid Side" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="E3_2098_Fabric28_1MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="696.3" Y="1670.8" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1179.1" Y="1670.8" Angle="0" />
+              <Point Index="2" X="1179.1" Y="1726.6" Angle="0" />
+              <Point Index="3" X="696.3" Y="1726.6" Angle="0" />
+              <Point Index="4" X="696.3" Y="1670.8" Angle="0" />
+              <Point Index="5" X="1179.1" Y="1670.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1179.1,1698.7,0$;766.3,1726.6,1$;696.3,1698.7,2$;1109.1,1670.8,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1179.1" Y="1670.8" Angle="0" />
+              <Point Index="2" X="1179.1" Y="1726.6" Angle="0" />
+              <Point Index="3" X="696.3" Y="1726.6" Angle="0" />
+              <Point Index="4" X="696.3" Y="1670.8" Angle="0" />
+              <Point Index="5" X="1179.1" Y="1670.8" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="49.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="49.8" Y="476.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="476.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="49.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="49.8" ProWidth="476.8" />
+        </Workpiece>
+        <Workpiece ID="24" WorkpieceId="26Y111T1F1B3_1063" CuttingOrderNo="24" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="34" Width="716" Thickness="17" CutLength="32.8" CutWidth="713.6" MachiningPoint="1" Grain="N" ProdutionNo="02.26Y111T1F1B3_1063" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="1166.4" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1205.2" Y="-3" Angle="0" />
+              <Point Index="2" X="1205.2" Y="716.6" Angle="0" />
+              <Point Index="3" X="1166.4" Y="716.6" Angle="0" />
+              <Point Index="4" X="1166.4" Y="-3" Angle="0" />
+              <Point Index="5" X="1205.2" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1205.2,646.6,0$;1185.8,716.6,1$;1166.4,67,2$;1185.8,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1205.2" Y="-3" Angle="0" />
+              <Point Index="2" X="1205.2" Y="716.6" Angle="0" />
+              <Point Index="3" X="1166.4" Y="716.6" Angle="0" />
+              <Point Index="4" X="1166.4" Y="-3" Angle="0" />
+              <Point Index="5" X="1205.2" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="32.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="25" WorkpieceId="26Y111T1F1B3_1088" CuttingOrderNo="25" Qty="1" Name="Back Panel" Material="CC_HDH17_8134_BS" Length="70" Width="338" Thickness="17" CutLength="66.4" CutWidth="334.4" MachiningPoint="7" Grain="N" ProdutionNo="04.26Y111T1F1B3_1088" ProductionName="Back Panel" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="361.9" Y="1255.9" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="702.3" Y="1255.9" Angle="0" />
+              <Point Index="2" X="702.3" Y="1328.3" Angle="0" />
+              <Point Index="3" X="361.9" Y="1328.3" Angle="0" />
+              <Point Index="4" X="361.9" Y="1255.9" Angle="0" />
+              <Point Index="5" X="702.3" Y="1255.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="702.3,1258.3,0$;431.9,1328.3,1$;361.9,1325.9,2$;632.3,1255.9,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="702.3" Y="1255.9" Angle="0" />
+              <Point Index="2" X="702.3" Y="1328.3" Angle="0" />
+              <Point Index="3" X="361.9" Y="1328.3" Angle="0" />
+              <Point Index="4" X="361.9" Y="1255.9" Angle="0" />
+              <Point Index="5" X="702.3" Y="1255.9" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="66.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="66.4" Y="334.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="334.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="66.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="66.4" ProWidth="334.4" />
+        </Workpiece>
+        <Workpiece ID="26" WorkpieceId="26Y111T1F1B3_1064" CuttingOrderNo="26" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="34" Width="444" Thickness="17" CutLength="32.8" CutWidth="441.6" MachiningPoint="7" Grain="N" ProdutionNo="02.26Y111T1F1B3_1064" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="696.3" Y="1726.7" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1143.9" Y="1726.7" Angle="0" />
+              <Point Index="2" X="1143.9" Y="1765.5" Angle="0" />
+              <Point Index="3" X="696.3" Y="1765.5" Angle="0" />
+              <Point Index="4" X="696.3" Y="1726.7" Angle="0" />
+              <Point Index="5" X="1143.9" Y="1726.7" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1143.9,1746.1,0$;766.3,1765.5,1$;696.3,1746.1,2$;1073.9,1726.7,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1143.9" Y="1726.7" Angle="0" />
+              <Point Index="2" X="1143.9" Y="1765.5" Angle="0" />
+              <Point Index="3" X="696.3" Y="1765.5" Angle="0" />
+              <Point Index="4" X="696.3" Y="1726.7" Angle="0" />
+              <Point Index="5" X="1143.9" Y="1726.7" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="441.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="441.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="32.8" ProWidth="441.6" />
+        </Workpiece>
+        <Workpiece ID="27" WorkpieceId="26Y111T1F1B3_1066" CuttingOrderNo="27" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="34" Width="444" Thickness="17" CutLength="32.8" CutWidth="441.6" MachiningPoint="7" Grain="N" ProdutionNo="02.26Y111T1F1B3_1066" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="696.3" Y="1765.6" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1143.9" Y="1765.6" Angle="0" />
+              <Point Index="2" X="1143.9" Y="1804.4" Angle="0" />
+              <Point Index="3" X="696.3" Y="1804.4" Angle="0" />
+              <Point Index="4" X="696.3" Y="1765.6" Angle="0" />
+              <Point Index="5" X="1143.9" Y="1765.6" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1143.9,1785,0$;766.3,1804.4,1$;696.3,1785,2$;1073.9,1765.6,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1143.9" Y="1765.6" Angle="0" />
+              <Point Index="2" X="1143.9" Y="1804.4" Angle="0" />
+              <Point Index="3" X="696.3" Y="1804.4" Angle="0" />
+              <Point Index="4" X="696.3" Y="1765.6" Angle="0" />
+              <Point Index="5" X="1143.9" Y="1765.6" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="441.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="441.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="32.8" ProWidth="441.6" />
+        </Workpiece>
+        <Workpiece ID="28" WorkpieceId="26Y111T1F1B3_1074" CuttingOrderNo="28" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="34" Width="444" Thickness="17" CutLength="32.8" CutWidth="441.6" MachiningPoint="7" Grain="N" ProdutionNo="02.26Y111T1F1B3_1074" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="696.3" Y="1804.5" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1143.9" Y="1804.5" Angle="0" />
+              <Point Index="2" X="1143.9" Y="1843.3" Angle="0" />
+              <Point Index="3" X="696.3" Y="1843.3" Angle="0" />
+              <Point Index="4" X="696.3" Y="1804.5" Angle="0" />
+              <Point Index="5" X="1143.9" Y="1804.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1143.9,1823.9,0$;766.3,1843.3,1$;696.3,1823.9,2$;1073.9,1804.5,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1143.9" Y="1804.5" Angle="0" />
+              <Point Index="2" X="1143.9" Y="1843.3" Angle="0" />
+              <Point Index="3" X="696.3" Y="1843.3" Angle="0" />
+              <Point Index="4" X="696.3" Y="1804.5" Angle="0" />
+              <Point Index="5" X="1143.9" Y="1804.5" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="441.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="441.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="32.8" ProWidth="441.6" />
+        </Workpiece>
+        <Workpiece ID="29" WorkpieceId="26Y111T1F1B3_1076" CuttingOrderNo="29" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="34" Width="444" Thickness="17" CutLength="32.8" CutWidth="441.6" MachiningPoint="7" Grain="N" ProdutionNo="02.26Y111T1F1B3_1076" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="696.3" Y="1843.4" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1143.9" Y="1843.4" Angle="0" />
+              <Point Index="2" X="1143.9" Y="1882.2" Angle="0" />
+              <Point Index="3" X="696.3" Y="1882.2" Angle="0" />
+              <Point Index="4" X="696.3" Y="1843.4" Angle="0" />
+              <Point Index="5" X="1143.9" Y="1843.4" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1143.9,1862.8,0$;766.3,1882.2,1$;696.3,1862.8,2$;1073.9,1843.4,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1143.9" Y="1843.4" Angle="0" />
+              <Point Index="2" X="1143.9" Y="1882.2" Angle="0" />
+              <Point Index="3" X="696.3" Y="1882.2" Angle="0" />
+              <Point Index="4" X="696.3" Y="1843.4" Angle="0" />
+              <Point Index="5" X="1143.9" Y="1843.4" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="441.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="441.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="32.8" ProWidth="441.6" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="66.5" Width="85.4">
+          <Lineament RotationAngle="0" X="724.8" Y="1362.5">
+            <Points>
+              <Point Index="1" X="724.8" Y="1362.5" Angle="0" />
+              <Point Index="2" X="797.3" Y="1362.5" Angle="0" />
+              <Point Index="3" X="797.3" Y="1453.9" Angle="0" />
+              <Point Index="4" X="724.8" Y="1453.9" Angle="0" />
+              <Point Index="5" X="724.8" Y="1362.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="68.9" Width="224.2">
+          <Lineament RotationAngle="0" X="797.3" Y="1223.7">
+            <Points>
+              <Point Index="1" X="797.3" Y="1223.7" Angle="0" />
+              <Point Index="2" X="872.2" Y="1223.7" Angle="0" />
+              <Point Index="3" X="872.2" Y="1453.9" Angle="0" />
+              <Point Index="4" X="797.3" Y="1453.9" Angle="0" />
+              <Point Index="5" X="797.3" Y="1223.7" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="3" Type="0" Length="68.9" Width="224.2">
+          <Lineament RotationAngle="0" X="872.2" Y="1223.7">
+            <Points>
+              <Point Index="1" X="872.2" Y="1223.7" Angle="0" />
+              <Point Index="2" X="947.1" Y="1223.7" Angle="0" />
+              <Point Index="3" X="947.1" Y="1453.9" Angle="0" />
+              <Point Index="4" X="872.2" Y="1453.9" Angle="0" />
+              <Point Index="5" X="872.2" Y="1223.7" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="4" Type="0" Length="256.9" Width="224.2">
+          <Lineament RotationAngle="0" X="947.1" Y="1223.7">
+            <Points>
+              <Point Index="1" X="947.1" Y="1223.7" Angle="0" />
+              <Point Index="2" X="1210" Y="1223.7" Angle="0" />
+              <Point Index="3" X="1210" Y="1453.9" Angle="0" />
+              <Point Index="4" X="947.1" Y="1453.9" Angle="0" />
+              <Point Index="5" X="947.1" Y="1223.7" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="5" Type="0" Length="107.1" Width="67.2">
+          <Lineament RotationAngle="0" X="1096.9" Y="1150.5">
+            <Points>
+              <Point Index="1" X="1096.9" Y="1150.5" Angle="0" />
+              <Point Index="2" X="1210" Y="1150.5" Angle="0" />
+              <Point Index="3" X="1210" Y="1223.7" Angle="0" />
+              <Point Index="4" X="1096.9" Y="1223.7" Angle="0" />
+              <Point Index="5" X="1096.9" Y="1150.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="6" Type="0" Length="66.5" Width="87.6">
+          <Lineament RotationAngle="0" X="5" Y="2336.4">
+            <Points>
+              <Point Index="1" X="5" Y="2336.4" Angle="0" />
+              <Point Index="2" X="77.5" Y="2336.4" Angle="0" />
+              <Point Index="3" X="77.5" Y="2430" Angle="0" />
+              <Point Index="4" X="5" Y="2430" Angle="0" />
+              <Point Index="5" X="5" Y="2336.4" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="7" Type="0" Length="66.5" Width="87.6">
+          <Lineament RotationAngle="0" X="77.5" Y="2336.4">
+            <Points>
+              <Point Index="1" X="77.5" Y="2336.4" Angle="0" />
+              <Point Index="2" X="150" Y="2336.4" Angle="0" />
+              <Point Index="3" X="150" Y="2430" Angle="0" />
+              <Point Index="4" X="77.5" Y="2430" Angle="0" />
+              <Point Index="5" X="77.5" Y="2336.4" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="8" Type="0" Length="68.9" Width="250.4">
+          <Lineament RotationAngle="0" X="150" Y="2173.6">
+            <Points>
+              <Point Index="1" X="150" Y="2173.6" Angle="0" />
+              <Point Index="2" X="224.9" Y="2173.6" Angle="0" />
+              <Point Index="3" X="224.9" Y="2430" Angle="0" />
+              <Point Index="4" X="150" Y="2430" Angle="0" />
+              <Point Index="5" X="150" Y="2173.6" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="9" Type="0" Length="68.9" Width="250.4">
+          <Lineament RotationAngle="0" X="224.9" Y="2173.6">
+            <Points>
+              <Point Index="1" X="224.9" Y="2173.6" Angle="0" />
+              <Point Index="2" X="299.8" Y="2173.6" Angle="0" />
+              <Point Index="3" X="299.8" Y="2430" Angle="0" />
+              <Point Index="4" X="224.9" Y="2430" Angle="0" />
+              <Point Index="5" X="224.9" Y="2173.6" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="10" Type="0" Length="184.5" Width="68.9">
+          <Lineament RotationAngle="0" X="1019.5" Y="1453.9">
+            <Points>
+              <Point Index="1" X="1019.5" Y="1453.9" Angle="0" />
+              <Point Index="2" X="1210" Y="1453.9" Angle="0" />
+              <Point Index="3" X="1210" Y="1528.8" Angle="0" />
+              <Point Index="4" X="1019.5" Y="1528.8" Angle="0" />
+              <Point Index="5" X="1019.5" Y="1453.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="11" Type="0" Length="68.9" Width="175.5">
+          <Lineament RotationAngle="0" X="299.8" Y="2248.5">
+            <Points>
+              <Point Index="1" X="299.8" Y="2248.5" Angle="0" />
+              <Point Index="2" X="374.7" Y="2248.5" Angle="0" />
+              <Point Index="3" X="374.7" Y="2430" Angle="0" />
+              <Point Index="4" X="299.8" Y="2430" Angle="0" />
+              <Point Index="5" X="299.8" Y="2248.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="12" Type="0" Length="250.8" Width="66.5">
+          <Lineament RotationAngle="0" X="953.2" Y="1528.8">
+            <Points>
+              <Point Index="1" X="953.2" Y="1528.8" Angle="0" />
+              <Point Index="2" X="1210" Y="1528.8" Angle="0" />
+              <Point Index="3" X="1210" Y="1601.3" Angle="0" />
+              <Point Index="4" X="953.2" Y="1601.3" Angle="0" />
+              <Point Index="5" X="953.2" Y="1528.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="13" Type="0" Length="66.5" Width="244.2">
+          <Lineament RotationAngle="0" X="374.7" Y="2179.8">
+            <Points>
+              <Point Index="1" X="374.7" Y="2179.8" Angle="0" />
+              <Point Index="2" X="447.2" Y="2179.8" Angle="0" />
+              <Point Index="3" X="447.2" Y="2430" Angle="0" />
+              <Point Index="4" X="374.7" Y="2430" Angle="0" />
+              <Point Index="5" X="374.7" Y="2179.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="14" Type="0" Length="178.3" Width="66.5">
+          <Lineament RotationAngle="0" X="1025.7" Y="1601.3">
+            <Points>
+              <Point Index="1" X="1025.7" Y="1601.3" Angle="0" />
+              <Point Index="2" X="1210" Y="1601.3" Angle="0" />
+              <Point Index="3" X="1210" Y="1673.8" Angle="0" />
+              <Point Index="4" X="1025.7" Y="1673.8" Angle="0" />
+              <Point Index="5" X="1025.7" Y="1601.3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="15" Type="0" Length="66.5" Width="171.7">
+          <Lineament RotationAngle="0" X="447.2" Y="2252.3">
+            <Points>
+              <Point Index="1" X="447.2" Y="2252.3" Angle="0" />
+              <Point Index="2" X="519.7" Y="2252.3" Angle="0" />
+              <Point Index="3" X="519.7" Y="2430" Angle="0" />
+              <Point Index="4" X="447.2" Y="2430" Angle="0" />
+              <Point Index="5" X="447.2" Y="2252.3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="16" Type="0" Length="38.9" Width="30.5">
+          <Lineament RotationAngle="0" X="519.7" Y="2393.5">
+            <Points>
+              <Point Index="1" X="519.7" Y="2393.5" Angle="0" />
+              <Point Index="2" X="564.6" Y="2393.5" Angle="0" />
+              <Point Index="3" X="564.6" Y="2430" Angle="0" />
+              <Point Index="4" X="519.7" Y="2430" Angle="0" />
+              <Point Index="5" X="519.7" Y="2393.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="17" Type="0" Length="38.9" Width="30.5">
+          <Lineament RotationAngle="0" X="564.6" Y="2393.5">
+            <Points>
+              <Point Index="1" X="564.6" Y="2393.5" Angle="0" />
+              <Point Index="2" X="609.5" Y="2393.5" Angle="0" />
+              <Point Index="3" X="609.5" Y="2430" Angle="0" />
+              <Point Index="4" X="564.6" Y="2430" Angle="0" />
+              <Point Index="5" X="564.6" Y="2393.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="18" Type="0" Length="38.9" Width="30.5">
+          <Lineament RotationAngle="0" X="609.5" Y="2393.5">
+            <Points>
+              <Point Index="1" X="609.5" Y="2393.5" Angle="0" />
+              <Point Index="2" X="654.4" Y="2393.5" Angle="0" />
+              <Point Index="3" X="654.4" Y="2430" Angle="0" />
+              <Point Index="4" X="609.5" Y="2430" Angle="0" />
+              <Point Index="5" X="609.5" Y="2393.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="19" Type="0" Length="38.9" Width="30.5">
+          <Lineament RotationAngle="0" X="654.4" Y="2393.5">
+            <Points>
+              <Point Index="1" X="654.4" Y="2393.5" Angle="0" />
+              <Point Index="2" X="699.3" Y="2393.5" Angle="0" />
+              <Point Index="3" X="699.3" Y="2430" Angle="0" />
+              <Point Index="4" X="654.4" Y="2430" Angle="0" />
+              <Point Index="5" X="654.4" Y="2393.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="20" Type="0" Length="21.8" Width="49.9">
+          <Lineament RotationAngle="0" X="1182.2" Y="1673.8">
+            <Points>
+              <Point Index="1" X="1182.2" Y="1673.8" Angle="0" />
+              <Point Index="2" X="1210" Y="1673.8" Angle="0" />
+              <Point Index="3" X="1210" Y="1729.7" Angle="0" />
+              <Point Index="4" X="1182.2" Y="1729.7" Angle="0" />
+              <Point Index="5" X="1182.2" Y="1673.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="21" Type="0" Length="-4.3" Width="713.7">
+          <Lineament RotationAngle="0" X="1208.3" Y="0">
+            <Points>
+              <Point Index="1" X="1208.3" Y="0" Angle="0" />
+              <Point Index="2" X="1210" Y="0" Angle="0" />
+              <Point Index="3" X="1210" Y="719.7" Angle="0" />
+              <Point Index="4" X="1208.3" Y="719.7" Angle="0" />
+              <Point Index="5" X="1208.3" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="22" Type="0" Length="34.6" Width="424.8">
+          <Lineament RotationAngle="0" X="1169.4" Y="719.7">
+            <Points>
+              <Point Index="1" X="1169.4" Y="719.7" Angle="0" />
+              <Point Index="2" X="1210" Y="719.7" Angle="0" />
+              <Point Index="3" X="1210" Y="1150.5" Angle="0" />
+              <Point Index="4" X="1169.4" Y="1150.5" Angle="0" />
+              <Point Index="5" X="1169.4" Y="719.7" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="23" Type="0" Length="13.4" Width="66.5">
+          <Lineament RotationAngle="0" X="705.4" Y="1258.9">
+            <Points>
+              <Point Index="1" X="705.4" Y="1258.9" Angle="0" />
+              <Point Index="2" X="724.8" Y="1258.9" Angle="0" />
+              <Point Index="3" X="724.8" Y="1331.4" Angle="0" />
+              <Point Index="4" X="705.4" Y="1331.4" Angle="0" />
+              <Point Index="5" X="705.4" Y="1258.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="24" Type="0" Length="353.9" Width="116.5">
+          <Lineament RotationAngle="0" X="364.9" Y="1331.4">
+            <Points>
+              <Point Index="1" X="364.9" Y="1331.4" Angle="0" />
+              <Point Index="2" X="724.8" Y="1331.4" Angle="0" />
+              <Point Index="3" X="724.8" Y="1453.9" Angle="0" />
+              <Point Index="4" X="364.9" Y="1453.9" Angle="0" />
+              <Point Index="5" X="364.9" Y="1331.4" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="25" Type="0" Length="57" Width="32.9">
+          <Lineament RotationAngle="0" X="1147" Y="1729.7">
+            <Points>
+              <Point Index="1" X="1147" Y="1729.7" Angle="0" />
+              <Point Index="2" X="1210" Y="1729.7" Angle="0" />
+              <Point Index="3" X="1210" Y="1768.6" Angle="0" />
+              <Point Index="4" X="1147" Y="1768.6" Angle="0" />
+              <Point Index="5" X="1147" Y="1729.7" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="26" Type="0" Length="57" Width="32.9">
+          <Lineament RotationAngle="0" X="1147" Y="1768.6">
+            <Points>
+              <Point Index="1" X="1147" Y="1768.6" Angle="0" />
+              <Point Index="2" X="1210" Y="1768.6" Angle="0" />
+              <Point Index="3" X="1210" Y="1807.5" Angle="0" />
+              <Point Index="4" X="1147" Y="1807.5" Angle="0" />
+              <Point Index="5" X="1147" Y="1768.6" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="27" Type="0" Length="57" Width="32.9">
+          <Lineament RotationAngle="0" X="1147" Y="1807.5">
+            <Points>
+              <Point Index="1" X="1147" Y="1807.5" Angle="0" />
+              <Point Index="2" X="1210" Y="1807.5" Angle="0" />
+              <Point Index="3" X="1210" Y="1846.4" Angle="0" />
+              <Point Index="4" X="1147" Y="1846.4" Angle="0" />
+              <Point Index="5" X="1147" Y="1807.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="28" Type="0" Length="57" Width="32.9">
+          <Lineament RotationAngle="0" X="1147" Y="1846.4">
+            <Points>
+              <Point Index="1" X="1147" Y="1846.4" Angle="0" />
+              <Point Index="2" X="1210" Y="1846.4" Angle="0" />
+              <Point Index="3" X="1210" Y="1885.3" Angle="0" />
+              <Point Index="4" X="1147" Y="1885.3" Angle="0" />
+              <Point Index="5" X="1147" Y="1846.4" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="29" Type="0" Length="504.7" Width="538.7">
+          <Lineament RotationAngle="0" X="699.3" Y="1885.3">
+            <Points>
+              <Point Index="1" X="699.3" Y="1885.3" Angle="0" />
+              <Point Index="2" X="1210" Y="1885.3" Angle="0" />
+              <Point Index="3" X="1210" Y="2430" Angle="0" />
+              <Point Index="4" X="699.3" Y="2430" Angle="0" />
+              <Point Index="5" X="699.3" Y="1885.3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+    <Pattern Index="2" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="30" WorkpieceId="26Y111T1F1B3_1007" CuttingOrderNo="1" Qty="1" Name="Bed Bottom Strip" Material="CC_HDH17_8134_BS" Length="40" Width="1220" Thickness="17" CutLength="38.8" CutWidth="1217.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1007" ProductionName="Bed Bottom Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="46.8" Y="-3" Angle="0" />
+              <Point Index="2" X="46.8" Y="1220.6" Angle="0" />
+              <Point Index="3" X="2" Y="1220.6" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="46.8" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="46.8,1150.6,0$;24.4,1220.6,1$;2,67,2$;24.4,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="46.8" Y="-3" Angle="0" />
+              <Point Index="2" X="46.8" Y="1220.6" Angle="0" />
+              <Point Index="3" X="2" Y="1220.6" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="46.8" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="38.8" ProWidth="1217.6" />
+        </Workpiece>
+        <Workpiece ID="31" WorkpieceId="26Y111T1F1B3_1009" CuttingOrderNo="2" Qty="1" Name="Bed Bottom Strip" Material="CC_HDH17_8134_BS" Length="40" Width="1220" Thickness="17" CutLength="38.8" CutWidth="1217.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1009" ProductionName="Bed Bottom Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="46.9" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="91.7" Y="-3" Angle="0" />
+              <Point Index="2" X="91.7" Y="1220.6" Angle="0" />
+              <Point Index="3" X="46.9" Y="1220.6" Angle="0" />
+              <Point Index="4" X="46.9" Y="-3" Angle="0" />
+              <Point Index="5" X="91.7" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="91.7,1150.6,0$;69.3,1220.6,1$;46.9,67,2$;69.3,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="91.7" Y="-3" Angle="0" />
+              <Point Index="2" X="91.7" Y="1220.6" Angle="0" />
+              <Point Index="3" X="46.9" Y="1220.6" Angle="0" />
+              <Point Index="4" X="46.9" Y="-3" Angle="0" />
+              <Point Index="5" X="91.7" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="38.8" ProWidth="1217.6" />
+        </Workpiece>
+        <Workpiece ID="32" WorkpieceId="26Y111T1F1B3_1018" CuttingOrderNo="3" Qty="1" Name="Bed Bottom Strip" Material="CC_HDH17_8134_BS" Length="40" Width="1220" Thickness="17" CutLength="38.8" CutWidth="1217.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1018" ProductionName="Bed Bottom Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="91.8" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="136.6" Y="-3" Angle="0" />
+              <Point Index="2" X="136.6" Y="1220.6" Angle="0" />
+              <Point Index="3" X="91.8" Y="1220.6" Angle="0" />
+              <Point Index="4" X="91.8" Y="-3" Angle="0" />
+              <Point Index="5" X="136.6" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="136.6,1150.6,0$;114.2,1220.6,1$;91.8,67,2$;114.2,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="136.6" Y="-3" Angle="0" />
+              <Point Index="2" X="136.6" Y="1220.6" Angle="0" />
+              <Point Index="3" X="91.8" Y="1220.6" Angle="0" />
+              <Point Index="4" X="91.8" Y="-3" Angle="0" />
+              <Point Index="5" X="136.6" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="38.8" ProWidth="1217.6" />
+        </Workpiece>
+        <Workpiece ID="33" WorkpieceId="26Y111T1F1B3_1020" CuttingOrderNo="4" Qty="1" Name="Bed Bottom Strip" Material="CC_HDH17_8134_BS" Length="40" Width="1220" Thickness="17" CutLength="38.8" CutWidth="1217.6" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1020" ProductionName="Bed Bottom Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="136.7" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="181.5" Y="-3" Angle="0" />
+              <Point Index="2" X="181.5" Y="1220.6" Angle="0" />
+              <Point Index="3" X="136.7" Y="1220.6" Angle="0" />
+              <Point Index="4" X="136.7" Y="-3" Angle="0" />
+              <Point Index="5" X="181.5" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="181.5,1150.6,0$;159.1,1220.6,1$;136.7,67,2$;159.1,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="181.5" Y="-3" Angle="0" />
+              <Point Index="2" X="181.5" Y="1220.6" Angle="0" />
+              <Point Index="3" X="136.7" Y="1220.6" Angle="0" />
+              <Point Index="4" X="136.7" Y="-3" Angle="0" />
+              <Point Index="5" X="181.5" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1217.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="38.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="38.8" ProWidth="1217.6" />
+        </Workpiece>
+        <Workpiece ID="34" WorkpieceId="26Y111T1F1B3_1065" CuttingOrderNo="5" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="34" Width="716" Thickness="17" CutLength="32.8" CutWidth="713.6" MachiningPoint="7" Grain="N" ProdutionNo="02.26Y111T1F1B3_1065" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="181.6" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="901.2" Y="-3" Angle="0" />
+              <Point Index="2" X="901.2" Y="35.8" Angle="0" />
+              <Point Index="3" X="181.6" Y="35.8" Angle="0" />
+              <Point Index="4" X="181.6" Y="-3" Angle="0" />
+              <Point Index="5" X="901.2" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="901.2,16.4,0$;251.6,35.8,1$;181.6,16.4,2$;831.2,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="901.2" Y="-3" Angle="0" />
+              <Point Index="2" X="901.2" Y="35.8" Angle="0" />
+              <Point Index="3" X="181.6" Y="35.8" Angle="0" />
+              <Point Index="4" X="181.6" Y="-3" Angle="0" />
+              <Point Index="5" X="901.2" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="32.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="35" WorkpieceId="26Y111T1F1B3_1073" CuttingOrderNo="6" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="34" Width="716" Thickness="17" CutLength="32.8" CutWidth="713.6" MachiningPoint="7" Grain="N" ProdutionNo="02.26Y111T1F1B3_1073" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="181.6" Y="35.9" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="901.2" Y="35.9" Angle="0" />
+              <Point Index="2" X="901.2" Y="74.7" Angle="0" />
+              <Point Index="3" X="181.6" Y="74.7" Angle="0" />
+              <Point Index="4" X="181.6" Y="35.9" Angle="0" />
+              <Point Index="5" X="901.2" Y="35.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="901.2,55.3,0$;251.6,74.7,1$;181.6,55.3,2$;831.2,35.9,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="901.2" Y="35.9" Angle="0" />
+              <Point Index="2" X="901.2" Y="74.7" Angle="0" />
+              <Point Index="3" X="181.6" Y="74.7" Angle="0" />
+              <Point Index="4" X="181.6" Y="35.9" Angle="0" />
+              <Point Index="5" X="901.2" Y="35.9" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="32.8" ProWidth="713.6" />
+        </Workpiece>
+        <Workpiece ID="36" WorkpieceId="26Y111T1F1B3_1075" CuttingOrderNo="7" Qty="1" Name="Bed Top Strip" Material="CC_HDH17_8134_BS" Length="34" Width="716" Thickness="17" CutLength="32.8" CutWidth="713.6" MachiningPoint="7" Grain="N" ProdutionNo="02.26Y111T1F1B3_1075" ProductionName="Bed Top Strip" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="181.6" Y="74.8" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="901.2" Y="74.8" Angle="0" />
+              <Point Index="2" X="901.2" Y="113.6" Angle="0" />
+              <Point Index="3" X="181.6" Y="113.6" Angle="0" />
+              <Point Index="4" X="181.6" Y="74.8" Angle="0" />
+              <Point Index="5" X="901.2" Y="74.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="901.2,94.2,0$;251.6,113.6,1$;181.6,94.2,2$;831.2,74.8,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="901.2" Y="74.8" Angle="0" />
+              <Point Index="2" X="901.2" Y="113.6" Angle="0" />
+              <Point Index="3" X="181.6" Y="113.6" Angle="0" />
+              <Point Index="4" X="181.6" Y="74.8" Angle="0" />
+              <Point Index="5" X="901.2" Y="74.8" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="713.6" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="32.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="32.8" ProWidth="713.6" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="1199" Width="1200.3">
+          <Lineament RotationAngle="0" X="5" Y="1223.7">
+            <Points>
+              <Point Index="1" X="5" Y="1223.7" Angle="0" />
+              <Point Index="2" X="1210" Y="1223.7" Angle="0" />
+              <Point Index="3" X="1210" Y="2430" Angle="0" />
+              <Point Index="4" X="5" Y="2430" Angle="0" />
+              <Point Index="5" X="5" Y="1223.7" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="299.7" Width="32.9">
+          <Lineament RotationAngle="0" X="904.3" Y="0">
+            <Points>
+              <Point Index="1" X="904.3" Y="0" Angle="0" />
+              <Point Index="2" X="1210" Y="0" Angle="0" />
+              <Point Index="3" X="1210" Y="38.9" Angle="0" />
+              <Point Index="4" X="904.3" Y="38.9" Angle="0" />
+              <Point Index="5" X="904.3" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="3" Type="0" Length="299.7" Width="32.9">
+          <Lineament RotationAngle="0" X="904.3" Y="38.9">
+            <Points>
+              <Point Index="1" X="904.3" Y="38.9" Angle="0" />
+              <Point Index="2" X="1210" Y="38.9" Angle="0" />
+              <Point Index="3" X="1210" Y="77.8" Angle="0" />
+              <Point Index="4" X="904.3" Y="77.8" Angle="0" />
+              <Point Index="5" X="904.3" Y="38.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="4" Type="0" Length="299.7" Width="32.9">
+          <Lineament RotationAngle="0" X="904.3" Y="77.8">
+            <Points>
+              <Point Index="1" X="904.3" Y="77.8" Angle="0" />
+              <Point Index="2" X="1210" Y="77.8" Angle="0" />
+              <Point Index="3" X="1210" Y="116.7" Angle="0" />
+              <Point Index="4" X="904.3" Y="116.7" Angle="0" />
+              <Point Index="5" X="904.3" Y="77.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="5" Type="0" Length="1019.4" Width="1101">
+          <Lineament RotationAngle="0" X="184.6" Y="116.7">
+            <Points>
+              <Point Index="1" X="184.6" Y="116.7" Angle="0" />
+              <Point Index="2" X="1210" Y="116.7" Angle="0" />
+              <Point Index="3" X="1210" Y="1223.7" Angle="0" />
+              <Point Index="4" X="184.6" Y="1223.7" Angle="0" />
+              <Point Index="5" X="184.6" Y="116.7" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+  </Patterns>
+  <Patterns Index="2" ID="2" Name="CC_MDF17_8134_BS" Length="2440" Width="1220" Thickness="17" Grain="L">
+    <Pattern Index="1" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="37" WorkpieceId="26Y111T1F1B3_1028" CuttingOrderNo="1" Qty="1" Name="Bed Top" Material="CC_MDF17_8134_BS" Length="716" Width="1254" Thickness="17" CutLength="714.8" CutWidth="1252.8" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1028" ProductionName="Bed Top" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="E3_2098_Fabric28_1MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="722.8" Y="-3" Angle="0" />
+              <Point Index="2" X="722.8" Y="1255.8" Angle="0" />
+              <Point Index="3" X="2" Y="1255.8" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="722.8" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="722.8,1185.8,0$;72,1255.8,1$;2,67,2$;652.8,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="722.8" Y="-3" Angle="0" />
+              <Point Index="2" X="722.8" Y="1255.8" Angle="0" />
+              <Point Index="3" X="2" Y="1255.8" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="722.8" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="714.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="714.8" Y="1252.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1252.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="714.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="714.8" ProWidth="1252.8" />
+        </Workpiece>
+        <Workpiece ID="38" WorkpieceId="26Y111T1F1B3_1067" CuttingOrderNo="2" Qty="1" Name="Bed Top" Material="CC_MDF17_8134_BS" Length="716" Width="478" Thickness="17" CutLength="714.8" CutWidth="476.8" MachiningPoint="3" Grain="N" ProdutionNo="02.26Y111T1F1B3_1067" ProductionName="Bed Top" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="E3_2098_Fabric28_1MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="722.9" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="722.9" Y="-3" Angle="0" />
+              <Point Index="2" X="1205.7" Y="-3" Angle="0" />
+              <Point Index="3" X="1205.7" Y="717.8" Angle="0" />
+              <Point Index="4" X="722.9" Y="717.8" Angle="0" />
+              <Point Index="5" X="722.9" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="1135.7,-3,0$;1205.7,647.8,1$;792.9,717.8,2$;722.9,67,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="722.9" Y="-3" Angle="0" />
+              <Point Index="2" X="1205.7" Y="-3" Angle="0" />
+              <Point Index="3" X="1205.7" Y="717.8" Angle="0" />
+              <Point Index="4" X="722.9" Y="717.8" Angle="0" />
+              <Point Index="5" X="722.9" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="714.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="714.8" Y="476.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="476.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="714.8" ProWidth="476.8" />
+        </Workpiece>
+        <Workpiece ID="39" WorkpieceId="26Y111T1F1B3_1077" CuttingOrderNo="3" Qty="1" Name="Bed Top" Material="CC_MDF17_8134_BS" Length="716" Width="478" Thickness="17" CutLength="714.8" CutWidth="476.8" MachiningPoint="3" Grain="N" ProdutionNo="02.26Y111T1F1B3_1077" ProductionName="Bed Top" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="E3_2098_Fabric28_1MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="2" Y="1255.9" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="2" Y="1255.9" Angle="0" />
+              <Point Index="2" X="484.8" Y="1255.9" Angle="0" />
+              <Point Index="3" X="484.8" Y="1976.7" Angle="0" />
+              <Point Index="4" X="2" Y="1976.7" Angle="0" />
+              <Point Index="5" X="2" Y="1255.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="414.8,1255.9,0$;484.8,1906.7,1$;72,1976.7,2$;2,1325.9,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="2" Y="1255.9" Angle="0" />
+              <Point Index="2" X="484.8" Y="1255.9" Angle="0" />
+              <Point Index="3" X="484.8" Y="1976.7" Angle="0" />
+              <Point Index="4" X="2" Y="1976.7" Angle="0" />
+              <Point Index="5" X="2" Y="1255.9" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="714.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="714.8" Y="476.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="476.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="714.8" ProWidth="476.8" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="-4.8" Width="714.9">
+          <Lineament RotationAngle="0" X="1208.8" Y="0">
+            <Points>
+              <Point Index="1" X="1208.8" Y="0" Angle="0" />
+              <Point Index="2" X="1210" Y="0" Angle="0" />
+              <Point Index="3" X="1210" Y="720.9" Angle="0" />
+              <Point Index="4" X="1208.8" Y="720.9" Angle="0" />
+              <Point Index="5" X="1208.8" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="478.1" Width="532">
+          <Lineament RotationAngle="0" X="725.9" Y="720.9">
+            <Points>
+              <Point Index="1" X="725.9" Y="720.9" Angle="0" />
+              <Point Index="2" X="1210" Y="720.9" Angle="0" />
+              <Point Index="3" X="1210" Y="1258.9" Angle="0" />
+              <Point Index="4" X="725.9" Y="1258.9" Angle="0" />
+              <Point Index="5" X="725.9" Y="720.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="3" Type="0" Length="716.1" Width="1165.1">
+          <Lineament RotationAngle="0" X="487.9" Y="1258.9">
+            <Points>
+              <Point Index="1" X="487.9" Y="1258.9" Angle="0" />
+              <Point Index="2" X="1210" Y="1258.9" Angle="0" />
+              <Point Index="3" X="1210" Y="2430" Angle="0" />
+              <Point Index="4" X="487.9" Y="2430" Angle="0" />
+              <Point Index="5" X="487.9" Y="1258.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="4" Type="0" Length="476.9" Width="444.2">
+          <Lineament RotationAngle="0" X="5" Y="1979.8">
+            <Points>
+              <Point Index="1" X="5" Y="1979.8" Angle="0" />
+              <Point Index="2" X="487.9" Y="1979.8" Angle="0" />
+              <Point Index="3" X="487.9" Y="2430" Angle="0" />
+              <Point Index="4" X="5" Y="2430" Angle="0" />
+              <Point Index="5" X="5" Y="1979.8" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+    <Pattern Index="2" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="40" WorkpieceId="26Y111T1F1B3_1026" CuttingOrderNo="1" Qty="1" Name="Bed Top" Material="CC_MDF17_8134_BS" Length="1254" Width="616" Thickness="17" CutLength="1252.8" CutWidth="614.8" MachiningPoint="3" Grain="N" ProdutionNo="01.26Y111T1F1B3_1026" ProductionName="Bed Top" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="E3_2098_Fabric28_1MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="2" Y="-3" Angle="0" />
+              <Point Index="2" X="622.8" Y="-3" Angle="0" />
+              <Point Index="3" X="622.8" Y="1255.8" Angle="0" />
+              <Point Index="4" X="2" Y="1255.8" Angle="0" />
+              <Point Index="5" X="2" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="552.8,-3,0$;622.8,1185.8,1$;72,1255.8,2$;2,67,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="2" Y="-3" Angle="0" />
+              <Point Index="2" X="622.8" Y="-3" Angle="0" />
+              <Point Index="3" X="622.8" Y="1255.8" Angle="0" />
+              <Point Index="4" X="2" Y="1255.8" Angle="0" />
+              <Point Index="5" X="2" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="1252.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="1252.8" Y="614.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="614.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="1252.8" ProWidth="614.8" />
+        </Workpiece>
+        <Workpiece ID="41" WorkpieceId="26Y111T1F1B3_1027" CuttingOrderNo="2" Qty="1" Name="Bed Top" Material="CC_MDF17_8134_BS" Length="1254" Width="100" Thickness="17" CutLength="1252.8" CutWidth="98.8" MachiningPoint="3" Grain="N" ProdutionNo="01.26Y111T1F1B3_1027" ProductionName="Bed Top" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="E3_2098_Fabric28_1MM" EBL2="E3_2098_Fabric28_1MM" EBW1="E3_2098_Fabric28_1MM" EBW2="E3_2098_Fabric28_1MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="622.9" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="622.9" Y="-3" Angle="0" />
+              <Point Index="2" X="727.7" Y="-3" Angle="0" />
+              <Point Index="3" X="727.7" Y="1255.8" Angle="0" />
+              <Point Index="4" X="622.9" Y="1255.8" Angle="0" />
+              <Point Index="5" X="622.9" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="657.7,-3,0$;727.7,1185.8,1$;692.9,1255.8,2$;622.9,67,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="622.9" Y="-3" Angle="0" />
+              <Point Index="2" X="727.7" Y="-3" Angle="0" />
+              <Point Index="3" X="727.7" Y="1255.8" Angle="0" />
+              <Point Index="4" X="622.9" Y="1255.8" Angle="0" />
+              <Point Index="5" X="622.9" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="1252.8" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="1252.8" Y="98.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="98.8" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="1252.8" ProWidth="98.8" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="1199" Width="1165.1">
+          <Lineament RotationAngle="0" X="5" Y="1258.9">
+            <Points>
+              <Point Index="1" X="5" Y="1258.9" Angle="0" />
+              <Point Index="2" X="1210" Y="1258.9" Angle="0" />
+              <Point Index="3" X="1210" Y="2430" Angle="0" />
+              <Point Index="4" X="5" Y="2430" Angle="0" />
+              <Point Index="5" X="5" Y="1258.9" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="473.2" Width="1252.9">
+          <Lineament RotationAngle="0" X="730.8" Y="0">
+            <Points>
+              <Point Index="1" X="730.8" Y="0" Angle="0" />
+              <Point Index="2" X="1210" Y="0" Angle="0" />
+              <Point Index="3" X="1210" Y="1258.9" Angle="0" />
+              <Point Index="4" X="730.8" Y="1258.9" Angle="0" />
+              <Point Index="5" X="730.8" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+  </Patterns>
+  <Patterns Index="3" ID="3" Name="CP_HDR17_8023_BS" Length="2440" Width="1220" Thickness="17" Grain="L">
+    <Pattern Index="1" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="42" WorkpieceId="26Y112T1F1A2_1003" CuttingOrderNo="1" Qty="1" Name="Top Shelf" Material="CP_HDR17_8023_BS" Length="1200" Width="600" Thickness="17" CutLength="1196.4" CutWidth="596.4" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y112T1F1A2_1003" ProductionName="Top Shelf" Customer="Mr Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="2" Y="-3" Angle="0" />
+              <Point Index="2" X="1204.4" Y="-3" Angle="0" />
+              <Point Index="3" X="1204.4" Y="599.4" Angle="0" />
+              <Point Index="4" X="2" Y="599.4" Angle="0" />
+              <Point Index="5" X="2" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="1134.4,-3,0$;1204.4,529.4,1$;72,599.4,2$;2,67,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="2" Y="-3" Angle="0" />
+              <Point Index="2" X="1204.4" Y="-3" Angle="0" />
+              <Point Index="3" X="1204.4" Y="599.4" Angle="0" />
+              <Point Index="4" X="2" Y="599.4" Angle="0" />
+              <Point Index="5" X="2" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="1196.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="1196.4" Y="596.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="596.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="1196.4" ProWidth="596.4" />
+        </Workpiece>
+        <Workpiece ID="43" WorkpieceId="26Y112T1F1C2_1003" CuttingOrderNo="2" Qty="1" Name="Top Shelf" Material="CP_HDR17_8023_BS" Length="1200" Width="600" Thickness="17" CutLength="1196.4" CutWidth="596.4" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y112T1F1C2_1003" ProductionName="Top Shelf" Customer="Mr Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="2" Y="599.5" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="2" Y="599.5" Angle="0" />
+              <Point Index="2" X="1204.4" Y="599.5" Angle="0" />
+              <Point Index="3" X="1204.4" Y="1201.9" Angle="0" />
+              <Point Index="4" X="2" Y="1201.9" Angle="0" />
+              <Point Index="5" X="2" Y="599.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="1134.4,599.5,0$;1204.4,1131.9,1$;72,1201.9,2$;2,669.5,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="2" Y="599.5" Angle="0" />
+              <Point Index="2" X="1204.4" Y="599.5" Angle="0" />
+              <Point Index="3" X="1204.4" Y="1201.9" Angle="0" />
+              <Point Index="4" X="2" Y="1201.9" Angle="0" />
+              <Point Index="5" X="2" Y="599.5" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="1196.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="1196.4" Y="596.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="596.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="1196.4" ProWidth="596.4" />
+        </Workpiece>
+        <Workpiece ID="44" WorkpieceId="26Y112T1F1A2_1004" CuttingOrderNo="3" Qty="1" Name="Back Panel" Material="CP_HDR17_8023_BS" Length="250" Width="1146" Thickness="17" CutLength="246.4" CutWidth="1142.4" MachiningPoint="7" Grain="N" ProdutionNo="01.26Y112T1F1A2_1004" ProductionName="Back Panel" Customer="Mr Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="1202" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1150.4" Y="1202" Angle="0" />
+              <Point Index="2" X="1150.4" Y="1454.4" Angle="0" />
+              <Point Index="3" X="2" Y="1454.4" Angle="0" />
+              <Point Index="4" X="2" Y="1202" Angle="0" />
+              <Point Index="5" X="1150.4" Y="1202" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1150.4,1384.4,0$;72,1454.4,1$;2,1272,2$;1080.4,1202,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1150.4" Y="1202" Angle="0" />
+              <Point Index="2" X="1150.4" Y="1454.4" Angle="0" />
+              <Point Index="3" X="2" Y="1454.4" Angle="0" />
+              <Point Index="4" X="2" Y="1202" Angle="0" />
+              <Point Index="5" X="1150.4" Y="1202" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="246.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="246.4" Y="1142.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1142.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="246.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="246.4" ProWidth="1142.4" />
+        </Workpiece>
+        <Workpiece ID="45" WorkpieceId="26Y112T1F1C2_1004" CuttingOrderNo="4" Qty="1" Name="Back Panel" Material="CP_HDR17_8023_BS" Length="250" Width="1146" Thickness="17" CutLength="246.4" CutWidth="1142.4" MachiningPoint="7" Grain="N" ProdutionNo="01.26Y112T1F1C2_1004" ProductionName="Back Panel" Customer="Mr Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="1454.5" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1150.4" Y="1454.5" Angle="0" />
+              <Point Index="2" X="1150.4" Y="1706.9" Angle="0" />
+              <Point Index="3" X="2" Y="1706.9" Angle="0" />
+              <Point Index="4" X="2" Y="1454.5" Angle="0" />
+              <Point Index="5" X="1150.4" Y="1454.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="1150.4,1636.9,0$;72,1706.9,1$;2,1524.5,2$;1080.4,1454.5,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1150.4" Y="1454.5" Angle="0" />
+              <Point Index="2" X="1150.4" Y="1706.9" Angle="0" />
+              <Point Index="3" X="2" Y="1706.9" Angle="0" />
+              <Point Index="4" X="2" Y="1454.5" Angle="0" />
+              <Point Index="5" X="1150.4" Y="1454.5" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="246.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="246.4" Y="1142.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1142.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="246.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="246.4" ProWidth="1142.4" />
+        </Workpiece>
+        <Workpiece ID="46" WorkpieceId="26Y112T1F1A2_1001" CuttingOrderNo="5" Qty="1" Name="Right Side" Material="CP_HDR17_8023_BS" Length="433" Width="580" Thickness="17" CutLength="429.4" CutWidth="576.4" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y112T1F1A2_1001" ProductionName="Right Side" Customer="Mr Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="1707" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="437.4" Y="1707" Angle="0" />
+              <Point Index="2" X="437.4" Y="2289.4" Angle="0" />
+              <Point Index="3" X="2" Y="2289.4" Angle="0" />
+              <Point Index="4" X="2" Y="1707" Angle="0" />
+              <Point Index="5" X="437.4" Y="1707" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="437.4,2219.4,0$;72,2289.4,1$;2,1777,2$;367.4,1707,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="437.4" Y="1707" Angle="0" />
+              <Point Index="2" X="437.4" Y="2289.4" Angle="0" />
+              <Point Index="3" X="2" Y="2289.4" Angle="0" />
+              <Point Index="4" X="2" Y="1707" Angle="0" />
+              <Point Index="5" X="437.4" Y="1707" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="429.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="429.4" Y="576.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="576.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="429.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="429.4" ProWidth="576.4" />
+        </Workpiece>
+        <Workpiece ID="47" WorkpieceId="26Y112T1F1A2_1002" CuttingOrderNo="6" Qty="1" Name="Left Side" Material="CP_HDR17_8023_BS" Length="433" Width="580" Thickness="17" CutLength="429.4" CutWidth="576.4" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y112T1F1A2_1002" ProductionName="Left Side" Customer="Mr Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="437.5" Y="1707" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="872.9" Y="1707" Angle="0" />
+              <Point Index="2" X="872.9" Y="2289.4" Angle="0" />
+              <Point Index="3" X="437.5" Y="2289.4" Angle="0" />
+              <Point Index="4" X="437.5" Y="1707" Angle="0" />
+              <Point Index="5" X="872.9" Y="1707" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="872.9,2219.4,0$;507.5,2289.4,1$;437.5,1777,2$;802.9,1707,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="872.9" Y="1707" Angle="0" />
+              <Point Index="2" X="872.9" Y="2289.4" Angle="0" />
+              <Point Index="3" X="437.5" Y="2289.4" Angle="0" />
+              <Point Index="4" X="437.5" Y="1707" Angle="0" />
+              <Point Index="5" X="872.9" Y="1707" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="429.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="429.4" Y="576.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="576.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="429.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="429.4" ProWidth="576.4" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="-3.5" Width="596.5">
+          <Lineament RotationAngle="0" X="1207.5" Y="0">
+            <Points>
+              <Point Index="1" X="1207.5" Y="0" Angle="0" />
+              <Point Index="2" X="1210" Y="0" Angle="0" />
+              <Point Index="3" X="1210" Y="602.5" Angle="0" />
+              <Point Index="4" X="1207.5" Y="602.5" Angle="0" />
+              <Point Index="5" X="1207.5" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="-3.5" Width="596.5">
+          <Lineament RotationAngle="0" X="1207.5" Y="602.5">
+            <Points>
+              <Point Index="1" X="1207.5" Y="602.5" Angle="0" />
+              <Point Index="2" X="1210" Y="602.5" Angle="0" />
+              <Point Index="3" X="1210" Y="1205" Angle="0" />
+              <Point Index="4" X="1207.5" Y="1205" Angle="0" />
+              <Point Index="5" X="1207.5" Y="602.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="3" Type="0" Length="50.5" Width="246.5">
+          <Lineament RotationAngle="0" X="1153.5" Y="1205">
+            <Points>
+              <Point Index="1" X="1153.5" Y="1205" Angle="0" />
+              <Point Index="2" X="1210" Y="1205" Angle="0" />
+              <Point Index="3" X="1210" Y="1457.5" Angle="0" />
+              <Point Index="4" X="1153.5" Y="1457.5" Angle="0" />
+              <Point Index="5" X="1153.5" Y="1205" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="4" Type="0" Length="50.5" Width="246.5">
+          <Lineament RotationAngle="0" X="1153.5" Y="1457.5">
+            <Points>
+              <Point Index="1" X="1153.5" Y="1457.5" Angle="0" />
+              <Point Index="2" X="1210" Y="1457.5" Angle="0" />
+              <Point Index="3" X="1210" Y="1710" Angle="0" />
+              <Point Index="4" X="1153.5" Y="1710" Angle="0" />
+              <Point Index="5" X="1153.5" Y="1457.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="5" Type="0" Length="429.5" Width="131.5">
+          <Lineament RotationAngle="0" X="5" Y="2292.5">
+            <Points>
+              <Point Index="1" X="5" Y="2292.5" Angle="0" />
+              <Point Index="2" X="440.5" Y="2292.5" Angle="0" />
+              <Point Index="3" X="440.5" Y="2430" Angle="0" />
+              <Point Index="4" X="5" Y="2430" Angle="0" />
+              <Point Index="5" X="5" Y="2292.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="6" Type="0" Length="328" Width="714">
+          <Lineament RotationAngle="0" X="876" Y="1710">
+            <Points>
+              <Point Index="1" X="876" Y="1710" Angle="0" />
+              <Point Index="2" X="1210" Y="1710" Angle="0" />
+              <Point Index="3" X="1210" Y="2430" Angle="0" />
+              <Point Index="4" X="876" Y="2430" Angle="0" />
+              <Point Index="5" X="876" Y="1710" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="7" Type="0" Length="429.5" Width="131.5">
+          <Lineament RotationAngle="0" X="440.5" Y="2292.5">
+            <Points>
+              <Point Index="1" X="440.5" Y="2292.5" Angle="0" />
+              <Point Index="2" X="876" Y="2292.5" Angle="0" />
+              <Point Index="3" X="876" Y="2430" Angle="0" />
+              <Point Index="4" X="440.5" Y="2430" Angle="0" />
+              <Point Index="5" X="440.5" Y="2292.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+    <Pattern Index="2" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="48" WorkpieceId="26Y112T1F1C2_1001" CuttingOrderNo="1" Qty="1" Name="Right Side" Material="CP_HDR17_8023_BS" Length="433" Width="580" Thickness="17" CutLength="429.4" CutWidth="576.4" MachiningPoint="7" Grain="N" ProdutionNo="01.26Y112T1F1C2_1001" ProductionName="Right Side" Customer="Mr Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="584.4" Y="-3" Angle="0" />
+              <Point Index="2" X="584.4" Y="432.4" Angle="0" />
+              <Point Index="3" X="2" Y="432.4" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="584.4" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="584.4,362.4,0$;72,432.4,1$;2,67,2$;514.4,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="584.4" Y="-3" Angle="0" />
+              <Point Index="2" X="584.4" Y="432.4" Angle="0" />
+              <Point Index="3" X="2" Y="432.4" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="584.4" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="429.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="429.4" Y="576.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="576.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="429.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="429.4" ProWidth="576.4" />
+        </Workpiece>
+        <Workpiece ID="49" WorkpieceId="26Y112T1F1C2_1002" CuttingOrderNo="2" Qty="1" Name="Left Side" Material="CP_HDR17_8023_BS" Length="433" Width="580" Thickness="17" CutLength="429.4" CutWidth="576.4" MachiningPoint="7" Grain="N" ProdutionNo="01.26Y112T1F1C2_1002" ProductionName="Left Side" Customer="Mr Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="584.5" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1166.9" Y="-3" Angle="0" />
+              <Point Index="2" X="1166.9" Y="432.4" Angle="0" />
+              <Point Index="3" X="584.5" Y="432.4" Angle="0" />
+              <Point Index="4" X="584.5" Y="-3" Angle="0" />
+              <Point Index="5" X="1166.9" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="1166.9,362.4,0$;654.5,432.4,1$;584.5,67,2$;1096.9,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1166.9" Y="-3" Angle="0" />
+              <Point Index="2" X="1166.9" Y="432.4" Angle="0" />
+              <Point Index="3" X="584.5" Y="432.4" Angle="0" />
+              <Point Index="4" X="584.5" Y="-3" Angle="0" />
+              <Point Index="5" X="1166.9" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="429.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="429.4" Y="576.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="576.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="429.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="429.4" ProWidth="576.4" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="1199" Width="1988.5">
+          <Lineament RotationAngle="0" X="5" Y="435.5">
+            <Points>
+              <Point Index="1" X="5" Y="435.5" Angle="0" />
+              <Point Index="2" X="1210" Y="435.5" Angle="0" />
+              <Point Index="3" X="1210" Y="2430" Angle="0" />
+              <Point Index="4" X="5" Y="2430" Angle="0" />
+              <Point Index="5" X="5" Y="435.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="34" Width="429.5">
+          <Lineament RotationAngle="0" X="1170" Y="0">
+            <Points>
+              <Point Index="1" X="1170" Y="0" Angle="0" />
+              <Point Index="2" X="1210" Y="0" Angle="0" />
+              <Point Index="3" X="1210" Y="435.5" Angle="0" />
+              <Point Index="4" X="1170" Y="435.5" Angle="0" />
+              <Point Index="5" X="1170" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+  </Patterns>
+  <Patterns Index="4" ID="4" Name="CP_HDR17_8023_OS_8134" Length="2440" Width="1220" Thickness="17" Grain="L">
+    <Pattern Index="1" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="50" WorkpieceId="26Y111T1F1B3_1002" CuttingOrderNo="1" Qty="1" Name="Bed Head Side" Material="CP_HDR17_8023_OS_8134" Length="880" Width="1288" Thickness="17" CutLength="876.4" CutWidth="1284.4" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1002" ProductionName="Bed Head Side" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="884.4" Y="-3" Angle="0" />
+              <Point Index="2" X="884.4" Y="1287.4" Angle="0" />
+              <Point Index="3" X="2" Y="1287.4" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="884.4" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="884.4,1217.4,0$;72,1287.4,1$;2,67,2$;814.4,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="884.4" Y="-3" Angle="0" />
+              <Point Index="2" X="884.4" Y="1287.4" Angle="0" />
+              <Point Index="3" X="2" Y="1287.4" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="884.4" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="876.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="876.4" Y="1284.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1284.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="876.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="876.4" ProWidth="1284.4" />
+        </Workpiece>
+        <Workpiece ID="51" WorkpieceId="26Y111T1F1B3_1059" CuttingOrderNo="2" Qty="1" Name="Bed Head Side" Material="CP_HDR17_8023_OS_8134" Length="576" Width="478" Thickness="17" CutLength="572.4" CutWidth="474.4" MachiningPoint="3" Grain="N" ProdutionNo="02.26Y111T1F1B3_1059" ProductionName="Bed Head Side" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="2" Y="1287.5" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="2" Y="1287.5" Angle="0" />
+              <Point Index="2" X="482.4" Y="1287.5" Angle="0" />
+              <Point Index="3" X="482.4" Y="1865.9" Angle="0" />
+              <Point Index="4" X="2" Y="1865.9" Angle="0" />
+              <Point Index="5" X="2" Y="1287.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="412.4,1287.5,0$;482.4,1795.9,1$;72,1865.9,2$;2,1357.5,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="2" Y="1287.5" Angle="0" />
+              <Point Index="2" X="482.4" Y="1287.5" Angle="0" />
+              <Point Index="3" X="482.4" Y="1865.9" Angle="0" />
+              <Point Index="4" X="2" Y="1865.9" Angle="0" />
+              <Point Index="5" X="2" Y="1287.5" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="474.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="474.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="572.4" ProWidth="474.4" />
+        </Workpiece>
+        <Workpiece ID="52" WorkpieceId="26Y111T1F1B3_1061" CuttingOrderNo="3" Qty="1" Name="Left Side" Material="CP_HDR17_8023_OS_8134" Length="76" Width="478" Thickness="17" CutLength="72.4" CutWidth="474.4" MachiningPoint="7" Grain="N" ProdutionNo="02.26Y111T1F1B3_1061" ProductionName="Left Side" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="90">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="1866" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="482.4" Y="1866" Angle="0" />
+              <Point Index="2" X="482.4" Y="1944.4" Angle="0" />
+              <Point Index="3" X="2" Y="1944.4" Angle="0" />
+              <Point Index="4" X="2" Y="1866" Angle="0" />
+              <Point Index="5" X="482.4" Y="1866" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="0" ToolPointList="482.4,1874.4,0$;72,1944.4,1$;2,1936,2$;412.4,1866,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="482.4" Y="1866" Angle="0" />
+              <Point Index="2" X="482.4" Y="1944.4" Angle="0" />
+              <Point Index="3" X="2" Y="1944.4" Angle="0" />
+              <Point Index="4" X="2" Y="1866" Angle="0" />
+              <Point Index="5" X="482.4" Y="1866" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="72.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="72.4" Y="474.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="474.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="72.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="72.4" ProWidth="474.4" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="316.5" Width="1284.5">
+          <Lineament RotationAngle="0" X="887.5" Y="0">
+            <Points>
+              <Point Index="1" X="887.5" Y="0" Angle="0" />
+              <Point Index="2" X="1210" Y="0" Angle="0" />
+              <Point Index="3" X="1210" Y="1290.5" Angle="0" />
+              <Point Index="4" X="887.5" Y="1290.5" Angle="0" />
+              <Point Index="5" X="887.5" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="718.5" Width="1133.5">
+          <Lineament RotationAngle="0" X="485.5" Y="1290.5">
+            <Points>
+              <Point Index="1" X="485.5" Y="1290.5" Angle="0" />
+              <Point Index="2" X="1210" Y="1290.5" Angle="0" />
+              <Point Index="3" X="1210" Y="2430" Angle="0" />
+              <Point Index="4" X="485.5" Y="2430" Angle="0" />
+              <Point Index="5" X="485.5" Y="1290.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="3" Type="0" Length="474.5" Width="476.5">
+          <Lineament RotationAngle="0" X="5" Y="1947.5">
+            <Points>
+              <Point Index="1" X="5" Y="1947.5" Angle="0" />
+              <Point Index="2" X="485.5" Y="1947.5" Angle="0" />
+              <Point Index="3" X="485.5" Y="2430" Angle="0" />
+              <Point Index="4" X="5" Y="2430" Angle="0" />
+              <Point Index="5" X="5" Y="1947.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+    <Pattern Index="2" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="53" WorkpieceId="26Y111T1F1B3_1060" CuttingOrderNo="1" Qty="1" Name="Bed Head Side" Material="CP_HDR17_8023_OS_8134" Length="576" Width="1500" Thickness="17" CutLength="572.4" CutWidth="1496.4" MachiningPoint="1" Grain="N" ProdutionNo="02.26Y111T1F1B3_1060" ProductionName="Bed Head Side" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="580.4" Y="-3" Angle="0" />
+              <Point Index="2" X="580.4" Y="1499.4" Angle="0" />
+              <Point Index="3" X="2" Y="1499.4" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="580.4" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="580.4,1429.4,0$;72,1499.4,1$;2,67,2$;510.4,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="580.4" Y="-3" Angle="0" />
+              <Point Index="2" X="580.4" Y="1499.4" Angle="0" />
+              <Point Index="3" X="2" Y="1499.4" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="580.4" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="572.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="1496.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1496.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="572.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="572.4" ProWidth="1496.4" />
+        </Workpiece>
+        <Workpiece ID="54" WorkpieceId="26Y111T1F1B3_1001" CuttingOrderNo="2" Qty="1" Name="Bed Foot Side" Material="CP_HDR17_8023_OS_8134" Length="380" Width="1466" Thickness="17" CutLength="376.4" CutWidth="1462.4" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1001" ProductionName="Bed Foot Side" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="580.5" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="962.9" Y="-3" Angle="0" />
+              <Point Index="2" X="962.9" Y="1465.4" Angle="0" />
+              <Point Index="3" X="580.5" Y="1465.4" Angle="0" />
+              <Point Index="4" X="580.5" Y="-3" Angle="0" />
+              <Point Index="5" X="962.9" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="962.9,1395.4,0$;650.5,1465.4,1$;580.5,67,2$;892.9,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="962.9" Y="-3" Angle="0" />
+              <Point Index="2" X="962.9" Y="1465.4" Angle="0" />
+              <Point Index="3" X="580.5" Y="1465.4" Angle="0" />
+              <Point Index="4" X="580.5" Y="-3" Angle="0" />
+              <Point Index="5" X="962.9" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="376.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="376.4" Y="1462.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1462.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="376.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="376.4" ProWidth="1462.4" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="1199" Width="921.5">
+          <Lineament RotationAngle="0" X="5" Y="1502.5">
+            <Points>
+              <Point Index="1" X="5" Y="1502.5" Angle="0" />
+              <Point Index="2" X="1210" Y="1502.5" Angle="0" />
+              <Point Index="3" X="1210" Y="2430" Angle="0" />
+              <Point Index="4" X="5" Y="2430" Angle="0" />
+              <Point Index="5" X="5" Y="1502.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="238" Width="1496.5">
+          <Lineament RotationAngle="0" X="966" Y="0">
+            <Points>
+              <Point Index="1" X="966" Y="0" Angle="0" />
+              <Point Index="2" X="1210" Y="0" Angle="0" />
+              <Point Index="3" X="1210" Y="1502.5" Angle="0" />
+              <Point Index="4" X="966" Y="1502.5" Angle="0" />
+              <Point Index="5" X="966" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="3" Type="0" Length="376.5" Width="28">
+          <Lineament RotationAngle="0" X="583.5" Y="1468.5">
+            <Points>
+              <Point Index="1" X="583.5" Y="1468.5" Angle="0" />
+              <Point Index="2" X="966" Y="1468.5" Angle="0" />
+              <Point Index="3" X="966" Y="1502.5" Angle="0" />
+              <Point Index="4" X="583.5" Y="1502.5" Angle="0" />
+              <Point Index="5" X="583.5" Y="1468.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+    <Pattern Index="3" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="55" WorkpieceId="26Y111T1F1B3_1004" CuttingOrderNo="1" Qty="1" Name="Left Side" Material="CP_HDR17_8023_OS_8134" Length="380" Width="1271" Thickness="17" CutLength="376.4" CutWidth="1267.4" MachiningPoint="1" Grain="N" ProdutionNo="01.26Y111T1F1B3_1004" ProductionName="Left Side" Customer="Mr. Vijay" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_75633_PINE_NUT_2MM" EBL2="RE_75633_PINE_NUT_2MM" EBW1="RE_75633_PINE_NUT_2MM" EBW2="RE_75633_PINE_NUT_2MM" RotateAngle="0">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="-90" X="2" Y="-3" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="384.4" Y="-3" Angle="0" />
+              <Point Index="2" X="384.4" Y="1270.4" Angle="0" />
+              <Point Index="3" X="2" Y="1270.4" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="384.4" Y="-3" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false" ToolPoint="0" ToolPointList="384.4,1200.4,0$;72,1270.4,1$;2,67,2$;314.4,-3,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="384.4" Y="-3" Angle="0" />
+              <Point Index="2" X="384.4" Y="1270.4" Angle="0" />
+              <Point Index="3" X="2" Y="1270.4" Angle="0" />
+              <Point Index="4" X="2" Y="-3" Angle="0" />
+              <Point Index="5" X="384.4" Y="-3" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="376.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="376.4" Y="1267.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="1267.4" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="376.4" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="376.4" ProWidth="1267.4" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="816.5" Width="1267.5">
+          <Lineament RotationAngle="0" X="387.5" Y="0">
+            <Points>
+              <Point Index="1" X="387.5" Y="0" Angle="0" />
+              <Point Index="2" X="1210" Y="0" Angle="0" />
+              <Point Index="3" X="1210" Y="1273.5" Angle="0" />
+              <Point Index="4" X="387.5" Y="1273.5" Angle="0" />
+              <Point Index="5" X="387.5" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="1199" Width="1150.5">
+          <Lineament RotationAngle="0" X="5" Y="1273.5">
+            <Points>
+              <Point Index="1" X="5" Y="1273.5" Angle="0" />
+              <Point Index="2" X="1210" Y="1273.5" Angle="0" />
+              <Point Index="3" X="1210" Y="2430" Angle="0" />
+              <Point Index="4" X="5" Y="2430" Angle="0" />
+              <Point Index="5" X="5" Y="1273.5" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+  </Patterns>
+</FccRoot>

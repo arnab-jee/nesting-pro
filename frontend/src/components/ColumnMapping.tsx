@@ -68,32 +68,38 @@ export function ColumnMapping({ csvText, headers, previewRows, guessedSchema, on
       </table>
 
       {unmapped.length > 0 && (
-        <p className="warning">Unmapped: {unmapped.join(", ")} — rows may fail to parse.</p>
+        <p className="alert alert--warning">Unmapped: {unmapped.join(", ")} — rows may fail to parse.</p>
       )}
 
       <h3>Preview</h3>
-      <table className="csv-preview">
-        <thead>
-          <tr>
-            {headers.map((h) => (
-              <th key={h}>{h}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {previewRows.map((row, i) => (
-            <tr key={i}>
-              {row.map((cell, j) => (
-                <td key={j}>{cell}</td>
+      <div className="table-scroll">
+        <table className="csv-preview">
+          <thead>
+            <tr>
+              {headers.map((h) => (
+                <th key={h}>{h}</th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {previewRows.map((row, i) => (
+              <tr key={i}>
+                {row.map((cell, j) => (
+                  <td key={j}>{cell}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <div className="actions">
-        <button onClick={onBack}>Back</button>
-        <button onClick={() => onConfirm(rewriteCsvHeaders(csvText, mapping))}>Continue</button>
+        <button className="btn btn--secondary" onClick={onBack}>
+          Back
+        </button>
+        <button className="btn btn--primary" onClick={() => onConfirm(rewriteCsvHeaders(csvText, mapping))}>
+          Continue
+        </button>
       </div>
     </div>
   );

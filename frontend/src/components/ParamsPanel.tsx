@@ -41,48 +41,54 @@ export function ParamsPanel({
     <div className="params-panel">
       <h2>Parameters</h2>
 
-      <fieldset>
-        <legend>Margin (mm)</legend>
-        {(["top", "right", "bottom", "left"] as const).map((side) => (
-          <label key={side}>
-            {side}
-            <input
-              type="number"
-              value={margin[side]}
-              onChange={(e) => onMarginChange({ ...margin, [side]: Number(e.target.value) })}
-            />
-          </label>
-        ))}
+      <fieldset className="params-section">
+        <legend className="params-section__title">Margin (mm)</legend>
+        <div className="field-grid field-grid--4">
+          {(["top", "right", "bottom", "left"] as const).map((side) => (
+            <label className="field" key={side}>
+              <span className="field__label">{side}</span>
+              <input
+                type="number"
+                value={margin[side]}
+                onChange={(e) => onMarginChange({ ...margin, [side]: Number(e.target.value) })}
+              />
+            </label>
+          ))}
+        </div>
       </fieldset>
 
       {target === "saw" ? (
-        <fieldset>
-          <legend>Saw</legend>
-          <label>
-            Kerf (mm)
-            <input type="number" value={kerf} onChange={(e) => onKerfChange(Number(e.target.value))} />
-          </label>
-          <label>
-            <input type="checkbox" checked={allowRotation} onChange={(e) => onAllowRotationChange(e.target.checked)} />
-            Allow rotation (grain-free parts only)
-          </label>
+        <fieldset className="params-section">
+          <legend className="params-section__title">Saw</legend>
+          <div className="field-grid field-grid--2">
+            <label className="field">
+              <span className="field__label">Kerf (mm)</span>
+              <input type="number" value={kerf} onChange={(e) => onKerfChange(Number(e.target.value))} />
+            </label>
+            <label className="field field--checkbox">
+              <input type="checkbox" checked={allowRotation} onChange={(e) => onAllowRotationChange(e.target.checked)} />
+              <span className="field__label">Allow rotation (grain-free parts only)</span>
+            </label>
+          </div>
         </fieldset>
       ) : (
-        <fieldset>
-          <legend>Nanxing</legend>
-          <label>
-            Tool Ø (mm)
-            <input type="number" value={toolDiameter} onChange={(e) => onToolDiameterChange(Number(e.target.value))} />
-          </label>
-          <label>
-            Part spacing (mm)
-            <input type="number" value={partSpacing} onChange={(e) => onPartSpacingChange(Number(e.target.value))} />
-          </label>
+        <fieldset className="params-section">
+          <legend className="params-section__title">Nanxing</legend>
+          <div className="field-grid field-grid--2">
+            <label className="field">
+              <span className="field__label">Tool Ø (mm)</span>
+              <input type="number" value={toolDiameter} onChange={(e) => onToolDiameterChange(Number(e.target.value))} />
+            </label>
+            <label className="field">
+              <span className="field__label">Part spacing (mm)</span>
+              <input type="number" value={partSpacing} onChange={(e) => onPartSpacingChange(Number(e.target.value))} />
+            </label>
+          </div>
         </fieldset>
       )}
 
-      <fieldset>
-        <legend>Stock boards</legend>
+      <fieldset className="params-section">
+        <legend className="params-section__title">Stock boards</legend>
         <table>
           <thead>
             <tr>

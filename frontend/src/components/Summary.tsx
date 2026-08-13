@@ -26,13 +26,22 @@ export function Summary({ result, stock }: Props) {
       : 0;
 
   return (
-    <div className="summary">
+    <div className="card summary">
       <h2>Summary</h2>
-      <ul>
-        <li>Sheets: {result.sheets.length}</li>
-        <li>Average utilization: {avgUtilization.toFixed(1)}%</li>
-        <li>Unplaced parts: {result.unplaced.length}</li>
-      </ul>
+      <div className="stat-row">
+        <div className="stat-card">
+          <span className="stat-card__value">{result.sheets.length}</span>
+          <span className="stat-card__label">Sheets</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-card__value">{avgUtilization.toFixed(1)}%</span>
+          <span className="stat-card__label">Avg. utilization</span>
+        </div>
+        <div className={`stat-card ${result.unplaced.length > 0 ? "stat-card--warn" : "stat-card--ok"}`}>
+          <span className="stat-card__value">{result.unplaced.length}</span>
+          <span className="stat-card__label">Unplaced parts</span>
+        </div>
+      </div>
       {result.unplaced.length > 0 && (
         <table className="unplaced-table">
           <thead>

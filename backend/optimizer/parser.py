@@ -52,7 +52,14 @@ SCHEMA_COLUMNS = {
 }
 
 GRAIN_MAP = {
+    # 0/1/2 are the raw CSV codes (Business Logic/grain_logic.md): 0 = no grain constraint,
+    # 1 = part's length must be parallel to the grain direction ("length" grain), 2 = part's
+    # length must be perpendicular to the grain direction, i.e. width parallel to grain
+    # ("width" grain). 1/2 previously fell through to "none" via the .get() default below,
+    # silently treating grain-locked parts as rotatable.
     "0": "none",
+    "1": "length",
+    "2": "width",
     "none": "none",
     "x": "length",
     "y": "width",
