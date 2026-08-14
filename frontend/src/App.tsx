@@ -1,11 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
-import { ApiError, downloadPdf, downloadXml, optimize, parseCsv } from "./api";
+import { ApiError, downloadPdf, downloadXml, getSettings, optimize, parseCsv, setWasteStrategyDefault } from "./api";
 import { CsvUpload, type CsvLoaded } from "./components/CsvUpload";
 import { ColumnMapping } from "./components/ColumnMapping";
 import { MachineSelector } from "./components/MachineSelector";
 import { ParamsPanel } from "./components/ParamsPanel";
 import { SheetPreview } from "./components/SheetPreview";
+import { StockBoardLibrary } from "./components/StockBoardLibrary";
 import { Stepper } from "./components/Stepper";
 import { Summary } from "./components/Summary";
 import type { Margin, OptRequest, OptResult, Part, StockBoard, TargetMachine, WasteStrategy } from "./types";
@@ -37,7 +38,24 @@ function App() {
   const [toolDiameter, setToolDiameter] = useState(6);
   const [partSpacing, setPartSpacing] = useState(6.1);
   const [allowRotation, setAllowRotation] = useState(true);
-  const [wasteStrategy, setWasteStrategy] = useState<WasteStrategy>("balanced");
+  const [wasteStrategy, setWasteStrategyState] = useState<WasteStrategy>("balanced");
+
+  // Load the persisted default once on mount, then keep it "sticky": every change the user
+  // makes gets saved back as the new default for next time (Updates/update_004.md).
+  useEffect(() => {
+    getSettings()
+      .then((s) => setWasteStrategyState(s.wasteStrategyDefault))
+      .catch(() => {
+        /* fall back to the "balanced" default already set — persistence is a nice-to-have here */
+      });
+  }, []);
+
+  function setWasteStrategy(value: WasteStrategy) {
+    setWasteStrategyState(value);
+    setWasteStrategyDefault(value).catch(() => {
+      /* the job can still run with the chosen value even if saving the default failed */
+    });
+  }
 
   const [optResult, setOptResult] = useState<OptResult | null>(null);
   const [optimizing, setOptimizing] = useState(false);
@@ -155,6 +173,7 @@ function App() {
             wasteStrategy={wasteStrategy}
             onWasteStrategyChange={setWasteStrategy}
           />
+          <StockBoardLibrary onUse={(board) => setStock((prev) => [...prev, board])} />
           <ErrorAlert errors={optimizeErrors} />
           <div className="actions">
             <button className="btn btn--secondary" onClick={() => setStep("map")}>

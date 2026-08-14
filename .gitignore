@@ -6,6 +6,9 @@ __pycache__/
 .venv/
 venv/
 
+# Runtime SQLite database (backend/storage.py)
+backend/nesting_pro.db
+
 # Node / frontend (future)
 node_modules/
 dist/

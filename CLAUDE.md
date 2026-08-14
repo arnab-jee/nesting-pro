@@ -56,8 +56,9 @@ Key libs: `shapely` (geometry), `rectpack`/custom packers (nesting), `lxml` (FCC
 > Verified 2026-08-12 by actually running the code against `sample_data/` (both CSVs and the
 > real golden XML files), not just reading it. A three-phase fix plan was written to
 > `~/.claude/plans/delegated-moseying-robin.md`; **Phases A, B, and C are all done**, plus
-> follow-on M6, M7, and M3-redesign passes (each planned separately, same plan file, overwritten
-> per pass). Remaining work is M8 and the frontend/PDF orientation mismatch noted below.
+> follow-on M6, M7, M3-redesign, and M9 passes (each planned separately, same plan file,
+> overwritten per pass). Remaining work is M8 and the deferred parts of M9 (login/tenancy,
+> per-machine config, schema-template renaming).
 
 | # | Milestone | Status | Evidence |
 |---|-----------|--------|----------|
@@ -69,14 +70,18 @@ Key libs: `shapely` (geometry), `rectpack`/custom packers (nesting), `lxml` (FCC
 | M6 | FCC XML toolpaths | 🟢 Implemented + tested | `CutInfos.ToolPointList`/`ToolPoint` implemented per Appendix A.5's lead-in-ramp formula, plus two rules the appendix doesn't document, both found by testing against real files: **(1)** when an edge is shorter than `SlopeLen` (70mm), both of that edge's candidate points clamp to the edge midpoint instead of the raw corner-offset formula; **(2)** the `Lineament`/`Lineament2`/`FccOutline` polygon winding — and the `ToolPointList` idx→corner assignment — starts one corner later exactly when `CutWidth > CutLength` **and** the part isn't grain-locked (grain-locked parts never shift, confirmed against 207 grain-directional workpieces, all unrotated). This same signal turned out to fully explain `MachiningPoint`'s "~83%/17%" split from Appendix A.3 (now exact, see M5). `ToolPointList` itself lands at 88.1–96.4% exact match across the 4 golden files — the remaining mismatches look like isolated real-world manual adjustments (e.g. a single corner off by 6.8mm on one otherwise-perfect 55/56-attribute workpiece) rather than a missed rule; Appendix A.5 itself expects this needs machine dry-run refinement, so it's tracked as a documented tolerance (`backend/tests/test_xml_roundtrip.py`'s `MIN_TOOL_POINT_LIST_MATCH_RATE`), not chased to 100%. `ToolPoint` (which of the 4 lead-in points the cut starts at) has no discovered rule — defaults to `"0"` per Appendix A.5's own stated fallback. Point-winding and `MachiningPoint` comparisons in the round-trip test were tightened from tolerant to strict now that the real rules are known, and confirmed to have teeth (broke the shift logic, reran, 4/4 golden-file tests failed on the exact-match `MachiningPoint` assertion; restored, all green). |
 | M7 | Frontend integration | 🟢 Built + browser-verified | New `frontend/` (Vite + React + TypeScript), sibling to `backend/`. Wizard flow: CSV drag-drop → column-mapping (client-side schema guess in `csvSchemas.ts` for immediate feedback; actual parsing delegated to the already-tested `/api/parse`, not reimplemented in TS) → machine selector + params panel (margins, stock boards derived from parts, kerf/saw or tool Ø+spacing/nanxing) → per-sheet SVG preview (`SheetPreview.tsx`) + summary (`Summary.tsx`, with a client-computed unplaced-reason since the backend doesn't attach one) → PDF/XML download via the existing `/api/export/*` endpoints. Dev wiring is a Vite `server.proxy` (`/api` → `127.0.0.1:8000`), zero backend changes. `tsc -b`/`npm run build`/`npm run lint` all clean. **Actually driven in a headless browser** (Playwright, no project `run` skill existed yet so used the generic browser-driven fallback): uploaded both real sample CSVs — correct schema auto-detection for both, part counts matched exactly (50, 55); ran optimize for both Panel Saw and Nanxing — 21 sheets / 0 unplaced / 46.8% avg utilization each, matching Phase A's known-good numbers exactly; 21 SVG sheet previews rendered with 50 total placed-part rects (matches part count); downloaded a real 21-page PDF and a real `FccRoot` XML; a deliberately malformed CSV correctly surfaced the backend's exact validation error in the UI instead of crashing. Zero console/page/network errors throughout. **Scope decision:** the per-sheet preview does *not* share a renderer with the PDF (spec §8's aspiration) — that would mean redesigning M3's still-skeletal `reportlab` renderer, a separate concern; downloads call the existing `/export/pdf`/`/export/xml` endpoints as-is. **Visual polish pass** (presentation-only, no logic changes): real design tokens + dark-mode support in `index.css`, a `Stepper.tsx` progress indicator, card-based layout, stat cards, selectable machine-option cards, and a responsive sheet-preview grid. Found and fixed one real bug while at it — the Vite scaffold's leftover `#root { text-align: center }` was inheriting into every form label/paragraph in the app. Reverified in a headless browser (screenshots at each wizard step) with the same real CSV — same known-good numbers (21 sheets, 0 unplaced), zero console errors, confirmed `text-align: left` via computed style. |
 | M8 | Offcut/oddment reuse | ⬜ Not started | `Sheet.offcuts` are computed as leftover free rectangles per run but never persisted or fed back as input stock for a later job. |
+| M9 | Data persistence, phase 1 (stock boards + settings) | 🟢 Implemented + tested | `Updates/update_004.md` originally asked for a much bigger scope in one pass — login, multi-tenant "company system," stock boards, per-machine optimization availability, waste-placement defaults, and renaming/editing the CSV schema templates — but explicitly asked to "discuss and ask relevant questions before start updating the code" first. Scoped down via two `AskUserQuestion` rounds before writing anything: **SQLite** (not Postgres/MySQL — single-tenant local deployment, no need for a DB server), **single-tenant** (no `tenant`/company isolation), **simple internal login deferred entirely** (this pass has no auth at all), **persistence-first sequencing** (only Stock Boards + a Waste Placement default land now; login/tenancy, per-machine availability config, and schema-template renaming are explicitly future passes, not started). New `backend/storage.py`: stdlib `sqlite3` (no ORM — two small tables don't justify one), a `stock_boards` table and a generic `key/value` `settings` table (chosen over a rigid single-column settings table so future single-value defaults don't need a schema migration each time). New endpoints: `GET/POST /stock-boards`, `PUT/DELETE /stock-boards/{id}`, `GET/PUT /settings`, using a per-request `sqlite3.Connection` via FastAPI `Depends` (safe under SQLite's threading model; the DB file itself is gitignored, not committed). Frontend: new `StockBoardLibrary.tsx` (list/add/delete saved boards, "Use" appends one to the current job's stock list) rendered in the configure step, and `wasteStrategy` now loads its initial value from `GET /settings` on mount and round-trips every change back via `PUT /settings` (a "sticky default," not a separate save button). Covered by `backend/tests/test_storage.py` (11 tests, direct CRUD unit tests against an in-memory DB) and `backend/tests/test_api_persistence.py` (8 tests, real FastAPI `TestClient` HTTP-level tests against a temp-file DB — `:memory:` doesn't work here since `get_db` opens a fresh connection per request and in-memory SQLite doesn't survive across separate connections) — this also closes a sliver of the long-standing "no test touches `api.py` directly" gap, scoped just to the new endpoints. Verified the validation-error path has teeth: temporarily disabled the waste-strategy value check in `storage.py`, reran, both the unit test and the HTTP test failed as expected, restored. **Also verified end-to-end in a real headless browser** (Playwright via a scratch script, no project `run` skill existed yet): fresh SQLite DB → confirmed `GET /settings` defaults to `"balanced"` → uploaded a real sample CSV → added a stock board through the library form → confirmed it appeared in the library table → clicked "Use" and confirmed it appeared in the job's own Stock boards table → changed the waste-placement dropdown and confirmed the change round-tripped to the server (`GET /settings` reflected it, not just React state) → deleted the library entry and confirmed it disappeared. Zero console/page errors throughout. `tsc -b`/lint/build all clean. Deferred to a later pass: login/auth, tenant/company modeling, per-machine "available optimizations" config, and the CSV-schema-template rename (Nanxing Nesting → "Template 1", Panel Saw → "Template 2" — mapping confirmed with the project owner, not yet implemented). |
 
 **Cross-cutting:** `backend/tests/` now has `conftest.py`, `helpers.py`, `fcc_golden.py` (golden
 XML → exporter-input importer, test-only), `test_parser.py`, `test_guillotine.py`,
 `test_nanxing.py`, `test_xml_roundtrip.py` (now parametrized across all 4 non-empty golden
-files, not just one), `test_pdf.py`, `test_packing_engines.py` — **76 tests**, all green from a
-clean `pip install -e ".[dev]"`. Not yet covered: any test touching `api.py` directly (the
-`export/pdf.py` gap is now closed). `frontend/` has no automated tests yet (type-check + build +
-one manual browser run only) — no test framework wired up.
+files, not just one), `test_pdf.py`, `test_packing_engines.py`, `test_storage.py`,
+`test_api_persistence.py` — **95 tests**, all green from a clean `pip install -e ".[dev]"`.
+`test_api_persistence.py` is the first test file to exercise `api.py` directly over real HTTP
+(via FastAPI's `TestClient`, new `httpx` dev dep) — scoped just to the new `/stock-boards` and
+`/settings` endpoints; `/parse`, `/optimize`, `/export/pdf`, `/export/xml` still aren't covered
+as HTTP endpoints, only their underlying `optimizer/` functions are. `frontend/` has no
+automated tests yet (type-check + build + manual browser runs only) — no test framework wired up.
 
 **Directory reorg (post-M7):** `sample_data/` now nests its CSVs under `CSV Files from IMOS/`
 and golden XMLs under `XML Data for Nanxing Nesting Machine/` (previously flat), and gained a
@@ -104,7 +109,7 @@ not built (see M3 row).
 
 <!-- Update after each work block. This is what a fresh session needs most. -->
 
-- **Last worked:** 2026-08-13 — four passes across two sessions. (1) Applied
+- **Last worked:** 2026-08-14 — five passes across three sessions. (1) Applied
   `Business Logic/grain_logic.md` (raw CSV `Grain` codes are `0`/`1`/`2`, not just `0`/`x`/`y`;
   `1`/`2` were previously unmapped and silently treated as ungrained/rotatable). Fixed in
   `GRAIN_MAP` (`backend/optimizer/parser.py`), see M1 row. (2) Redesigned M3's PDF export to
@@ -126,7 +131,11 @@ not built (see M3 row).
   own Nanxing output (`Updates/image.png`) showing scattered wastage slivers instead of
   consolidated ones — added `waste_strategy` (see M4 row), measured a real utilization
   improvement on the busiest sheet of the real sample job (73.56%→78.41%), and exposed it in the
-  frontend `ParamsPanel`. Before all four: Phases A/B/C of
+  frontend `ParamsPanel`. (5) `Updates/update_004.md` first asked for a large, one-shot
+  persistence/auth/multi-tenancy build, but explicitly asked to discuss and ask questions before
+  touching code — two `AskUserQuestion` rounds scoped it down to SQLite, single-tenant, no
+  login yet, and just Stock Boards + a Waste Placement default persisted this pass (see M9 row
+  for the full scoping trail and what got deferred). Before all five: Phases A/B/C of
   `~/.claude/plans/delegated-moseying-robin.md` complete, plus follow-on M6, M7, and
   Nanxing-packer-efficiency passes (same plan file, rewritten fresh for each pass), prompted by
   `update_001` (a user-supplied real-world comparison against the actual Nanxing machine
@@ -136,7 +145,10 @@ not built (see M3 row).
 - **Backend entry point:** `backend/api.py` (FastAPI app object `app`), run via `backend/start-backend.sh`
   → `uvicorn api:app --reload --host 127.0.0.1 --port 8000`. `backend/.venv` has the `dev`
   extra installed (`pip install -e ".[dev]"`, now including `pypdf` for PDF-export test
-  assertions) — `pytest -q` from `backend/` runs 76 tests, all green.
+  assertions and `httpx` for FastAPI `TestClient` HTTP tests) — `pytest -q` from `backend/` runs
+  95 tests, all green. New runtime dependency: a SQLite file at `backend/nesting_pro.db`
+  (gitignored, auto-created on first request via `storage.get_connection()` — no manual setup
+  step, but a fresh clone's first `/stock-boards` or `/settings` call creates it).
 - **Frontend entry point:** `frontend/` (Vite + React + TypeScript), `npm run dev` serves on
   `http://localhost:5173` with `/api/*` proxied to the backend on `:8000` (`vite.config.ts`) —
   run both dev servers side by side, no backend changes needed for local dev. `npm run build`
@@ -187,11 +199,13 @@ not built (see M3 row).
 - **Immediate next step:** M6's output has never touched a real machine — before relying on it,
   a small reproducible dry-run cut is needed (spec §7.3/Appendix A.5), which isn't something a
   coding session can do unattended. Barring that, remaining work is M8 (offcut reuse), the
-  frontend/PDF board-orientation mismatch noted above, possibly a `frontend/` test suite, and
-  giving the new `waste_strategy="edge"` option a real cut/dry-run check of its own — it's
-  verified geometrically (decomposable, no overlaps, no drops) and against a real CSV job's
-  numbers, but "wastage visually pushed to one edge" hasn't been confirmed on an actual cut
-  sheet, only in a rendered PDF.
+  deferred parts of M9 (login/auth, tenant/company modeling, per-machine "available
+  optimizations" config, CSV-schema-template renaming — see M9 row for the confirmed
+  Template-1/Template-2 mapping, not yet wired in), the frontend/PDF board-orientation mismatch
+  noted above, possibly a `frontend/` test suite, and giving the `waste_strategy="edge"` option
+  a real cut/dry-run check of its own — it's verified geometrically (decomposable, no overlaps,
+  no drops) and against a real CSV job's numbers, but "wastage visually pushed to one edge"
+  hasn't been confirmed on an actual cut sheet, only in a rendered PDF.
 - **Open questions / blockers:** none new beyond what's already in `instructions.md` §10 (still
   needs owner confirmation on kerf value, ZIP/JPEG vs plain PDF acceptance, etc). `ToolPoint`'s
   rule is unresolved (see above) — needs either more/different golden data or real machine
@@ -246,6 +260,12 @@ formatted like the reference. A valid empty job is a self-closed root `<FccRoot 
    rendered PDF. Not yet confirmed on an actual cut sheet that the consolidated wastage is where
    it visually appears to be and is actually more usable as offcut stock in practice.
 6. **M8 offcut reuse:** larger oddments become returnable stock (see Appendix A.6).
+7. **M9, deferred scope:** `update_004.md`'s login/auth, tenant/company modeling, per-machine
+   "available optimizations" config, and CSV-schema-template renaming (Nanxing Nesting →
+   "Template 1", Panel Saw → "Template 2" — mapping already confirmed with the project owner,
+   just not implemented yet) were all explicitly scoped out of the first persistence pass (see
+   M9 row) to land Stock Boards + Waste Placement defaults first. Pick up in that order unless
+   priorities change.
 
 ---
 

@@ -1,4 +1,4 @@
-import type { OptRequest, OptResult, Part } from "./types";
+import type { OptRequest, OptResult, Part, StockBoard, WasteStrategy } from "./types";
 
 export class ApiError extends Error {
   errors: string[];
@@ -10,12 +10,7 @@ export class ApiError extends Error {
   }
 }
 
-async function postJson(path: string, body: unknown): Promise<Response> {
-  const res = await fetch(`/api${path}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
+async function handleErrors(res: Response): Promise<Response> {
   if (!res.ok) {
     const payload = await res.json().catch(() => null);
     const detail = payload?.detail;
@@ -23,6 +18,58 @@ async function postJson(path: string, body: unknown): Promise<Response> {
     throw new ApiError(errors);
   }
   return res;
+}
+
+async function postJson(path: string, body: unknown): Promise<Response> {
+  const res = await fetch(`/api${path}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return handleErrors(res);
+}
+
+async function getJson(path: string): Promise<Response> {
+  return handleErrors(await fetch(`/api${path}`));
+}
+
+async function putJson(path: string, body: unknown): Promise<Response> {
+  const res = await fetch(`/api${path}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  return handleErrors(res);
+}
+
+async function deleteJson(path: string): Promise<Response> {
+  return handleErrors(await fetch(`/api${path}`, { method: "DELETE" }));
+}
+
+export type PersistedStockBoard = StockBoard & { id: number };
+
+export async function listStockBoards(): Promise<PersistedStockBoard[]> {
+  return (await getJson("/stock-boards")).json();
+}
+
+export async function createStockBoard(board: StockBoard): Promise<PersistedStockBoard> {
+  return (await postJson("/stock-boards", board)).json();
+}
+
+export async function updateStockBoard(id: number, board: StockBoard): Promise<PersistedStockBoard> {
+  return (await putJson(`/stock-boards/${id}`, board)).json();
+}
+
+export async function deleteStockBoard(id: number): Promise<void> {
+  await deleteJson(`/stock-boards/${id}`);
+}
+
+export async function getSettings(): Promise<{ wasteStrategyDefault: WasteStrategy }> {
+  return (await getJson("/settings")).json();
+}
+
+export async function setWasteStrategyDefault(value: WasteStrategy): Promise<void> {
+  await putJson("/settings", { wasteStrategyDefault: value });
 }
 
 export async function parseCsv(csvText: string): Promise<{ parts: Part[] }> {
