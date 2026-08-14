@@ -8,6 +8,7 @@ from optimizer.export.pdf import (
     _cutting_list,
     _deduplicate_layouts,
     _grain_direction_is_vertical,
+    _nominal_dims,
     _sheet_signature,
     _sidebar_bottom_boxes,
     render_layout_pdf,
@@ -104,6 +105,22 @@ def test_cutting_list_uses_nominal_dims_not_rotated_footprint():
     rows, _ = _cutting_list(sheet)
     assert rows[0]["length"] == 100.0
     assert rows[0]["width"] == 200.0
+
+
+def test_nominal_dims_recovers_length_grain_natural_pose():
+    # Issues/issues_001.md fix: a grain="length" part's natural (rotated=False) pose has
+    # cutWidth on local x (w) and cutLength on local y (h) — the opposite pairing from
+    # grain="none"/"width" parts. _nominal_dims must be grain-aware to still recover the true
+    # (cutLength, cutWidth) for the cutting list / edge-dimension labels.
+    part = _part(name="X", w=556.4, h=1323.4, rotated=False, grain="length")
+    length, width = _nominal_dims(part)
+    assert (length, width) == (1323.4, 556.4)
+
+
+def test_nominal_dims_unaffected_for_width_and_none_grain():
+    for grain in ("width", "none"):
+        part = _part(name="X", w=1323.4, h=556.4, rotated=False, grain=grain)
+        assert _nominal_dims(part) == (1323.4, 556.4)
 
 
 def test_grain_direction_mapping():

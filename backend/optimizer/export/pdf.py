@@ -7,7 +7,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.pdfgen.canvas import Canvas
 
-from ..model import CutInstruction, OptResult, Sheet
+from ..model import CutInstruction, OptResult, PlacedPart, Sheet
 from .xml import fmt_num
 
 # Layout structure follows sample_data/Max Cut Optimization Drawings/max_cut.pdf (Updates/
@@ -52,6 +52,17 @@ DIM_LABEL_MARGIN = 14 * mm
 
 def _color_for_index(index: int) -> tuple[float, float, float]:
     return PALETTE[index % len(PALETTE)]
+
+
+def _nominal_dims(p: PlacedPart) -> tuple[float, float]:
+    """Recovers the part's original (cutLength, cutWidth) from its placed footprint (w, h) and
+    rotated flag. Must mirror optimizer/saw_packing.py's/nanxing_packing.py's _footprint(): for
+    grain="length" parts, the natural (rotated=False) pose already has cutLength on the local
+    x-axis (w), so p.rotated alone isn't enough — see that function's docstring for why."""
+    swapped = (p.grain == "length") != p.rotated
+    if swapped:
+        return p.h, p.w
+    return p.w, p.h
 
 
 def _shrink_to_fit(canvas: Canvas, text: str, max_width: float, start_size: float, min_size: float = 4.0, font: str = "Helvetica-Bold") -> float:
@@ -114,8 +125,7 @@ def _cutting_list(sheet: Sheet) -> tuple[list[dict], dict[int, int]]:
     symbol_by_index: dict[int, int] = {}
     next_symbol = 1
     for i, p in enumerate(sheet.placed):
-        length = p.h if p.rotated else p.w
-        width = p.w if p.rotated else p.h
+        length, width = _nominal_dims(p)
         key = (p.name, round(length, 1), round(width, 1))
         if key not in groups:
             groups[key] = next_symbol
@@ -368,8 +378,7 @@ def _draw_board_drawing(
         canvas.setStrokeColorRGB(*PART_STROKE)
         canvas.setLineWidth(0.75)
         canvas.rect(x, y, w, h, fill=1, stroke=1)
-        length_mm = part.h if part.rotated else part.w
-        width_mm = part.w if part.rotated else part.h
+        length_mm, width_mm = _nominal_dims(part)
         _draw_part_edge_dims(canvas, x, y, w, h, width_mm, length_mm)
         symbol = symbol_by_index[i]
         _draw_part_symbol_label(canvas, x, y, w, h, f"{symbol}.{part.name}")

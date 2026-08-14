@@ -1,0 +1,99 @@
+from __future__ import annotations
+
+from lxml import etree
+
+from optimizer.export.xml import generate_fcc_xml
+from optimizer.model import Margin, Offcut, OptResult, Part, PlacedPart, Sheet
+from optimizer.nanxing import optimize as nanxing_optimize
+from optimizer.parser import parse_csv_text
+
+from .conftest import CSV_SAMPLE_DIR
+from .helpers import default_stock_for
+
+# Issues/issues_002.md: a real Nanxing machine load showed every job crammed into a region no
+# bigger than the board's *width*, with the rest of the board's real *length* left empty. Root
+# cause: optimizer/export/xml.py wrote PlacedPart.x (the packer's board.width-axis coordinate,
+# max ~1205mm on a 2440x1220 board) straight into the XML's X attribute, which the machine
+# reads as the board's *length* axis (expects up to ~2430mm) — and PlacedPart.y (board.length-
+# axis, max ~2430mm) into Y, which the machine reads as *width* (expects up to ~1205mm). The
+# golden-file round-trip test never caught this because its importer (fcc_golden.py) made the
+# exact same (backwards) assumption on the way in, so import+export cancelled out — round-trip
+# fidelity was preserved even though the axis labeling was wrong for real packer-sourced data.
+# These tests exercise the real packer -> exporter path directly, which the round-trip test
+# never did.
+
+
+def _part(id: str, cutLength: float, cutWidth: float) -> Part:
+    return Part(
+        id=id, posId=id, name=id, cutLength=cutLength, cutWidth=cutWidth,
+        finishedLength=cutLength, finishedWidth=cutWidth, thickness=18.0, qty=1,
+        material="MAT", grain="none", edges={"l1": "", "l2": "", "w1": "", "w2": ""},
+    )
+
+
+def test_workpiece_x_follows_board_length_axis_not_width():
+    # Synthetic, deliberately discriminating case: a part placed at local y=2000 (the packer's
+    # length-derived axis) on a 2440x1220 board. y=2000 exceeds the board's width (1220), so if
+    # the exporter still wrote placed.y straight into XML Y (the bug), this value could never
+    # appear as a valid Y coordinate on a 1220mm-wide board — it must appear as X instead.
+    part = _part("P1", cutLength=200.0, cutWidth=100.0)
+    placed = PlacedPart(
+        partId="P1", x=50.0, y=2000.0, rotated=False, w=200.0, h=100.0,
+        name="P1", material="MAT", thickness=18.0, grain="none",
+    )
+    sheet = Sheet(
+        index=1, material="MAT", boardL=2440.0, boardW=1220.0, thickness=18.0,
+        placed=[placed], offcuts=[], utilizationPct=50.0,
+    )
+    result = OptResult(sheets=[sheet], unplaced=[])
+    margin = Margin(top=0, right=0, bottom=0, left=0)
+    xml_bytes = generate_fcc_xml(result, {"P1": part}, margin, tool_diameter=6.0, part_spacing=6.0)
+    root = etree.fromstring(xml_bytes)
+    lineament = root.find(".//Workpiece/Lineament")
+    assert float(lineament.get("X")) == 2000.0 - 3.0  # placed.y - PRO_OFFSET
+    assert float(lineament.get("Y")) == 50.0 - 3.0  # placed.x - PRO_OFFSET
+
+
+def test_oddment_x_follows_board_length_axis_not_width():
+    offcut = Offcut(x=50.0, y=1800.0, w=100.0, h=200.0)
+    sheet = Sheet(
+        index=1, material="MAT", boardL=2440.0, boardW=1220.0, thickness=18.0,
+        placed=[], offcuts=[offcut], utilizationPct=0.0,
+    )
+    result = OptResult(sheets=[sheet], unplaced=[])
+    margin = Margin(top=0, right=0, bottom=0, left=0)
+    xml_bytes = generate_fcc_xml(result, {}, margin, tool_diameter=6.0, part_spacing=6.0)
+    root = etree.fromstring(xml_bytes)
+    lineament = root.find(".//Oddments/Lineament")
+    assert float(lineament.get("X")) == 1800.0
+    assert float(lineament.get("Y")) == 50.0
+
+
+def test_real_job_workpiece_coordinates_stay_within_declared_board_bounds():
+    # Integration-level sanity check against a real CSV: every workpiece's XML Points must fall
+    # within [0, Patterns.Length] x [0, Patterns.Width] (plus a small tolerance for the
+    # tool-path envelope offset), and — the actually discriminating assertion — at least one
+    # workpiece's X extent on the busiest sheet must exceed the board's Width, proving the
+    # board's real Length axis is genuinely being used, not just coincidentally never exercised.
+    text = (CSV_SAMPLE_DIR / "nesting_machine_data.csv").read_text(encoding="utf-8-sig")
+    parts, errors = parse_csv_text(text)
+    assert errors == []
+    stock = default_stock_for(parts)
+    margin = Margin(top=10, right=10, bottom=10, left=5)
+    result = nanxing_optimize(parts, stock, margin, spacing=6.0)
+    parts_by_id = {p.id: p for p in parts}
+    xml_bytes = generate_fcc_xml(result, parts_by_id, margin, tool_diameter=6.0, part_spacing=6.0)
+    root = etree.fromstring(xml_bytes)
+
+    saw_x_exceed_width = False
+    for patterns_el in root.findall("Patterns"):
+        board_length = float(patterns_el.get("Length"))
+        board_width = float(patterns_el.get("Width"))
+        for wp in patterns_el.findall(".//Workpiece"):
+            for point in wp.findall("Lineament/Points/Point"):
+                x, y = float(point.get("X")), float(point.get("Y"))
+                assert -5 <= x <= board_length + 5, f"{wp.get('WorkpieceId')} X={x} outside [0,{board_length}]"
+                assert -5 <= y <= board_width + 5, f"{wp.get('WorkpieceId')} Y={y} outside [0,{board_width}]"
+                if x > board_width:
+                    saw_x_exceed_width = True
+    assert saw_x_exceed_width, "expected at least one workpiece to use X beyond the board's width — otherwise this test can't tell a correct axis mapping from a swapped one"

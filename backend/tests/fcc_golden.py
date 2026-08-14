@@ -70,17 +70,21 @@ def load_golden_fcc(path: Path):
                 lineament_el = wp.find("Lineament")
                 minx, miny, maxx, maxy = _bounds(lineament_el.find("Points"))
                 # Lineament spans the tool-path envelope (cut rect inflated by ProOffset on
-                # each side, see optimizer/export/xml.py) — deflate back to the true cut rect
+                # each side, see optimizer/export/xml.py) — deflate back to the true cut rect.
+                # The XML's X/Y follow the machine's own convention (X=board length axis,
+                # Y=board width axis); PlacedPart.x/y follow the packer's convention (x=width
+                # axis, y=length axis) — the opposite — so this is transposed on the way in,
+                # mirroring the transpose optimizer/export/xml.py applies on the way out.
                 offset_x = float(lineament_el.get("ProOffsetX", 3.0))
                 offset_y = float(lineament_el.get("ProOffsetY", 3.0))
                 placed_parts.append(
                     PlacedPart(
                         partId=part.id,
-                        x=minx + offset_x,
-                        y=miny + offset_y,
+                        x=miny + offset_y,
+                        y=minx + offset_x,
                         rotated=wp.get("RotateAngle") == "90",
-                        w=(maxx - minx) - 2 * offset_x,
-                        h=(maxy - miny) - 2 * offset_y,
+                        w=(maxy - miny) - 2 * offset_y,
+                        h=(maxx - minx) - 2 * offset_x,
                         name=part.name,
                         material=part.material,
                         thickness=part.thickness,
@@ -91,7 +95,7 @@ def load_golden_fcc(path: Path):
             offcuts: list[Offcut] = []
             for odd in pattern_el.findall("OddmentsList/Oddments"):
                 minx, miny, maxx, maxy = _bounds(odd.find("Lineament/Points"))
-                offcuts.append(Offcut(x=minx, y=miny, w=maxx - minx, h=maxy - miny))
+                offcuts.append(Offcut(x=miny, y=minx, w=maxy - miny, h=maxx - minx))
 
             sheets.append(
                 Sheet(

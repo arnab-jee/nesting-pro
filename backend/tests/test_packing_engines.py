@@ -6,11 +6,20 @@ import optimizer.guillotine as guillotine_module
 import optimizer.nanxing as nanxing_module
 from optimizer import nanxing_packing, saw_packing
 from optimizer.guillotine import optimize as saw_optimize
+from optimizer.model import Margin, Part, StockBoard
 from optimizer.nanxing import optimize as nanxing_optimize
 
 from .helpers import default_stock_for, is_guillotine_cuttable, overlapping_pairs
 
 MODULES = [saw_packing, nanxing_packing]
+
+
+def _part(cutLength: float, cutWidth: float, grain: str = "none", id: str = "P") -> Part:
+    return Part(
+        id=id, posId=id, name=id, cutLength=cutLength, cutWidth=cutWidth,
+        finishedLength=cutLength, finishedWidth=cutWidth, thickness=18.0, qty=1,
+        material="MAT", grain=grain, edges={"l1": "", "l2": "", "w1": "", "w2": ""},
+    )
 
 
 def test_packers_are_independent_modules():
@@ -103,3 +112,69 @@ def test_edge_strategy_consolidates_wastage_vs_balanced(nesting_parts, default_m
         return largest_per_sheet / total_area
 
     assert largest_offcut_fraction(edge) > largest_offcut_fraction(balanced)
+
+
+# --- Issues/issues_001.md: grain="length" parts were placed with cutLength forced onto the
+# board's *width*-derived axis regardless of grain, silently rejecting any such part whose
+# cutLength exceeded the board's width even when it fit easily along the board's length axis.
+# Confirmed backwards against real golden Nanxing machine data (WorkpieceId
+# 26Y117T1F1B1_1001, Grain="L", CutLength=1323.4, placed with an X-span of ~1329mm on a
+# 2440mm-length board, RotateAngle absent) before fixing _footprint() in both packer modules.
+
+@pytest.mark.parametrize("mod", MODULES)
+def test_footprint_length_grain_natural_pose_runs_cutlength_on_local_y(mod):
+    # local x is the board.width-derived axis, local y is board.length-derived (see
+    # place_parts_on_board: width=board.width-margins, height=board.length-margins).
+    part = _part(cutLength=1323.4, cutWidth=556.4, grain="length")
+    pw, ph = mod._footprint(part, rotated=False)
+    assert (pw, ph) == (556.4, 1323.4)  # cutWidth on local x, cutLength on local y
+
+
+@pytest.mark.parametrize("mod", MODULES)
+def test_footprint_width_grain_natural_pose_unchanged(mod):
+    part = _part(cutLength=1323.4, cutWidth=556.4, grain="width")
+    pw, ph = mod._footprint(part, rotated=False)
+    assert (pw, ph) == (1323.4, 556.4)  # cutLength on local x, cutWidth on local y — unchanged
+
+
+@pytest.mark.parametrize("mod", MODULES)
+def test_footprint_none_grain_unaffected_by_the_fix(mod):
+    part = _part(cutLength=1323.4, cutWidth=556.4, grain="none")
+    assert mod._footprint(part, rotated=False) == (1323.4, 556.4)
+    assert mod._footprint(part, rotated=True) == (556.4, 1323.4)
+
+
+def test_length_grain_part_too_wide_for_board_width_now_places_on_saw():
+    # The exact real part from Issues/issues_001.md: cutLength=1323.4 exceeds a 2440x1220
+    # board's usable width axis (1205mm after 5+10mm margins) but fits its usable length axis
+    # (2430mm). Previously rejected outright since grain="length" disallows rotation and the
+    # only orientation ever tried put cutLength on the width axis.
+    part = _part(cutLength=1323.4, cutWidth=556.4, grain="length", id="X")
+    stock = [StockBoard(material="MAT", length=2440, width=1220, thickness=18.0, grain="none")]
+    margin = Margin(top=0, right=10, bottom=10, left=5)
+    result = saw_optimize([part], stock, margin, kerf=4.0, allow_rotation=True)
+    assert result.unplaced == []
+    assert len(result.sheets) == 1
+    placed = result.sheets[0].placed[0]
+    assert placed.rotated is False  # natural pose, not an actual 90-degree turn
+    assert (placed.w, placed.h) == (556.4, 1323.4)
+
+
+def test_length_grain_part_too_wide_for_board_width_now_places_on_nanxing():
+    part = _part(cutLength=1323.4, cutWidth=556.4, grain="length", id="X")
+    stock = [StockBoard(material="MAT", length=2440, width=1220, thickness=18.0, grain="none")]
+    margin = Margin(top=0, right=10, bottom=10, left=5)
+    result = nanxing_optimize([part], stock, margin, spacing=6.0)
+    assert result.unplaced == []
+    assert len(result.sheets) == 1
+
+
+def test_length_grain_part_still_rejected_if_it_exceeds_both_axes():
+    # A part that's genuinely too big for the board in any orientation must still end up
+    # unplaced — the fix only corrects which axis is tried, not whether the geometry check
+    # itself is enforced.
+    part = _part(cutLength=3000.0, cutWidth=556.4, grain="length", id="X")
+    stock = [StockBoard(material="MAT", length=2440, width=1220, thickness=18.0, grain="none")]
+    margin = Margin(top=0, right=10, bottom=10, left=5)
+    result = saw_optimize([part], stock, margin, kerf=4.0, allow_rotation=True)
+    assert len(result.unplaced) == 1

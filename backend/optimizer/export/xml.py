@@ -143,9 +143,17 @@ def _edge_group(rotated: bool) -> _El:
 
 
 def _workpiece_element(part: Part, placed: PlacedPart, workpiece_id: int, cutting_order_no: int) -> _El:
-    # the true cut rectangle, inflated outward by the tool-path envelope offset
-    minx, miny = placed.x - PRO_OFFSET, placed.y - PRO_OFFSET
-    maxx, maxy = placed.x + placed.w + PRO_OFFSET, placed.y + placed.h + PRO_OFFSET
+    # placed.x/w run along the packer's local x axis (board.width-derived); placed.y/h run
+    # along local y (board.length-derived) — see optimizer/saw_packing.py's
+    # place_parts_on_board. The machine's own FCC XML convention is the opposite: X follows
+    # the board's *length* axis, Y follows *width* — confirmed against real golden data (M10)
+    # and against an actual machine load (Issues/issues_002.md: every real job loaded with
+    # everything crammed into the board's width-sized region and the rest of the true 2440mm
+    # length left empty). Transposed here for export: XML X/its extent come from placed.y/h,
+    # XML Y/its extent come from placed.x/w. tests/fcc_golden.py's importer applies the same
+    # transpose in reverse so the golden-file round-trip test stays self-consistent.
+    minx, miny = placed.y - PRO_OFFSET, placed.x - PRO_OFFSET
+    maxx, maxy = placed.y + placed.h + PRO_OFFSET, placed.x + placed.w + PRO_OFFSET
     rotated = placed.rotated
     # drives both the secondary winding shift (Lineament.RotationAngle) and the MachiningPoint=7
     # variant — verified deterministic against real data, not documented as such in Appendix A.
@@ -212,14 +220,17 @@ def _workpiece_element(part: Part, placed: PlacedPart, workpiece_id: int, cuttin
 
 
 def _oddments_element(offcut: Offcut, index: int, tool_diameter: float) -> _El:
-    minx, miny = offcut.x, offcut.y
-    maxx, maxy = offcut.x + offcut.w, offcut.y + offcut.h
+    # Same x<->y / w<->h transpose as _workpiece_element (see its comment) — offcut.x/w are
+    # board.width-axis, offcut.y/h are board.length-axis; the XML's X/Length follow the
+    # machine's length axis, Y/Width follow its width axis.
+    minx, miny = offcut.y, offcut.x
+    maxx, maxy = offcut.y + offcut.h, offcut.x + offcut.w
     points = _rect_points(minx, miny, maxx, maxy)
     # the machine reports usable oddment size net of the tool clearance needed to cut
     # it back out, not the raw free-rectangle bounding box (verified against golden data);
     # SamllWorkpieceFlg is keyed off that same *usable* size, not the raw bounds either
-    usable_length = offcut.w - tool_diameter
-    usable_width = offcut.h - tool_diameter
+    usable_length = offcut.h - tool_diameter
+    usable_width = offcut.w - tool_diameter
     small = min(usable_length, usable_width) <= SMALL_WORKPIECE_THRESHOLD
     lineament = _El(
         "Lineament",

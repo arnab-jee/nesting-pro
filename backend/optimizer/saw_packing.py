@@ -105,6 +105,29 @@ def merge_free_rects(rects: list[Rectangle]) -> list[Rectangle]:
     return rects
 
 
+def _footprint(part: Part, rotated: bool) -> tuple[float, float]:
+    """Returns (pw, ph), the placement footprint's extent along the board's local x/y axes.
+    `rotated` means the part has been physically turned 90 degrees from its own natural,
+    grain-mandated pose — it feeds directly into PlacedPart.rotated and the exported
+    RotateAngle, so it must NOT simply mean "pw=cutWidth".
+
+    For grain="length" parts, the natural (rotated=False) pose already has cutLength running
+    along the board's length-derived axis — confirmed against real golden Nanxing machine data
+    (207 grain="L" workpieces; e.g. WorkpieceId 26Y117T1F1B1_1001, CutLength=1323.4, placed
+    with an X-span of ~1329mm on a 2440mm-length board, RotateAngle absent — i.e. the machine
+    doesn't consider this a rotation at all). The previous version of this function always
+    defaulted cutLength onto the board's *width*-derived axis regardless of grain, which is
+    backwards for "length" grain and silently rejected any such part whose cutLength exceeded
+    the board's width even though it fit easily along the length axis (Issues/issues_001.md).
+    grain="width"/"none" parts are unaffected — their natural pose was already correct.
+    """
+    natural_swap = part.grain == "length"
+    swap = natural_swap != rotated
+    if swap:
+        return part.cutWidth, part.cutLength
+    return part.cutLength, part.cutWidth
+
+
 def place_parts_on_board(
     parts: list[Part], board: StockBoard, margin: Margin, gap: float, allow_rotation: bool, sheet_index: int,
     waste_strategy: WasteStrategy = "balanced",
@@ -124,8 +147,7 @@ def place_parts_on_board(
         best_choice = None
         orientations = [False, True] if allow_rotation and part.can_rotate() else [False]
         for rotated in orientations:
-            pw = part.cutWidth if rotated else part.cutLength
-            ph = part.cutLength if rotated else part.cutWidth
+            pw, ph = _footprint(part, rotated)
             footprint_w = pw + gap
             footprint_h = ph + gap
             for rect_idx, rect in enumerate(free_rects):

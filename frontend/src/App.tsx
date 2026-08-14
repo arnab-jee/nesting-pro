@@ -188,7 +188,7 @@ function App() {
 
       {step === "results" && optResult && (
         <div className="results">
-          <Summary result={optResult} stock={stock} />
+          <Summary result={optResult} stock={stock} margin={margin} allowRotation={allowRotation} />
           <div className="actions">
             {/* the drawing (PDF) is a plain layout render — works for either machine's
                 placement result. The FCC XML is Nanxing-specific (it's the router's own
