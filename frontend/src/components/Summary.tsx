@@ -43,6 +43,7 @@ export function Summary({ result, stock, margin, allowRotation }: Props) {
     result.sheets.length > 0
       ? result.sheets.reduce((sum, s) => sum + s.utilizationPct, 0) / result.sheets.length
       : 0;
+  const panelsCut = result.sheets.reduce((sum, s) => sum + s.placed.length, 0);
 
   return (
     <div className="card summary">
@@ -59,6 +60,10 @@ export function Summary({ result, stock, margin, allowRotation }: Props) {
         <div className={`stat-card ${result.unplaced.length > 0 ? "stat-card--warn" : "stat-card--ok"}`}>
           <span className="stat-card__value">{result.unplaced.length}</span>
           <span className="stat-card__label">Unplaced parts</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-card__value">{panelsCut}</span>
+          <span className="stat-card__label">Panels/Parts cut</span>
         </div>
       </div>
       {result.unplaced.length > 0 && (
