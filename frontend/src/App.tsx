@@ -39,6 +39,7 @@ function App() {
   const [partSpacing, setPartSpacing] = useState(6.1);
   const [allowRotation, setAllowRotation] = useState(true);
   const [wasteStrategy, setWasteStrategyState] = useState<WasteStrategy>("balanced");
+  const [showCutLines, setShowCutLines] = useState(false);
 
   // Load the persisted default once on mount, then keep it "sticky": every change the user
   // makes gets saved back as the new default for next time (Updates/update_004.md).
@@ -65,7 +66,7 @@ function App() {
   const projectName = parts[0]?.customer?.replace(/\s+/g, "-") ?? "nesting-job";
 
   function currentRequest(): OptRequest {
-    return { parts, stock, kerf, toolDiameter, partSpacing, margin, allowRotation, target, wasteStrategy };
+    return { parts, stock, kerf, toolDiameter, partSpacing, margin, allowRotation, target, wasteStrategy, showCutLines };
   }
 
   async function handleMappingConfirmed(finalCsvText: string) {
@@ -172,17 +173,25 @@ function App() {
             onAllowRotationChange={setAllowRotation}
             wasteStrategy={wasteStrategy}
             onWasteStrategyChange={setWasteStrategy}
+            showCutLines={showCutLines}
+            onShowCutLinesChange={setShowCutLines}
           />
           <StockBoardLibrary onUse={(board) => setStock((prev) => [...prev, board])} />
           <ErrorAlert errors={optimizeErrors} />
           <div className="actions">
-            <button className="btn btn--secondary" onClick={() => setStep("map")}>
+            <button className="btn btn--secondary" onClick={() => setStep("map")} disabled={optimizing}>
               Back
             </button>
             <button className="btn btn--primary" onClick={handleRunOptimize} disabled={optimizing}>
+              {optimizing && <span className="spinner" aria-hidden="true" />}
               {optimizing ? "Optimizing…" : "Run optimize"}
             </button>
           </div>
+          {optimizing && (
+            <p className="status-text">
+              Nesting {parts.length} parts — large jobs (hundreds of parts) can take a few seconds.
+            </p>
+          )}
         </div>
       )}
 
@@ -211,7 +220,13 @@ function App() {
           <ErrorAlert errors={downloadErrors} />
           <div className="sheet-grid">
             {optResult.sheets.map((sheet) => (
-              <SheetPreview key={sheet.index} sheet={sheet} />
+              <SheetPreview
+                key={sheet.index}
+                sheet={sheet}
+                cuts={optResult.cuts.filter((c) => c.sheetIndex === sheet.index)}
+                margin={margin}
+                showCutLines={showCutLines}
+              />
             ))}
           </div>
         </div>

@@ -308,6 +308,76 @@ th {
   margin-bottom: 1rem;
 }
 
+.th-sortable {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.th-sortable:hover {
+  color: var(--text);
+}
+
+.th-sortable__arrow {
+  display: inline-block;
+  width: 0.9em;
+}
+
+.table-search {
+  max-width: 20rem;
+  margin-bottom: 0.75rem;
+}
+
+/* ---------- cut list ---------- */
+
+.cut-list {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.cut-list summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.cut-list summary:hover {
+  color: var(--text);
+}
+
+.cut-orientation {
+  text-transform: capitalize;
+}
+
+.cut-orientation--vertical {
+  color: var(--accent);
+}
+
+.cut-orientation--horizontal {
+  color: var(--text-h);
+}
+
+/* ---------- spinner ---------- */
+
+.spinner {
+  display: inline-block;
+  width: 0.85em;
+  height: 0.85em;
+  margin-right: 0.4em;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  vertical-align: -0.1em;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* ---------- buttons ---------- */
 
 .actions {
@@ -520,6 +590,13 @@ th {
 
 .part-label {
   fill: var(--text-h);
+  pointer-events: none;
+}
+
+.cut-line {
+  stroke: #d92626;
+  stroke-width: 3;
+  stroke-dasharray: 10 6;
   pointer-events: none;
 }
 

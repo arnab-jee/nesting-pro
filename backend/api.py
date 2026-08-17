@@ -137,7 +137,8 @@ def export_pdf(request: dict = Body(...)) -> Response:
             result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True), waste_strategy=waste_strategy)
         else:
             result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=waste_strategy)
-        pdf_data = render_layout_pdf(result)
+        show_cut_lines = request.get("showCutLines", False)
+        pdf_data = render_layout_pdf(result, margin, show_cut_lines=show_cut_lines)
         return Response(content=pdf_data, media_type="application/pdf")
     except Exception as exc:
         raise HTTPException(status_code=400, detail=[str(exc)])

@@ -5,6 +5,7 @@ from pypdf import PdfReader
 
 from optimizer.export.pdf import (
     _color_for_index,
+    _cut_line_bounds,
     _cutting_list,
     _deduplicate_layouts,
     _grain_direction_is_vertical,
@@ -14,7 +15,7 @@ from optimizer.export.pdf import (
     render_layout_pdf,
 )
 from optimizer.guillotine import optimize as saw_optimize
-from optimizer.model import Margin, OptResult, PlacedPart, Sheet
+from optimizer.model import CutInstruction, Margin, OptResult, PlacedPart, Sheet
 
 from .helpers import default_stock_for
 
@@ -148,3 +149,80 @@ def test_color_cycles_through_palette_by_placement_order():
     colors = [_color_for_index(i) for i in range(16)]
     assert len(set(colors)) == 16
     assert _color_for_index(0) == _color_for_index(16)
+
+
+def test_cut_line_bounds_vertical_uses_margin_top_as_start():
+    # offset already has margin.left baked in (build_cuts_for_sheet); .length is only a span,
+    # so the missing start point along Y has to come from margin.top here.
+    margin = Margin(top=5.0, right=10.0, bottom=10.0, left=5.0)
+    cut = CutInstruction(orientation="vertical", offset=305.0, length=1200.0, sheetIndex=1)
+    x1, y1, x2, y2 = _cut_line_bounds(cut, margin)
+    assert (x1, x2) == (305.0, 305.0)
+    assert (y1, y2) == (5.0, 1205.0)
+
+
+def test_cut_line_bounds_horizontal_uses_margin_left_as_start():
+    margin = Margin(top=5.0, right=10.0, bottom=10.0, left=5.0)
+    cut = CutInstruction(orientation="horizontal", offset=610.0, length=2400.0, sheetIndex=1)
+    x1, y1, x2, y2 = _cut_line_bounds(cut, margin)
+    assert (y1, y2) == (610.0, 610.0)
+    assert (x1, x2) == (5.0, 2405.0)
+
+
+def test_render_layout_pdf_accepts_margin_and_draws_cut_lines_without_crashing(saw_parts, default_margin):
+    # Panel Saw is the only path that ever produces non-empty cuts (nanxing.py never populates
+    # OptResult.cuts) — this exercises render_layout_pdf's cut-line overlay end to end on a real
+    # saw job, asserting it doesn't crash and still yields a valid, non-empty PDF. show_cut_lines
+    # defaults to False (Issues/issues_004.md follow-up), so it's passed explicitly here to
+    # actually exercise the overlay-drawing path this test is named for.
+    result = _saw_result(saw_parts, default_margin)
+    assert len(result.cuts) > 0
+    pdf_bytes = render_layout_pdf(result, default_margin, show_cut_lines=True)
+    assert pdf_bytes.startswith(b"%PDF")
+    reader = PdfReader(BytesIO(pdf_bytes))
+    layouts = _deduplicate_layouts(result.sheets)
+    assert len(reader.pages) == len(layouts)
+
+
+def test_show_cut_lines_false_suppresses_the_drawn_overlay(saw_parts, default_margin):
+    # Issues/issues_003.md: the dashed cut-line overlay confused panel-saw operators on some
+    # layouts, so it needs to be toggleable, defaulting on. _draw_cut_lines sets a [3, 2] dash
+    # pattern before drawing any cut line — its literal PDF content-stream operator ("[3 2] 0 d")
+    # is a precise, unambiguous signal that lines were actually drawn, not just that the page
+    # rendered without crashing.
+    result = _saw_result(saw_parts, default_margin)
+    on_bytes = render_layout_pdf(result, default_margin, show_cut_lines=True)
+    off_bytes = render_layout_pdf(result, default_margin, show_cut_lines=False)
+    on_content = bytes(PdfReader(BytesIO(on_bytes)).pages[0].get_contents().get_data())
+    off_content = bytes(PdfReader(BytesIO(off_bytes)).pages[0].get_contents().get_data())
+    assert b"[3 2] 0 d" in on_content
+    assert b"[3 2] 0 d" not in off_content
+
+
+def test_show_cut_lines_defaults_to_false(saw_parts, default_margin):
+    # The overlay defaults off (flipped after Issues/issues_004.md's dense-layout fix landed) —
+    # a caller that omits show_cut_lines entirely must get the same "no lines drawn" behavior as
+    # explicitly passing False, not the old opt-out default.
+    result = _saw_result(saw_parts, default_margin)
+    default_bytes = render_layout_pdf(result, default_margin)
+    off_bytes = render_layout_pdf(result, default_margin, show_cut_lines=False)
+    default_content = bytes(PdfReader(BytesIO(default_bytes)).pages[0].get_contents().get_data())
+    off_content = bytes(PdfReader(BytesIO(off_bytes)).pages[0].get_contents().get_data())
+    assert b"[3 2] 0 d" not in default_content
+    assert default_content == off_content
+
+
+def test_show_cut_lines_false_still_reports_cut_length_stats(saw_parts, default_margin):
+    # Hiding the visual overlay shouldn't hide the numeric "Cut Length" stats — those aren't the
+    # confusing part per the reported issue, only the drawn dashed lines are.
+    result = _saw_result(saw_parts, default_margin)
+    pdf_bytes = render_layout_pdf(result, default_margin, show_cut_lines=False)
+    text = PdfReader(BytesIO(pdf_bytes)).pages[0].extract_text()
+    assert "Sheet Cut Length :" in text
+
+
+def test_render_layout_pdf_without_margin_still_works():
+    # margin is optional (defaults to a zero margin) so existing callers that only care about
+    # part/board geometry aren't forced to supply one.
+    pdf_bytes = render_layout_pdf(OptResult(sheets=[], unplaced=[]))
+    assert pdf_bytes.startswith(b"%PDF")

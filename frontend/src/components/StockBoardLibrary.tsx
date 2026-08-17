@@ -1,5 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ApiError, createStockBoard, deleteStockBoard, listStockBoards, type PersistedStockBoard } from "../api";
+import { SortableTh } from "./SortableTh";
+import { useTableControls } from "../hooks/useTableControls";
 import type { Grain, StockBoard } from "../types";
 
 interface Props {
@@ -7,6 +9,14 @@ interface Props {
 }
 
 const EMPTY_FORM = { material: "", length: "", width: "", thickness: "", grain: "none" as Grain };
+
+const BOARD_SORTERS: Record<string, (a: PersistedStockBoard, b: PersistedStockBoard) => number> = {
+  material: (a, b) => a.material.localeCompare(b.material),
+  length: (a, b) => a.length - b.length,
+  width: (a, b) => a.width - b.width,
+  thickness: (a, b) => a.thickness - b.thickness,
+  grain: (a, b) => a.grain.localeCompare(b.grain),
+};
 
 export function StockBoardLibrary({ onUse }: Props) {
   const [boards, setBoards] = useState<PersistedStockBoard[]>([]);
@@ -53,6 +63,9 @@ export function StockBoardLibrary({ onUse }: Props) {
     }
   }
 
+  const searchBoards = useCallback((b: PersistedStockBoard) => b.material, []);
+  const boardTable = useTableControls(boards, { searchText: searchBoards, sorters: BOARD_SORTERS });
+
   return (
     <fieldset className="params-section">
       <legend className="params-section__title">Stock Board Library</legend>
@@ -66,37 +79,46 @@ export function StockBoardLibrary({ onUse }: Props) {
       ) : boards.length === 0 ? (
         <p className="muted">No saved stock boards yet — add one below.</p>
       ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>Material</th>
-              <th>Length</th>
-              <th>Width</th>
-              <th>Thickness</th>
-              <th>Grain</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {boards.map((board) => (
-              <tr key={board.id}>
-                <td>{board.material}</td>
-                <td>{board.length}</td>
-                <td>{board.width}</td>
-                <td>{board.thickness}</td>
-                <td>{board.grain}</td>
-                <td>
-                  <button type="button" className="btn btn--quiet" onClick={() => onUse(board)}>
-                    Use
-                  </button>
-                  <button type="button" className="btn btn--quiet" onClick={() => handleDelete(board.id)}>
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <>
+          <label className="field table-search">
+            <span className="field__label">Search by material</span>
+            <input type="text" placeholder="Material…" value={boardTable.query} onChange={(e) => boardTable.setQuery(e.target.value)} />
+          </label>
+          <div className="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <SortableTh label="Material" sortKey="material" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
+                  <SortableTh label="Length" sortKey="length" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
+                  <SortableTh label="Width" sortKey="width" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
+                  <SortableTh label="Thickness" sortKey="thickness" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
+                  <SortableTh label="Grain" sortKey="grain" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {boardTable.rows.map((board) => (
+                  <tr key={board.id}>
+                    <td>{board.material}</td>
+                    <td>{board.length}</td>
+                    <td>{board.width}</td>
+                    <td>{board.thickness}</td>
+                    <td>{board.grain}</td>
+                    <td>
+                      <button type="button" className="btn btn--quiet" onClick={() => onUse(board)}>
+                        Use
+                      </button>
+                      <button type="button" className="btn btn--quiet" onClick={() => handleDelete(board.id)}>
+                        Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {boardTable.rows.length === 0 && <p className="muted">No saved boards match "{boardTable.query}".</p>}
+          </div>
+        </>
       )}
 
       <div className="field-grid field-grid--4">

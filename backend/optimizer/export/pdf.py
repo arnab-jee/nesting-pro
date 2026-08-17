@@ -7,7 +7,7 @@ from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.pdfgen.canvas import Canvas
 
-from ..model import CutInstruction, OptResult, PlacedPart, Sheet
+from ..model import CutInstruction, Margin, OptResult, PlacedPart, Sheet
 from .xml import fmt_num
 
 # Layout structure follows sample_data/Max Cut Optimization Drawings/max_cut.pdf (Updates/
@@ -354,8 +354,32 @@ def _draw_main_header(
     return y
 
 
+def _cut_line_bounds(cut: CutInstruction, margin: Margin) -> tuple[float, float, float, float]:
+    """Returns (x1, y1, x2, y2) in absolute board mm, pre-scale/origin, for one guillotine cut.
+    CutInstruction.offset already has margin.left/.top baked in (optimizer/guillotine.py's
+    build_cuts_for_sheet adds it when the instruction is built) — but .length is only a span,
+    not an end coordinate, so the line's start along the *other* axis has to come from margin
+    here; there's nowhere else to get it once offset/length alone are on hand."""
+    if cut.orientation == "vertical":
+        return cut.offset, margin.top, cut.offset, margin.top + cut.length
+    return margin.left, cut.offset, margin.left + cut.length, cut.offset
+
+
+def _draw_cut_lines(canvas: Canvas, cuts: list[CutInstruction], margin: Margin, origin_x: float, origin_y: float, scale: float) -> None:
+    if not cuts:
+        return
+    canvas.saveState()
+    canvas.setStrokeColorRGB(0.85, 0.1, 0.1)
+    canvas.setLineWidth(0.6)
+    canvas.setDash([3, 2])
+    for cut in cuts:
+        x1, y1, x2, y2 = _cut_line_bounds(cut, margin)
+        canvas.line(origin_x + x1 * scale, origin_y + y1 * scale, origin_x + x2 * scale, origin_y + y2 * scale)
+    canvas.restoreState()
+
+
 def _draw_board_drawing(
-    canvas: Canvas, sheet: Sheet, symbol_by_index: dict[int, int],
+    canvas: Canvas, sheet: Sheet, symbol_by_index: dict[int, int], cuts: list[CutInstruction], margin: Margin,
     x0: float, x1: float, top_y: float, bottom_y: float,
 ) -> None:
     avail_w = (x1 - x0) - DIM_LABEL_MARGIN
@@ -382,6 +406,8 @@ def _draw_board_drawing(
         _draw_part_edge_dims(canvas, x, y, w, h, width_mm, length_mm)
         symbol = symbol_by_index[i]
         _draw_part_symbol_label(canvas, x, y, w, h, f"{symbol}.{part.name}")
+
+    _draw_cut_lines(canvas, cuts, margin, origin_x, origin_y, scale)
 
     canvas.setStrokeColorRGB(0, 0, 0)
     canvas.setLineWidth(1.2)
@@ -411,7 +437,14 @@ def _draw_footer(canvas: Canvas, x0: float, x1: float, y0: float, y1: float) -> 
     canvas.drawRightString(x1, (y0 + y1) / 2 - 3, timestamp)
 
 
-def render_layout_pdf(result: OptResult, output_path: str | None = None) -> bytes:
+def render_layout_pdf(
+    result: OptResult, margin: Margin | None = None, output_path: str | None = None, show_cut_lines: bool = False,
+) -> bytes:
+    # margin defaults to zero rather than being required: only the cut-line overlay needs it
+    # (saw jobs only — result.cuts is always empty for Nanxing, see optimizer/nanxing.py), and
+    # existing callers/tests that only care about parts/board geometry shouldn't have to supply
+    # a margin that doesn't affect anything else on the page.
+    margin = margin if margin is not None else Margin(top=0, right=0, bottom=0, left=0)
     buffer = BytesIO()
     canvas = Canvas(buffer, pagesize=A4)
     page_width, page_height = A4
@@ -467,7 +500,14 @@ def render_layout_pdf(result: OptResult, output_path: str | None = None) -> byte
         canvas.setLineWidth(0.4)
         canvas.line(sidebar_x1 + PAD, header_bottom, frame_x1 - PAD, header_bottom)
 
-        _draw_board_drawing(canvas, sheet, symbol_by_index, sidebar_x1 + PAD, frame_x1 - PAD, header_bottom - PAD, footer_y1 + PAD)
+        # show_cut_lines only suppresses the drawn overlay (Issues/issues_003.md: the dashed
+        # lines confused panel-saw operators on some layouts) — the numeric "Cut Length" stats
+        # above stay derived from the full cuts_by_sheet regardless, since those aren't the
+        # confusing part.
+        _draw_board_drawing(
+            canvas, sheet, symbol_by_index, cuts_by_sheet.get(sheet.index, []) if show_cut_lines else [], margin,
+            sidebar_x1 + PAD, frame_x1 - PAD, header_bottom - PAD, footer_y1 + PAD,
+        )
         _draw_footer(canvas, frame_x0, frame_x1, frame_y0, footer_y1)
         canvas.showPage()
 

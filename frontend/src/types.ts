@@ -55,6 +55,7 @@ export interface OptRequest {
   allowRotation: boolean;
   target: TargetMachine;
   wasteStrategy: WasteStrategy;
+  showCutLines: boolean;
 }
 
 export interface PlacedPart {

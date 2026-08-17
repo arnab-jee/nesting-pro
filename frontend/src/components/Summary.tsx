@@ -1,3 +1,6 @@
+import { useCallback } from "react";
+import { SortableTh } from "./SortableTh";
+import { useTableControls } from "../hooks/useTableControls";
 import type { Margin, OptResult, Part, StockBoard } from "../types";
 
 interface Props {
@@ -6,6 +9,12 @@ interface Props {
   margin: Margin;
   allowRotation: boolean;
 }
+
+const UNPLACED_SORTERS: Record<string, (a: Part, b: Part) => number> = {
+  id: (a, b) => a.id.localeCompare(b.id),
+  material: (a, b) => a.material.localeCompare(b.material),
+  cutLength: (a, b) => a.cutLength - b.cutLength,
+};
 
 // The backend's OptResult carries the unplaced Part but no reason string (see the M7 plan) —
 // approximate one client-side by comparing against the matching stock board. This mirrors
@@ -45,6 +54,9 @@ export function Summary({ result, stock, margin, allowRotation }: Props) {
       : 0;
   const panelsCut = result.sheets.reduce((sum, s) => sum + s.placed.length, 0);
 
+  const searchUnplaced = useCallback((p: Part) => `${p.id} ${p.material}`, []);
+  const unplacedTable = useTableControls(result.unplaced, { searchText: searchUnplaced, sorters: UNPLACED_SORTERS });
+
   return (
     <div className="card summary">
       <h2>Summary</h2>
@@ -67,28 +79,42 @@ export function Summary({ result, stock, margin, allowRotation }: Props) {
         </div>
       </div>
       {result.unplaced.length > 0 && (
-        <table className="unplaced-table">
-          <thead>
-            <tr>
-              <th>Barcode</th>
-              <th>Material</th>
-              <th>Cut size</th>
-              <th>Reason</th>
-            </tr>
-          </thead>
-          <tbody>
-            {result.unplaced.map((p) => (
-              <tr key={p.id}>
-                <td>{p.id}</td>
-                <td>{p.material}</td>
-                <td>
-                  {p.cutLength}×{p.cutWidth}
-                </td>
-                <td>{unplacedReason(p, stock, margin, allowRotation)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <>
+          <label className="field table-search">
+            <span className="field__label">Search unplaced parts</span>
+            <input
+              type="text"
+              placeholder="Barcode or material…"
+              value={unplacedTable.query}
+              onChange={(e) => unplacedTable.setQuery(e.target.value)}
+            />
+          </label>
+          <div className="table-scroll">
+            <table className="unplaced-table">
+              <thead>
+                <tr>
+                  <SortableTh label="Barcode" sortKey="id" activeKey={unplacedTable.sortKey} dir={unplacedTable.sortDir} onSort={unplacedTable.toggleSort} />
+                  <SortableTh label="Material" sortKey="material" activeKey={unplacedTable.sortKey} dir={unplacedTable.sortDir} onSort={unplacedTable.toggleSort} />
+                  <SortableTh label="Cut size" sortKey="cutLength" activeKey={unplacedTable.sortKey} dir={unplacedTable.sortDir} onSort={unplacedTable.toggleSort} />
+                  <th>Reason</th>
+                </tr>
+              </thead>
+              <tbody>
+                {unplacedTable.rows.map((p) => (
+                  <tr key={p.id}>
+                    <td>{p.id}</td>
+                    <td>{p.material}</td>
+                    <td>
+                      {p.cutLength}×{p.cutWidth}
+                    </td>
+                    <td>{unplacedReason(p, stock, margin, allowRotation)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {unplacedTable.rows.length === 0 && <p className="muted">No unplaced parts match "{unplacedTable.query}".</p>}
+          </div>
+        </>
       )}
     </div>
   );

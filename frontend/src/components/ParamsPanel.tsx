@@ -16,6 +16,8 @@ interface Props {
   onAllowRotationChange: (v: boolean) => void;
   wasteStrategy: WasteStrategy;
   onWasteStrategyChange: (v: WasteStrategy) => void;
+  showCutLines: boolean;
+  onShowCutLinesChange: (v: boolean) => void;
 }
 
 export function ParamsPanel({
@@ -34,6 +36,8 @@ export function ParamsPanel({
   onAllowRotationChange,
   wasteStrategy,
   onWasteStrategyChange,
+  showCutLines,
+  onShowCutLinesChange,
 }: Props) {
   function updateStockDim(index: number, field: "length" | "width", value: number) {
     const next = stock.slice();
@@ -72,6 +76,10 @@ export function ParamsPanel({
             <label className="field field--checkbox">
               <input type="checkbox" checked={allowRotation} onChange={(e) => onAllowRotationChange(e.target.checked)} />
               <span className="field__label">Allow rotation (grain-free parts only)</span>
+            </label>
+            <label className="field field--checkbox">
+              <input type="checkbox" checked={showCutLines} onChange={(e) => onShowCutLinesChange(e.target.checked)} />
+              <span className="field__label">Show cut lines</span>
             </label>
           </div>
         </fieldset>

@@ -79,7 +79,7 @@ Key libs: `shapely` (geometry), `rectpack`/custom packers (nesting), `lxml` (FCC
 XML → exporter-input importer, test-only), `test_parser.py`, `test_guillotine.py`,
 `test_nanxing.py`, `test_xml_roundtrip.py` (now parametrized across all 4 non-empty golden
 files, not just one), `test_pdf.py`, `test_packing_engines.py`, `test_storage.py`,
-`test_api_persistence.py`, `test_xml_export_coordinates.py` — **109 tests**, all green from a
+`test_api_persistence.py`, `test_xml_export_coordinates.py` — **116 tests**, all green from a
 clean `pip install -e ".[dev]"`.
 `test_api_persistence.py` is the first test file to exercise `api.py` directly over real HTTP
 (via FastAPI's `TestClient`, new `httpx` dev dep) — scoped just to the new `/stock-boards` and
@@ -119,7 +119,7 @@ M3's cut-sequence overlay was deliberately not built (see M3 row).
 
 <!-- Update after each work block. This is what a fresh session needs most. -->
 
-- **Last worked:** 2026-08-14 — seven passes across three sessions. (1) Applied
+- **Last worked:** 2026-08-17 — eleven passes across four sessions. (1) Applied
   `Business Logic/grain_logic.md` (raw CSV `Grain` codes are `0`/`1`/`2`, not just `0`/`x`/`y`;
   `1`/`2` were previously unmapped and silently treated as ungrained/rotatable). Fixed in
   `GRAIN_MAP` (`backend/optimizer/parser.py`), see M1 row. (2) Redesigned M3's PDF export to
@@ -164,7 +164,82 @@ M3's cut-sequence overlay was deliberately not built (see M3 row).
   bug out both ways — it only manifests when real packer output (i.e. every actual user export)
   flows through, which the round-trip test structurally never exercised. Fixed by transposing
   both the exporter and the golden-file importer consistently; see M11 row for the full
-  detail and the real coordinate numbers confirming it. Before all seven: Phases A/B/C of
+  detail and the real coordinate numbers confirming it. (8) `Updates/update_005.md` asked for a
+  fourth Summary stat ("Panels/Parts cut") — small, done, see M7 row. Separately, after M11
+  landed, the project owner asked for post-M11 feature suggestions and a phased plan; that plan
+  now lives in `ROADMAP.md` (not duplicated in this file), and its **Phase 1 is done**: a
+  cut-sequence view (`CutList.tsx`, rendering `OptResult.cuts` — previously computed but never
+  shown anywhere), a loading spinner + status text for the optimize request, and shared
+  search/sort table controls (`useTableControls` hook, `SortableTh` component) applied to the
+  unplaced-parts and Stock Board Library tables. Verified in a real headless browser against the
+  656-part reported job. (9) The project owner asked for the cut-sequence view to also be drawn
+  visibly, not just listed as a table — "cut-lines should also be visible in Panel Saw drawings,"
+  meaning both the SVG preview and the PDF. Added as an extension of the already-done Phase 1
+  (`ROADMAP.md` updated in place rather than opening a new phase). `SheetPreview.tsx` now renders
+  each `CutInstruction` as a red dashed SVG `<line>`, gated on `CutList.tsx`'s (now controlled,
+  `open`/`onToggle`) disclosure state instead of always-on clutter or a second toggle. The PDF
+  side needed one real backend change: `optimizer/export/pdf.py`'s `render_layout_pdf` gained a
+  `margin: Margin | None = None` parameter (defaults to zero margin, so existing callers/tests
+  were unaffected) and a `_draw_cut_lines`/`_cut_line_bounds` pair that draws the same lines onto
+  the board diagram using the existing `scale`/`origin_x`/`origin_y` transform already used for
+  parts — `CutInstruction.offset` already bakes in `margin.left`/`.top` (`build_cuts_for_sheet`),
+  but `.length` is only a span, so margin is what supplies the line's missing start coordinate on
+  the other axis; the frontend's `cutLineBounds()` mirrors this exact logic. `api.py`'s
+  `/export/pdf` now threads `margin` through. Nanxing PDFs are unaffected by construction —
+  `optimizer/nanxing.py` never populates `OptResult.cuts` (confirmed by reading it directly), so
+  there's simply nothing for the overlay to draw there. Covered by `backend/tests/test_pdf.py`
+  (+4 tests, suite 109→113): `_cut_line_bounds()` unit tests for both orientations (verified they
+  have teeth — reverted the margin-offset logic, reran, both failed as expected, restored), an
+  integration test running a real saw job's cuts through `render_layout_pdf`, and a
+  no-margin-argument backward-compatibility test. Verified end-to-end in a real headless browser
+  against `panel_saw_machine_data.csv` (21 sheets): lines hidden by default, expanding Sheet 1's
+  cut list renders exactly 17 `<line>` elements matching its 17 cut rows 1:1, collapsing hides
+  them again, zero console errors. Also rasterized a real generated PDF page (`pdftoppm`) and
+  visually confirmed the red dashed lines run exactly along the true guillotine cut boundaries
+  between the colored panels — this project's established practice of eyeballing rendered PDF
+  output rather than trusting geometry math alone (see M3's own sidebar-overlap bug, caught the
+  same way). `tsc -b`/lint/build all clean. See `ROADMAP.md`'s Phase 1 section for the fuller
+  writeup. (10) `Issues/issues_003.md` reported that the cut-line overlay just added in pass (9)
+  actually confused panel-saw operators on some real layouts — a screenshot showed a dense sheet
+  where the dashed cut grid was hard to distinguish from the part boundaries. Rather than remove
+  the feature, added a **"Show cut lines"** checkbox (Saw section of `ParamsPanel.tsx`, default
+  enabled at the time — **flipped to disabled by default in pass (11) below**) so it's toggleable
+  per job. Backend: `render_layout_pdf` gained a
+  `show_cut_lines: bool = True` parameter that swaps in an empty per-sheet cuts list for the
+  board drawing when off — deliberately narrow: the numbered cutting list and the "Cut Length"
+  stats in the header stay populated either way, only the drawn dashed overlay is suppressed,
+  since those numbers were never the confusing part. `api.py`'s `/export/pdf` reads
+  `showCutLines` from the request body. Frontend: `SheetPreview.tsx`'s SVG line rendering is now
+  gated on `showCutLines && expanded` (global setting AND the per-sheet disclosure — renamed from
+  `showCuts` to `expanded` for clarity now that "show cuts" is ambiguous between the two), while
+  `CutList`'s own open/close state stays independent of the global setting. Covered by 2 new
+  backend tests (115 total, up from 113): one checks for the literal ReportLab dash-pattern
+  operator (`[3 2] 0 d`) in the PDF's decoded content stream — present when the setting is on,
+  absent when off, a precise signal that lines were actually drawn rather than just "the page
+  didn't crash" — and one confirms "Sheet Cut Length :" text still appears with the setting off.
+  Verified the dash-pattern test has teeth: temporarily removed the gate, reran, it failed as
+  expected, restored. Verified end-to-end in a real headless browser: checkbox defaults to
+  checked; unchecking it and rerunning produces zero `.cut-line` SVG elements even with the cut
+  list expanded; the downloaded PDF with the setting off was rasterized (`pdftoppm`) and visually
+  confirmed clean (no dashed overlay) while the sidebar's Cutting List/stats remained. `tsc -b`/
+  lint/build all clean. (11) Asked directly to flip the "Show cut lines" default to **off**.
+  Changed in three places to keep them consistent: `frontend/App.tsx`'s
+  `useState(true)` → `useState(false)`; `api.py`'s `request.get("showCutLines", True)` →
+  `False` (so a caller that omits the field entirely gets the same behavior as the UI); and
+  `render_layout_pdf`'s own `show_cut_lines: bool = True` → `False` default in
+  `optimizer/export/pdf.py`, so the function's default matches the app's rather than silently
+  disagreeing with it. One existing test (`test_render_layout_pdf_accepts_margin_and_draws_
+  cut_lines_without_crashing`) had been relying on the old implicit `True` default to exercise
+  the overlay-drawing path without asserting on it directly — updated to pass
+  `show_cut_lines=True` explicitly so it still tests what its name says. Added a new test
+  locking in the default itself: calling `render_layout_pdf` with no `show_cut_lines` argument
+  must byte-for-byte match calling it with `show_cut_lines=False`. Verified it has teeth:
+  temporarily reverted the default back to `True`, reran, failed as expected, restored. Full
+  suite: 115→116 passing (net +1: one new default-lock-in test, no others added or removed this
+  pass). Verified end-to-end in a real headless browser: the checkbox is unchecked on page load,
+  running a job and expanding a sheet's cut list draws zero `.cut-line` elements, and the PDF
+  still downloads successfully with the setting at its new off default. `tsc -b`/lint/build all
+  clean. Before all eleven: Phases A/B/C of
   `~/.claude/plans/delegated-moseying-robin.md` complete, plus follow-on M6, M7, and
   Nanxing-packer-efficiency passes (same plan file, rewritten fresh for each pass), prompted by
   `update_001` (a user-supplied real-world comparison against the actual Nanxing machine
@@ -181,7 +256,7 @@ M3's cut-sequence overlay was deliberately not built (see M3 row).
   → `uvicorn api:app --reload --host 127.0.0.1 --port 8000`. `backend/.venv` has the `dev`
   extra installed (`pip install -e ".[dev]"`, now including `pypdf` for PDF-export test
   assertions and `httpx` for FastAPI `TestClient` HTTP tests) — `pytest -q` from `backend/` runs
-  109 tests, all green. New runtime dependency: a SQLite file at `backend/nesting_pro.db`
+  116 tests, all green. New runtime dependency: a SQLite file at `backend/nesting_pro.db`
   (gitignored, auto-created on first request via `storage.get_connection()` — no manual setup
   step, but a fresh clone's first `/stock-boards` or `/settings` call creates it).
 - **Frontend entry point:** `frontend/` (Vite + React + TypeScript), `npm run dev` serves on
