@@ -1,9 +1,9 @@
 # nesting-pro — Post-M11 Development Roadmap
 
 > Proposed staged plan for the improvements discussed after M11 (FCC XML axis-inversion fix).
-> Phase 1 is done (2026-08-14); Phases 2–5 not yet started. For what's actually been built
-> backend-side, see `CLAUDE.md`'s milestone table (M1–M11). Phases here are sequenced by
-> dependency and effort, not strictly by importance — see the note at the bottom on reordering
+> Phases 1–2 are done (2026-08-14, 2026-08-17); Phases 3–5 not yet started. For what's actually
+> been built backend-side, see `CLAUDE.md`'s milestone table (M1–M11). Phases here are sequenced
+> by dependency and effort, not strictly by importance — see the note at the bottom on reordering
 > around business priority.
 
 ---
@@ -99,17 +99,43 @@ to show real numbered rows (6–11 depending on the sheet). Zero console errors.
 build all clean. The cut-line overlay (added after the rest of this phase) was separately
 verified against `panel_saw_machine_data.csv` — see that item for the specifics.
 
-## Phase 2 — Data visualization
+## Phase 2 — Data visualization ✅ done
 
 Still frontend-only — every number these need is already in the `/optimize` response — but more
-design work than Phase 1, hence its own phase.
+design work than Phase 1, hence its own phase. No new charting dependency was added — the
+project already renders `SheetPreview.tsx` with raw SVG, so all three items here follow that same
+lightweight-custom-SVG pattern instead of pulling in a chart library for what turned out to be
+simple bar charts.
 
-- **Per-sheet utilization chart** (bar/treemap across the whole job), so one bad sheet doesn't
-  hide among a wall of individual SVG previews.
-- **Material/waste breakdown chart** — sheets and waste % per material, for jobs spanning
-  multiple materials (the reported job had 5).
-- **Waste-strategy side-by-side comparison** — orchestrates two `/optimize` calls client-side
-  (`"balanced"` vs `"edge"`) and shows results together; no new endpoint needed.
+- ✅ **Per-sheet utilization chart**, so one bad sheet doesn't hide among a wall of individual SVG
+  previews. **Built as `UtilizationChart.tsx`**: one bar per *physical* sheet, in job order (not
+  deduplicated the way the PDF's "Occurrences" view is — collapsing duplicates would hide exactly
+  the "which specific sheet is bad" signal this chart exists for). Bars are threshold-colored
+  (`--success` ≥70%, `--accent` 40–70%, `--warning` <40%) and horizontally scrollable for jobs
+  with many sheets (the reported job has 67 after the M10/M11 fixes).
+- ✅ **Material/waste breakdown chart** — sheets and waste % per material, for jobs spanning
+  multiple materials (the reported job has 5). **Built as `MaterialBreakdown.tsx`**: groups
+  sheets by material, computes each material's sheet count and average waste % (`100 -` average
+  utilization), and renders one horizontal bar-in-row per material, worst-waste-first — the
+  material most worth a shop owner's attention leads. Skips rendering entirely for single-material
+  jobs (would just repeat the Summary's "Avg. utilization" stat card).
+- ✅ **Waste-strategy side-by-side comparison** — orchestrates two `/optimize` calls client-side
+  (`"balanced"` vs `"edge"`) and shows results together; no new endpoint needed. **Built as
+  `WasteStrategyComparison.tsx`**: a button offering to compare against whichever strategy isn't
+  currently active, re-running `/optimize` with the *exact* current request except
+  `wasteStrategy` flipped (same parts/stock/margins/target — an apples-to-apples comparison, not
+  a fresh job), then showing Sheets/Avg. utilization/Unplaced parts side by side for both. Lazy —
+  the second `/optimize` call only fires on click, not on every results view.
+
+Verified in a real headless browser against two real jobs: the 656-part multi-material reported
+job (`26Y117T1F1B1(BEDROOM 3-4)`, 67 sheets after M10/M11) — utilization chart bar count matches
+the Summary's "Sheets" stat exactly (67), material breakdown shows all 5 real materials sorted by
+waste descending, and the strategy comparison populates both columns with real numbers after
+clicking; and `panel_saw_machine_data.csv` (21 sheets, 2 materials) — confirmed the three
+utilization color tiers all render distinctly. Also visually confirmed in dark mode (Playwright
+`colorScheme: "dark"`) — every color in the new components comes from the existing CSS custom
+properties, so no separate dark-mode work was needed, just verification that it actually held.
+Zero console errors either job. `tsc -b`/lint/build all clean.
 
 ## Phase 3 — Presets & cost tracking
 

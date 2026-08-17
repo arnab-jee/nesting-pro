@@ -119,7 +119,7 @@ M3's cut-sequence overlay was deliberately not built (see M3 row).
 
 <!-- Update after each work block. This is what a fresh session needs most. -->
 
-- **Last worked:** 2026-08-17 — eleven passes across four sessions. (1) Applied
+- **Last worked:** 2026-08-17 — twelve passes across four sessions. (1) Applied
   `Business Logic/grain_logic.md` (raw CSV `Grain` codes are `0`/`1`/`2`, not just `0`/`x`/`y`;
   `1`/`2` were previously unmapped and silently treated as ungrained/rotatable). Fixed in
   `GRAIN_MAP` (`backend/optimizer/parser.py`), see M1 row. (2) Redesigned M3's PDF export to
@@ -239,7 +239,34 @@ M3's cut-sequence overlay was deliberately not built (see M3 row).
   pass). Verified end-to-end in a real headless browser: the checkbox is unchecked on page load,
   running a job and expanding a sheet's cut list draws zero `.cut-line` elements, and the PDF
   still downloads successfully with the setting at its new off default. `tsc -b`/lint/build all
-  clean. Before all eleven: Phases A/B/C of
+  clean. (12) Asked to implement `ROADMAP.md`'s Phase 2 (data visualization) — three frontend-only
+  items, all reading data `/optimize` already returns, no new endpoint needed. No charting
+  library exists in `frontend/package.json`, and `SheetPreview.tsx` already renders its board
+  diagrams as raw SVG, so all three follow that same lightweight-custom-SVG pattern rather than
+  adding a dependency. **`UtilizationChart.tsx`**: one bar per physical sheet in job order
+  (deliberately not deduplicated the way the PDF's "Occurrences" view is — collapsing duplicates
+  would hide exactly the "which specific sheet is underutilized" signal the chart exists for),
+  threshold-colored (`--success` ≥70%, `--accent` 40–70%, `--warning` <40%), horizontally
+  scrollable for large jobs. **`MaterialBreakdown.tsx`**: groups sheets by material, shows each
+  material's sheet count and average waste % as a horizontal bar, sorted worst-waste-first;
+  skips rendering for single-material jobs since it would just repeat the Summary's "Avg.
+  utilization" stat. **`WasteStrategyComparison.tsx`**: a button offering to re-run `/optimize`
+  with the *exact* current request except `wasteStrategy` flipped — an apples-to-apples
+  comparison against the same parts/stock/margins/target, not a fresh job — then shows
+  Sheets/Avg. utilization/Unplaced side by side for both; lazy, only fires on click. All three
+  wired into `App.tsx`'s results view between the download actions and the per-sheet SVG grid.
+  New `.chart-card`/`.material-row*`/`.strategy-compare*`/`.muted` CSS in `App.css`, entirely
+  built from the existing CSS custom properties (`--success`/`--accent`/`--warning`/`--border`/
+  `--text-muted`/`--text-h`) rather than hardcoded colors, so dark mode needed no separate work.
+  Verified in a real headless browser against two real jobs: the 656-part multi-material
+  reported job (`26Y117T1F1B1(BEDROOM 3-4)`, 67 sheets after M10/M11) — utilization chart's bar
+  count matched the Summary's "Sheets" stat exactly, material breakdown showed all 5 real
+  materials sorted by waste descending, and the strategy comparison populated both columns with
+  real numbers after clicking — and `panel_saw_machine_data.csv` (21 sheets, 2 materials, lower
+  utilization on later sheets) — confirmed all three utilization color tiers render distinctly.
+  Also screenshotted in dark mode (Playwright `colorScheme: "dark"`) to confirm the CSS-variable
+  approach actually held, not just assumed. Zero console errors either job. `tsc -b`/lint/build
+  all clean. See `ROADMAP.md`'s Phase 2 section for the fuller writeup. Before all twelve: Phases A/B/C of
   `~/.claude/plans/delegated-moseying-robin.md` complete, plus follow-on M6, M7, and
   Nanxing-packer-efficiency passes (same plan file, rewritten fresh for each pass), prompted by
   `update_001` (a user-supplied real-world comparison against the actual Nanxing machine

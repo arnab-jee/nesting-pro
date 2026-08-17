@@ -4,11 +4,14 @@ import { ApiError, downloadPdf, downloadXml, getSettings, optimize, parseCsv, se
 import { CsvUpload, type CsvLoaded } from "./components/CsvUpload";
 import { ColumnMapping } from "./components/ColumnMapping";
 import { MachineSelector } from "./components/MachineSelector";
+import { MaterialBreakdown } from "./components/MaterialBreakdown";
 import { ParamsPanel } from "./components/ParamsPanel";
 import { SheetPreview } from "./components/SheetPreview";
 import { StockBoardLibrary } from "./components/StockBoardLibrary";
 import { Stepper } from "./components/Stepper";
 import { Summary } from "./components/Summary";
+import { UtilizationChart } from "./components/UtilizationChart";
+import { WasteStrategyComparison } from "./components/WasteStrategyComparison";
 import type { Margin, OptRequest, OptResult, Part, StockBoard, TargetMachine, WasteStrategy } from "./types";
 
 export type Step = "upload" | "map" | "configure" | "results";
@@ -218,6 +221,9 @@ function App() {
             </button>
           </div>
           <ErrorAlert errors={downloadErrors} />
+          <UtilizationChart sheets={optResult.sheets} />
+          <MaterialBreakdown sheets={optResult.sheets} />
+          <WasteStrategyComparison request={currentRequest()} currentResult={optResult} />
           <div className="sheet-grid">
             {optResult.sheets.map((sheet) => (
               <SheetPreview

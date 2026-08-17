@@ -600,6 +600,118 @@ th {
   pointer-events: none;
 }
 
+.muted {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ---------- Phase 2: data visualization ---------- */
+
+.chart-card h3 {
+  margin: 0 0 0.9rem;
+  font-size: 1rem;
+}
+
+.chart-card h4 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-h);
+}
+
+.chart-scroll {
+  overflow-x: auto;
+  padding-bottom: 0.25rem;
+}
+
+.utilization-chart {
+  display: block;
+}
+
+.chart-axis-label {
+  fill: var(--text-muted);
+  font-size: 11px;
+  text-anchor: middle;
+}
+
+.material-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.material-row {
+  display: grid;
+  grid-template-columns: minmax(0, 10rem) 1fr auto auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.material-row__label {
+  font-size: 0.85rem;
+  color: var(--text-h);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.material-row__bar-track {
+  height: 0.6rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.material-row__bar {
+  height: 100%;
+  background: var(--warning);
+  border-radius: 999px;
+}
+
+.material-row__value {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-h);
+  white-space: nowrap;
+}
+
+.material-row__count {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.strategy-compare {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.strategy-compare__col {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.9rem 1rem;
+}
+
+.strategy-compare__col dl {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.35rem 0.75rem;
+  margin: 0;
+}
+
+.strategy-compare__col dt {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.strategy-compare__col dd {
+  margin: 0;
+  font-weight: 600;
+  color: var(--text-h);
+  text-align: right;
+}
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 640px) {
@@ -622,5 +734,14 @@ th {
 
   .stat-row {
     grid-template-columns: 1fr;
+  }
+
+  .strategy-compare {
+    grid-template-columns: 1fr;
+  }
+
+  .material-row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
   }
 }
