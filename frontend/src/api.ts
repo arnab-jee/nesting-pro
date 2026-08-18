@@ -1,4 +1,4 @@
-import type { OptRequest, OptResult, Part, StockBoard, WasteStrategy } from "./types";
+import type { ImportXmlResult, OptRequest, OptResult, Part, Preset, StockBoardWithCost, WasteStrategy } from "./types";
 
 export class ApiError extends Error {
   errors: string[];
@@ -46,17 +46,17 @@ async function deleteJson(path: string): Promise<Response> {
   return handleErrors(await fetch(`/api${path}`, { method: "DELETE" }));
 }
 
-export type PersistedStockBoard = StockBoard & { id: number };
+export type PersistedStockBoard = StockBoardWithCost & { id: number };
 
 export async function listStockBoards(): Promise<PersistedStockBoard[]> {
   return (await getJson("/stock-boards")).json();
 }
 
-export async function createStockBoard(board: StockBoard): Promise<PersistedStockBoard> {
+export async function createStockBoard(board: StockBoardWithCost): Promise<PersistedStockBoard> {
   return (await postJson("/stock-boards", board)).json();
 }
 
-export async function updateStockBoard(id: number, board: StockBoard): Promise<PersistedStockBoard> {
+export async function updateStockBoard(id: number, board: StockBoardWithCost): Promise<PersistedStockBoard> {
   return (await putJson(`/stock-boards/${id}`, board)).json();
 }
 
@@ -70,6 +70,24 @@ export async function getSettings(): Promise<{ wasteStrategyDefault: WasteStrate
 
 export async function setWasteStrategyDefault(value: WasteStrategy): Promise<void> {
   await putJson("/settings", { wasteStrategyDefault: value });
+}
+
+export type PersistedPreset = Preset & { id: number };
+
+export async function listPresets(): Promise<PersistedPreset[]> {
+  return (await getJson("/presets")).json();
+}
+
+export async function createPreset(preset: Preset): Promise<PersistedPreset> {
+  return (await postJson("/presets", preset)).json();
+}
+
+export async function deletePreset(id: number): Promise<void> {
+  await deleteJson(`/presets/${id}`);
+}
+
+export async function importNanxingXml(xmlText: string): Promise<ImportXmlResult> {
+  return (await postJson("/import/xml", { xml_text: xmlText })).json();
 }
 
 export async function parseCsv(csvText: string): Promise<{ parts: Part[] }> {

@@ -6,22 +6,24 @@ import { ColumnMapping } from "./components/ColumnMapping";
 import { MachineSelector } from "./components/MachineSelector";
 import { MaterialBreakdown } from "./components/MaterialBreakdown";
 import { ParamsPanel } from "./components/ParamsPanel";
+import { PresetLibrary } from "./components/PresetLibrary";
 import { SheetPreview } from "./components/SheetPreview";
 import { StockBoardLibrary } from "./components/StockBoardLibrary";
 import { Stepper } from "./components/Stepper";
 import { Summary } from "./components/Summary";
 import { UtilizationChart } from "./components/UtilizationChart";
 import { WasteStrategyComparison } from "./components/WasteStrategyComparison";
-import type { Margin, OptRequest, OptResult, Part, StockBoard, TargetMachine, WasteStrategy } from "./types";
+import { XmlImport } from "./components/XmlImport";
+import type { ImportXmlResult, Margin, OptRequest, OptResult, Part, Preset, StockBoardWithCost, TargetMachine, WasteStrategy } from "./types";
 
 export type Step = "upload" | "map" | "configure" | "results";
 
-function deriveDefaultStock(parts: Part[]): StockBoard[] {
-  const seen = new Map<string, StockBoard>();
+function deriveDefaultStock(parts: Part[]): StockBoardWithCost[] {
+  const seen = new Map<string, StockBoardWithCost>();
   for (const p of parts) {
     const key = `${p.material}__${p.thickness}`;
     if (!seen.has(key)) {
-      seen.set(key, { material: p.material, length: 2440, width: 1220, thickness: p.thickness, grain: "none" });
+      seen.set(key, { material: p.material, length: 2440, width: 1220, thickness: p.thickness, grain: "none", cost: 0, costUnit: "board" });
     }
   }
   return Array.from(seen.values());
@@ -35,7 +37,7 @@ function App() {
   const [parsing, setParsing] = useState(false);
 
   const [target, setTarget] = useState<TargetMachine>("saw");
-  const [stock, setStock] = useState<StockBoard[]>([]);
+  const [stock, setStock] = useState<StockBoardWithCost[]>([]);
   const [margin, setMargin] = useState<Margin>({ top: 0, right: 10, bottom: 10, left: 5 });
   const [kerf, setKerf] = useState(4);
   const [toolDiameter, setToolDiameter] = useState(6);
@@ -66,10 +68,32 @@ function App() {
   const [optimizeErrors, setOptimizeErrors] = useState<string[]>([]);
   const [downloadErrors, setDownloadErrors] = useState<string[]>([]);
 
+  // Updates/update_006.md: a result loaded from an existing Nanxing XML rather than produced by
+  // this app's own /optimize. There's no `parts` list backing it (the endpoint deliberately
+  // doesn't return one — see api.py's /import/xml), so re-optimizing, adjusting parameters, or
+  // downloading (which all call /optimize or /export/* with `parts`) would silently run against
+  // an empty parts list and produce wrong output instead of the layout that was actually loaded.
+  // Gates those actions off entirely rather than let them misbehave.
+  const [isImported, setIsImported] = useState(false);
+
   const projectName = parts[0]?.customer?.replace(/\s+/g, "-") ?? "nesting-job";
 
   function currentRequest(): OptRequest {
-    return { parts, stock, kerf, toolDiameter, partSpacing, margin, allowRotation, target, wasteStrategy, showCutLines };
+    // cost/costUnit are display-only (Phase 3) — the backend's StockBoard dataclass has no such
+    // fields and would reject an unexpected kwarg, so they're stripped here rather than carried
+    // through to /optimize or /export/*.
+    const backendStock = stock.map(({ cost: _cost, costUnit: _costUnit, ...board }) => board);
+    return { parts, stock: backendStock, kerf, toolDiameter, partSpacing, margin, allowRotation, target, wasteStrategy, showCutLines };
+  }
+
+  function applyPreset(preset: Preset) {
+    setTarget(preset.target);
+    setMargin(preset.margin);
+    setKerf(preset.kerf);
+    setToolDiameter(preset.toolDiameter);
+    setPartSpacing(preset.partSpacing);
+    setAllowRotation(preset.allowRotation);
+    setWasteStrategy(preset.wasteStrategy);
   }
 
   async function handleMappingConfirmed(finalCsvText: string) {
@@ -85,6 +109,18 @@ function App() {
     } finally {
       setParsing(false);
     }
+  }
+
+  function handleXmlImported(imported: ImportXmlResult) {
+    setTarget("nanxing");
+    setMargin(imported.margin);
+    setToolDiameter(imported.toolDiameter);
+    setPartSpacing(imported.partSpacing);
+    setStock(imported.stock.map((board) => ({ ...board, cost: 0, costUnit: "board" as const })));
+    setParts([]);
+    setOptResult({ sheets: imported.sheets, unplaced: imported.unplaced, cuts: imported.cuts });
+    setIsImported(true);
+    setStep("results");
   }
 
   async function handleRunOptimize() {
@@ -119,6 +155,7 @@ function App() {
     setOptResult(null);
     setOptimizeErrors([]);
     setDownloadErrors([]);
+    setIsImported(false);
   }
 
   return (
@@ -138,6 +175,7 @@ function App() {
               setStep("map");
             }}
           />
+          <XmlImport onLoaded={handleXmlImported} />
         </div>
       )}
 
@@ -180,6 +218,10 @@ function App() {
             onShowCutLinesChange={setShowCutLines}
           />
           <StockBoardLibrary onUse={(board) => setStock((prev) => [...prev, board])} />
+          <PresetLibrary
+            current={{ target, margin, kerf, toolDiameter, partSpacing, allowRotation, wasteStrategy }}
+            onApply={applyPreset}
+          />
           <ErrorAlert errors={optimizeErrors} />
           <div className="actions">
             <button className="btn btn--secondary" onClick={() => setStep("map")} disabled={optimizing}>
@@ -201,29 +243,39 @@ function App() {
       {step === "results" && optResult && (
         <div className="results">
           <Summary result={optResult} stock={stock} margin={margin} allowRotation={allowRotation} />
+          {isImported && (
+            <p className="status-text">
+              Viewing a layout imported from an existing Nanxing XML — its own placement is shown
+              as-is. Downloading and adjusting parameters aren't available for imported layouts.
+            </p>
+          )}
           <div className="actions">
-            {/* the drawing (PDF) is a plain layout render — works for either machine's
-                placement result. The FCC XML is Nanxing-specific (it's the router's own
-                machine format), so only offer it for that target. */}
-            <button className="btn btn--primary" onClick={() => handleDownload("pdf")}>
-              Download drawing (PDF)
-            </button>
-            {target === "nanxing" && (
-              <button className="btn btn--primary" onClick={() => handleDownload("xml")}>
-                Download XML
-              </button>
+            {!isImported && (
+              <>
+                {/* the drawing (PDF) is a plain layout render — works for either machine's
+                    placement result. The FCC XML is Nanxing-specific (it's the router's own
+                    machine format), so only offer it for that target. */}
+                <button className="btn btn--primary" onClick={() => handleDownload("pdf")}>
+                  Download drawing (PDF)
+                </button>
+                {target === "nanxing" && (
+                  <button className="btn btn--primary" onClick={() => handleDownload("xml")}>
+                    Download XML
+                  </button>
+                )}
+                <button className="btn btn--secondary" onClick={() => setStep("configure")}>
+                  Adjust parameters
+                </button>
+              </>
             )}
-            <button className="btn btn--secondary" onClick={() => setStep("configure")}>
-              Adjust parameters
-            </button>
             <button className="btn btn--quiet" onClick={startOver}>
               Start over
             </button>
           </div>
           <ErrorAlert errors={downloadErrors} />
           <UtilizationChart sheets={optResult.sheets} />
-          <MaterialBreakdown sheets={optResult.sheets} />
-          <WasteStrategyComparison request={currentRequest()} currentResult={optResult} />
+          <MaterialBreakdown sheets={optResult.sheets} stock={stock} />
+          {!isImported && <WasteStrategyComparison request={currentRequest()} currentResult={optResult} />}
           <div className="sheet-grid">
             {optResult.sheets.map((sheet) => (
               <SheetPreview

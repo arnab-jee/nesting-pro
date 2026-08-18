@@ -85,3 +85,94 @@ def test_settings_update_and_persist_across_requests(client):
 def test_settings_update_invalid_value_returns_400(client):
     resp = client.put("/settings", json={"wasteStrategyDefault": "not-a-real-strategy"})
     assert resp.status_code == 400
+
+
+def test_create_stock_board_defaults_cost_to_zero_and_board_unit(client):
+    created = client.post("/stock-boards", json={"material": "MDF", "length": 2440, "width": 1220, "thickness": 18})
+    assert created.json()["cost"] == 0.0
+    assert created.json()["costUnit"] == "board"
+
+
+def test_create_and_update_stock_board_cost(client):
+    created = client.post(
+        "/stock-boards",
+        json={"material": "MDF", "length": 2440, "width": 1220, "thickness": 18, "cost": 45.5, "costUnit": "sqft"},
+    )
+    board = created.json()
+    assert board["cost"] == 45.5
+    assert board["costUnit"] == "sqft"
+
+    updated = client.put(
+        f"/stock-boards/{board['id']}",
+        json={"material": "MDF", "length": 2440, "width": 1220, "thickness": 18, "grain": "none", "cost": 60.0, "costUnit": "board"},
+    )
+    assert updated.json()["cost"] == 60.0
+    assert updated.json()["costUnit"] == "board"
+
+
+def test_create_stock_board_invalid_cost_unit_returns_400(client):
+    resp = client.post(
+        "/stock-boards",
+        json={"material": "MDF", "length": 2440, "width": 1220, "thickness": 18, "costUnit": "sqm"},
+    )
+    assert resp.status_code == 400
+
+
+def test_list_presets_starts_empty(client):
+    resp = client.get("/presets")
+    assert resp.status_code == 200
+    assert resp.json() == []
+
+
+PRESET_PAYLOAD = {
+    "name": "Standard Panel Saw run",
+    "target": "saw",
+    "margin": {"top": 0, "right": 10, "bottom": 10, "left": 5},
+    "kerf": 4.0,
+    "toolDiameter": 6.0,
+    "partSpacing": 6.1,
+    "allowRotation": True,
+    "wasteStrategy": "balanced",
+}
+
+
+def test_create_list_update_delete_preset(client):
+    created = client.post("/presets", json=PRESET_PAYLOAD)
+    assert created.status_code == 200
+    preset = created.json()
+    assert preset["name"] == "Standard Panel Saw run"
+    assert preset["margin"] == {"top": 0, "right": 10, "bottom": 10, "left": 5}
+
+    listed = client.get("/presets").json()
+    assert listed == [preset]
+
+    updated_payload = {**PRESET_PAYLOAD, "name": "Renamed", "wasteStrategy": "edge"}
+    updated = client.put(f"/presets/{preset['id']}", json=updated_payload)
+    assert updated.status_code == 200
+    assert updated.json()["name"] == "Renamed"
+    assert updated.json()["wasteStrategy"] == "edge"
+
+    deleted = client.delete(f"/presets/{preset['id']}")
+    assert deleted.status_code == 200
+    assert client.get("/presets").json() == []
+
+
+def test_create_preset_missing_field_returns_400(client):
+    payload = {k: v for k, v in PRESET_PAYLOAD.items() if k != "name"}
+    resp = client.post("/presets", json=payload)
+    assert resp.status_code == 400
+
+
+def test_create_preset_invalid_target_returns_400(client):
+    resp = client.post("/presets", json={**PRESET_PAYLOAD, "target": "laser-cutter"})
+    assert resp.status_code == 400
+
+
+def test_update_nonexistent_preset_returns_404(client):
+    resp = client.put("/presets/999", json=PRESET_PAYLOAD)
+    assert resp.status_code == 404
+
+
+def test_delete_nonexistent_preset_returns_404(client):
+    resp = client.delete("/presets/999")
+    assert resp.status_code == 404

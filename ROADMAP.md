@@ -1,10 +1,10 @@
 # nesting-pro — Post-M11 Development Roadmap
 
 > Proposed staged plan for the improvements discussed after M11 (FCC XML axis-inversion fix).
-> Phases 1–2 are done (2026-08-14, 2026-08-17); Phases 3–5 not yet started. For what's actually
-> been built backend-side, see `CLAUDE.md`'s milestone table (M1–M11). Phases here are sequenced
-> by dependency and effort, not strictly by importance — see the note at the bottom on reordering
-> around business priority.
+> Phases 1–3 are done (2026-08-14, 2026-08-17 ×2); Phases 4–5 not yet started. For what's
+> actually been built backend-side, see `CLAUDE.md`'s milestone table (M1–M11). Phases here are
+> sequenced by dependency and effort, not strictly by importance — see the note at the bottom on
+> reordering around business priority.
 
 ---
 
@@ -137,17 +137,95 @@ utilization color tiers all render distinctly. Also visually confirmed in dark m
 properties, so no separate dark-mode work was needed, just verification that it actually held.
 Zero console errors either job. `tsc -b`/lint/build all clean.
 
-## Phase 3 — Presets & cost tracking
+## Phase 3 — Presets & cost tracking ✅ done
 
-First phase touching the backend — but reuses the CRUD pattern M9 already built for stock
+First phase touching the backend — reuses the exact CRUD pattern M9 already built for stock
 boards (SQLite table + `GET`/`POST`/`PUT`/`DELETE` endpoints), not new architecture.
 
-- **Named parameter presets** — margin/kerf/waste-strategy bundles (e.g. "Standard Panel Saw
-  run"), saved and reused the same way stock boards are today.
-- **Cost-per-board field** on stock boards, plus a $-cost-of-waste figure shown alongside the
-  utilization %. Weight this one heaviest in the phase — it turns an abstract percentage into a
-  number a shop owner feels directly, and is the strongest "here's what this app is worth"
-  argument if it's ever sold or licensed.
+- ✅ **Named parameter presets** — margin/kerf/waste-strategy bundles (e.g. "Standard Panel Saw
+  run"), saved and reused the same way stock boards are today. **Built**: a new `presets` SQLite
+  table (`backend/storage.py`) storing everything `ParamsPanel.tsx` controls except stock/parts
+  (target, margin, kerf, tool Ø, part spacing, allow-rotation, waste strategy) — stored flat
+  (`margin_top`/`margin_right`/etc. columns, matching `stock_boards`' existing flat-column
+  convention) but exposed over the wire with `margin` nested as `{top,right,bottom,left}` like
+  everywhere else in the JSON contract; `api.py`'s two new helpers (`_preset_to_dict`/
+  `_preset_kwargs_from_payload`) are the only place that reshapes between the two. Full CRUD
+  (`GET`/`POST`/`PUT`/`DELETE /presets`), matching the stock-boards precedent of exposing `PUT`
+  even though, also like stock boards, no frontend "edit in place" UI was built — only
+  list/create/delete/use. New `PresetLibrary.tsx` **doesn't have its own separate add-form
+  fields** the way `StockBoardLibrary.tsx` does — a preset just names and persists whatever's
+  currently set in `ParamsPanel.tsx`, so "save" only asks for a name, not a re-entry of every
+  field. "Use" applies a preset's values back onto the six pieces of `App.tsx` state it bundles.
+- ✅ **Cost-per-board field** on stock boards, plus a $-cost-of-waste figure shown alongside the
+  utilization %. Weighted heaviest, per the roadmap's own framing — it turns an abstract
+  percentage into a number a shop owner feels directly. **Built**: `cost_per_board` column added
+  to `stock_boards` (a real `ALTER TABLE` migration, `storage._migrate()`, since a pre-existing
+  local DB file — like the one already running this session — won't retroactively gain a column
+  from `CREATE TABLE IF NOT EXISTS`; verified directly against the real dev DB file, not just a
+  fresh one). Cost is deliberately **display-only** and never reaches the optimizer: the
+  backend's core `StockBoard` dataclass (used by `/optimize`/`/export/*`) is untouched, and the
+  frontend's `StockBoardWithCost` type (used for the job's stock list and the library) is a
+  strict superset of the wire-contract `StockBoard` — `App.tsx`'s `currentRequest()` strips
+  `costPerBoard` back off before building any `/optimize`/`/export/*` call, since the backend
+  dataclass would reject the unexpected field outright. New `frontend/src/costUtils.ts` computes
+  material cost and waste cost (a sheet's board cost × its wasted fraction) purely client-side
+  from the job's own stock list, matched by `(material, thickness)` since the same material can
+  have different costs at different thicknesses. Both figures are hidden entirely (not shown as
+  "$0.00") when no stock board has a nonzero cost, so "cost not entered" is never confused with
+  "confirmed zero waste." Surfaced in two places: `Summary.tsx` gained a second stat row
+  ("Material cost" / "Est. waste cost", job-wide) and `MaterialBreakdown.tsx` (Phase 2) gained a
+  per-material `$` figure alongside its existing waste % bar.
+
+Covered by 18 new backend tests (134 total, up from 116): `test_storage.py` direct CRUD unit
+tests for both presets and stock-board cost (incl. invalid-target/invalid-waste-strategy
+validation on presets, mirroring the existing waste-strategy-default validation pattern) and
+`test_api_persistence.py` HTTP-level tests via `TestClient` for the same. Verified the preset
+validation tests have teeth: temporarily gutted `_validate_preset_fields`, reran, both failed as
+expected, restored. Verified end-to-end in a real headless browser: added a stock board with a
+cost to the library and confirmed it displays; set a cost directly on the job's own stock table;
+saved the current parameters as a named preset, changed the kerf, clicked "Use" on the preset,
+and confirmed kerf reset to the saved value; ran optimize and confirmed both new Summary stat
+cards appear with real dollar figures. One real, if minor, finding along the way: a `500` from
+`GET /presets` turned out to be a **stale long-running `uvicorn --reload` process** (running for
+hours across many hot-reloads this session) rather than an application bug — confirmed by
+querying the same DB file directly via `storage.py` and via a fresh in-process `TestClient` (both
+returned correct data), then restarting the dev server, after which the live endpoint also
+returned correctly; not a code fix, just a dev-environment artifact worth knowing about.
+`tsc -b`/lint/build all clean.
+
+**Follow-on, same phase:** asked to change currency to **₹** and make the cost unit selectable
+(₹/board or ₹/sqft now, "more units we can add later"). `stock_boards`' `cost_per_board` column
+was renamed to `cost` and a new `cost_unit` column added — a real migration
+(`storage._migrate()`), handling both a DB that predates cost entirely and one still on the
+original single-unit `cost_per_board` column from earlier in this same phase (verified against
+both starting states, including inserting real pre-migration-shaped data and confirming it
+survives the rename, not just the schema change). `VALID_COST_UNITS`/frontend `CostUnit` are
+plain extensible tuples/unions specifically so a future unit is a one-line addition, not a schema
+change. `frontend/src/costUtils.ts` gained a `costPerBoardFor()` normalization step — ₹/sqft is
+scaled by the sheet's own area (`(boardL × boardW) / (304.8×304.8)` mm²-to-sqft) before entering
+the same material-cost/waste-cost sums Summary/MaterialBreakdown already had; ₹/board passes
+through unchanged. A shared `formatRate()` (`₹80.00/board`, `₹5.50/sqft`) keeps the library table
+and job stock table's display consistent. **A real, unrelated bug was found and fixed along the
+way**: re-verifying end-to-end surfaced an intermittent `sqlite3.ProgrammingError: SQLite objects
+created in a thread can only be used in that same thread` on `GET /presets` — this time against a
+*freshly restarted* backend, ruling out the earlier stale-reload explanation. Root cause:
+`api.py`'s `get_db()` is a sync generator dependency, and FastAPI runs sync dependencies/
+endpoints via anyio's threadpool, which doesn't guarantee the connection's creation and its use
+land on the same OS worker thread — a pre-existing latent issue since M9 first introduced SQLite
+(not something this pass introduced), exposed by bad thread-scheduling luck rather than by the
+currency change itself. Fixed with `check_same_thread=False` on the `sqlite3.connect()` call in
+`storage.get_connection()` — safe here since a connection is still only ever driven by one thread
+at a time in sequence, never concurrently, being created fresh per request and closed at the end
+of that same request. New regression test creates a real-file connection, queries it from a
+second `threading.Thread`, and asserts no exception — verified it has teeth (reverted the fix,
+reran, reproduced the exact real error message, restored). Full suite: 136→137 (18 Phase-3 tests
+adjusted in place for the rename rather than counted as new, +1 genuinely new for the thread-
+safety regression). Verified end-to-end in a real headless browser against a freshly restarted
+backend: added a ₹/sqft-priced board to the library and confirmed the rate displays correctly
+formatted; confirmed the job stock table's per-row unit selector defaults to ₹/board; ran optimize
+and confirmed both Summary cost stat cards show ₹ (and no stray `$` anywhere); zero console/
+network errors this time, including the specific `GET /presets` call that had failed before the
+fix. `tsc -b`/lint/build all clean.
 
 ## Phase 4 — Job history
 

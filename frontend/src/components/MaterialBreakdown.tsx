@@ -1,7 +1,9 @@
-import type { Sheet } from "../types";
+import { CURRENCY, hasCostData, totalWasteCost } from "../costUtils";
+import type { Sheet, StockBoardWithCost } from "../types";
 
 interface Props {
   sheets: Sheet[];
+  stock: StockBoardWithCost[];
 }
 
 interface Row {
@@ -9,9 +11,10 @@ interface Row {
   sheetCount: number;
   avgUtilizationPct: number;
   avgWastePct: number;
+  wasteCost: number;
 }
 
-function buildRows(sheets: Sheet[]): Row[] {
+function buildRows(sheets: Sheet[], stock: StockBoardWithCost[]): Row[] {
   const byMaterial = new Map<string, Sheet[]>();
   for (const sheet of sheets) {
     const group = byMaterial.get(sheet.material) ?? [];
@@ -21,7 +24,13 @@ function buildRows(sheets: Sheet[]): Row[] {
   const rows: Row[] = [];
   for (const [material, group] of byMaterial) {
     const avgUtilizationPct = group.reduce((sum, s) => sum + s.utilizationPct, 0) / group.length;
-    rows.push({ material, sheetCount: group.length, avgUtilizationPct, avgWastePct: 100 - avgUtilizationPct });
+    rows.push({
+      material,
+      sheetCount: group.length,
+      avgUtilizationPct,
+      avgWastePct: 100 - avgUtilizationPct,
+      wasteCost: totalWasteCost(group, stock),
+    });
   }
   // Worst-waste-first: the material most worth a shop owner's attention leads.
   return rows.sort((a, b) => b.avgWastePct - a.avgWastePct);
@@ -29,9 +38,10 @@ function buildRows(sheets: Sheet[]): Row[] {
 
 // Only meaningful once a job spans more than one material (the reported job had 5) — a
 // single-material job would just repeat the "Avg. utilization" stat card, so it's skipped then.
-export function MaterialBreakdown({ sheets }: Props) {
-  const rows = buildRows(sheets);
+export function MaterialBreakdown({ sheets, stock }: Props) {
+  const rows = buildRows(sheets, stock);
   if (rows.length < 2) return null;
+  const showCost = hasCostData(stock);
 
   return (
     <div className="card chart-card">
@@ -45,7 +55,9 @@ export function MaterialBreakdown({ sheets }: Props) {
             <div className="material-row__bar-track">
               <div className="material-row__bar" style={{ width: `${Math.min(100, row.avgWastePct)}%` }} />
             </div>
-            <span className="material-row__value">{row.avgWastePct.toFixed(1)}% waste</span>
+            <span className="material-row__value">
+              {row.avgWastePct.toFixed(1)}% waste{showCost && ` (~${CURRENCY}${row.wasteCost.toFixed(2)})`}
+            </span>
             <span className="material-row__count">
               {row.sheetCount} sheet{row.sheetCount === 1 ? "" : "s"}
             </span>

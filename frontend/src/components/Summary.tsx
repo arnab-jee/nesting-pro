@@ -1,11 +1,12 @@
 import { useCallback } from "react";
 import { SortableTh } from "./SortableTh";
+import { CURRENCY, hasCostData, totalMaterialCost, totalWasteCost } from "../costUtils";
 import { useTableControls } from "../hooks/useTableControls";
-import type { Margin, OptResult, Part, StockBoard } from "../types";
+import type { Margin, OptResult, Part, StockBoardWithCost } from "../types";
 
 interface Props {
   result: OptResult;
-  stock: StockBoard[];
+  stock: StockBoardWithCost[];
   margin: Margin;
   allowRotation: boolean;
 }
@@ -26,7 +27,7 @@ const UNPLACED_SORTERS: Record<string, (a: Part, b: Part) => number> = {
 // cutLength/cutWidth against the wrong axis pair for every grain and never considered margins
 // or the allowRotation toggle, so it could report "did not fit alongside the rest of the job"
 // for a part that was actually geometrically too large, or vice versa.
-function unplacedReason(part: Part, stock: StockBoard[], margin: Margin, allowRotation: boolean): string {
+function unplacedReason(part: Part, stock: StockBoardWithCost[], margin: Margin, allowRotation: boolean): string {
   const board = stock.find((b) => b.material === part.material && b.thickness === part.thickness);
   if (!board) return "no matching stock board configured for this material/thickness";
 
@@ -53,6 +54,9 @@ export function Summary({ result, stock, margin, allowRotation }: Props) {
       ? result.sheets.reduce((sum, s) => sum + s.utilizationPct, 0) / result.sheets.length
       : 0;
   const panelsCut = result.sheets.reduce((sum, s) => sum + s.placed.length, 0);
+  const showCost = hasCostData(stock);
+  const materialCost = showCost ? totalMaterialCost(result.sheets, stock) : 0;
+  const wasteCost = showCost ? totalWasteCost(result.sheets, stock) : 0;
 
   const searchUnplaced = useCallback((p: Part) => `${p.id} ${p.material}`, []);
   const unplacedTable = useTableControls(result.unplaced, { searchText: searchUnplaced, sorters: UNPLACED_SORTERS });
@@ -78,6 +82,18 @@ export function Summary({ result, stock, margin, allowRotation }: Props) {
           <span className="stat-card__label">Panels/Parts cut</span>
         </div>
       </div>
+      {showCost && (
+        <div className="stat-row stat-row--cost">
+          <div className="stat-card">
+            <span className="stat-card__value">{CURRENCY}{materialCost.toFixed(2)}</span>
+            <span className="stat-card__label">Material cost</span>
+          </div>
+          <div className="stat-card stat-card--warn">
+            <span className="stat-card__value">{CURRENCY}{wasteCost.toFixed(2)}</span>
+            <span className="stat-card__label">Est. waste cost</span>
+          </div>
+        </div>
+      )}
       {result.unplaced.length > 0 && (
         <>
           <label className="field table-search">

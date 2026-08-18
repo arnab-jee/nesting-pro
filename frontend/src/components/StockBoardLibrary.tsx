@@ -1,14 +1,15 @@
 import { useCallback, useEffect, useState } from "react";
 import { ApiError, createStockBoard, deleteStockBoard, listStockBoards, type PersistedStockBoard } from "../api";
+import { formatRate } from "../costUtils";
 import { SortableTh } from "./SortableTh";
 import { useTableControls } from "../hooks/useTableControls";
-import type { Grain, StockBoard } from "../types";
+import type { CostUnit, Grain, StockBoardWithCost } from "../types";
 
 interface Props {
-  onUse: (board: StockBoard) => void;
+  onUse: (board: StockBoardWithCost) => void;
 }
 
-const EMPTY_FORM = { material: "", length: "", width: "", thickness: "", grain: "none" as Grain };
+const EMPTY_FORM = { material: "", length: "", width: "", thickness: "", grain: "none" as Grain, cost: "", costUnit: "board" as CostUnit };
 
 const BOARD_SORTERS: Record<string, (a: PersistedStockBoard, b: PersistedStockBoard) => number> = {
   material: (a, b) => a.material.localeCompare(b.material),
@@ -16,6 +17,7 @@ const BOARD_SORTERS: Record<string, (a: PersistedStockBoard, b: PersistedStockBo
   width: (a, b) => a.width - b.width,
   thickness: (a, b) => a.thickness - b.thickness,
   grain: (a, b) => a.grain.localeCompare(b.grain),
+  cost: (a, b) => a.cost - b.cost,
 };
 
 export function StockBoardLibrary({ onUse }: Props) {
@@ -43,6 +45,8 @@ export function StockBoardLibrary({ onUse }: Props) {
         width: Number(form.width),
         thickness: Number(form.thickness),
         grain: form.grain,
+        cost: form.cost ? Number(form.cost) : 0,
+        costUnit: form.costUnit,
       });
       setBoards((prev) => [...prev, board]);
       setForm(EMPTY_FORM);
@@ -93,6 +97,7 @@ export function StockBoardLibrary({ onUse }: Props) {
                   <SortableTh label="Width" sortKey="width" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
                   <SortableTh label="Thickness" sortKey="thickness" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
                   <SortableTh label="Grain" sortKey="grain" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
+                  <SortableTh label="Cost" sortKey="cost" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
                   <th></th>
                 </tr>
               </thead>
@@ -104,6 +109,7 @@ export function StockBoardLibrary({ onUse }: Props) {
                     <td>{board.width}</td>
                     <td>{board.thickness}</td>
                     <td>{board.grain}</td>
+                    <td>{board.cost > 0 ? formatRate(board.cost, board.costUnit) : "—"}</td>
                     <td>
                       <button type="button" className="btn btn--quiet" onClick={() => onUse(board)}>
                         Use
@@ -144,6 +150,17 @@ export function StockBoardLibrary({ onUse }: Props) {
             <option value="none">None</option>
             <option value="length">Length</option>
             <option value="width">Width</option>
+          </select>
+        </label>
+        <label className="field">
+          <span className="field__label">Cost (₹)</span>
+          <input type="number" min="0" step="0.01" value={form.cost} onChange={(e) => setForm({ ...form, cost: e.target.value })} />
+        </label>
+        <label className="field">
+          <span className="field__label">Cost unit</span>
+          <select value={form.costUnit} onChange={(e) => setForm({ ...form, costUnit: e.target.value as CostUnit })}>
+            <option value="board">₹ per board</option>
+            <option value="sqft">₹ per sqft</option>
           </select>
         </label>
       </div>

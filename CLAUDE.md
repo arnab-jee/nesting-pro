@@ -76,11 +76,12 @@ Key libs: `shapely` (geometry), `rectpack`/custom packers (nesting), `lxml` (FCC
 | M11 | FCC XML X/Y axis inversion fix | 🟢 Fixed + tested | **The most significant bug found in this project — real machine load, reported via `Issues/issues_002.md` with 4 screenshots of the actual NaccNesting software.** Every task loaded from this app's own XML export showed parts crammed into a region no bigger than the board's *width* (~1220mm), with the board's real *length* (2440mm) left almost entirely empty — reported utilization numbers (85–89%) didn't match what was visually on screen, which was the actual tell. Root cause: `optimizer/export/xml.py` wrote `PlacedPart.x`/`.y` straight into the XML `X`/`Y` attributes with no transform. But the packer (`saw_packing.py`/`nanxing_packing.py`) places parts with `x` bounded by `board.width` (~1205mm usable) and `y` bounded by `board.length` (~2430mm usable) — while the real machine's XML convention is the *opposite*: `X` follows the board's length axis (confirmed independently during M10's golden-data investigation — a real `Grain="L"` workpiece spanned ~2178mm in X, only possible if X is the long axis — and now doubly confirmed by this real machine load). So every workpiece's *width*-axis position got reported to the machine as its *length*-axis position, capping every placement at ~1205mm regardless of the board's real 2440mm length. **Why 106 passing tests, including an extensive golden-file round-trip suite, never caught this:** `tests/fcc_golden.py` (the round-trip test's XML importer) made the exact same backwards assumption on the way in (`x=minx` from the golden file's own X, no swap) — so importing a golden file and re-exporting it cancelled the bug out both ways, and the round-trip matched byte-for-byte regardless of whether the axis labeling was actually correct. That test only ever re-serializes XML-sourced data; it never once ran data through the export path starting from the real packer's own output — which is exactly what `/export/xml` does for every real user. The bug had been there since M5/M6 first built this exporter; it just never surfaced until this real machine test. **The PDF export was unaffected** — `pdf.py` happens to already use the packer's `x`/`y` in the convention the packer actually produces, which is why the PDF drawings the project owner has been visually checking all session were correct while the XML silently wasn't; this is itself a small lesson in favor of rendering/visualizing output over trusting numeric round-trip tests alone. Fixed by transposing both sides consistently: `xml.py`'s `_workpiece_element`/`_oddments_element` now build the XML's `X`/width-extent from `placed.y`/`.h` and `Y`/length-extent from `placed.x`/`.w`; `tests/fcc_golden.py`'s importer applies the identical swap in reverse, so the golden round-trip tests keep passing (both sides of a self-consistent-but-wrong convention became both sides of a self-consistent-and-right one). New `backend/tests/test_xml_export_coordinates.py` (3 tests) exercises exactly the path the round-trip test structurally can't: two synthetic unit tests asserting a large `placed.y` value lands in XML `X` (not `Y`) for both workpieces and oddments, plus an integration test running a real sample CSV through the actual packer and exporter and asserting every workpiece's XML points fall within the declared board bounds *and* that at least one genuinely uses `X` beyond the board's width (a deliberately discriminating assertion — a test that never exercises the long axis can't tell a correct mapping from a swapped one). Verified these have teeth: reverted both transposes, reran, all 3 new tests failed — including the real-data test catching a real Y=1460.8mm on a 1220mm-wide board — restored. **Verified against the actual reported job**: regenerated XML for the exact CSV from the issue (`26Y117T1F1B1(BEDROOM 3-4)`, material `CC_MDF17_8134_BS` — the same material as screenshot 1) and confirmed max X now reaches 2349.6mm (of 2440mm available) and max Y stays within 1129.2mm (of 1220mm) — using the board's real length for the first time. Saved to `results/issue-002-fixed/` for the project owner to reload into the real NaccNesting software and confirm physically, the same way the original bug was found. Full suite: 106→109 passing. |
 
 **Cross-cutting:** `backend/tests/` now has `conftest.py`, `helpers.py`, `fcc_golden.py` (golden
-XML → exporter-input importer, test-only), `test_parser.py`, `test_guillotine.py`,
+XML → exporter-input importer, now a thin wrapper around `optimizer/import_xml.py` — see M6-row
+successor pass below), `test_parser.py`, `test_guillotine.py`,
 `test_nanxing.py`, `test_xml_roundtrip.py` (now parametrized across all 4 non-empty golden
 files, not just one), `test_pdf.py`, `test_packing_engines.py`, `test_storage.py`,
-`test_api_persistence.py`, `test_xml_export_coordinates.py` — **116 tests**, all green from a
-clean `pip install -e ".[dev]"`.
+`test_api_persistence.py`, `test_xml_export_coordinates.py`, `test_import_xml.py`,
+`test_api_import.py` — **161 tests**, all green from a clean `pip install -e ".[dev]"`.
 `test_api_persistence.py` is the first test file to exercise `api.py` directly over real HTTP
 (via FastAPI's `TestClient`, new `httpx` dev dep) — scoped just to the new `/stock-boards` and
 `/settings` endpoints; `/parse`, `/optimize`, `/export/pdf`, `/export/xml` still aren't covered
@@ -119,7 +120,7 @@ M3's cut-sequence overlay was deliberately not built (see M3 row).
 
 <!-- Update after each work block. This is what a fresh session needs most. -->
 
-- **Last worked:** 2026-08-17 — twelve passes across four sessions. (1) Applied
+- **Last worked:** 2026-08-18 — fifteen passes across five sessions. (1) Applied
   `Business Logic/grain_logic.md` (raw CSV `Grain` codes are `0`/`1`/`2`, not just `0`/`x`/`y`;
   `1`/`2` were previously unmapped and silently treated as ungrained/rotatable). Fixed in
   `GRAIN_MAP` (`backend/optimizer/parser.py`), see M1 row. (2) Redesigned M3's PDF export to
@@ -266,7 +267,111 @@ M3's cut-sequence overlay was deliberately not built (see M3 row).
   utilization on later sheets) — confirmed all three utilization color tiers render distinctly.
   Also screenshotted in dark mode (Playwright `colorScheme: "dark"`) to confirm the CSS-variable
   approach actually held, not just assumed. Zero console errors either job. `tsc -b`/lint/build
-  all clean. See `ROADMAP.md`'s Phase 2 section for the fuller writeup. Before all twelve: Phases A/B/C of
+  all clean. See `ROADMAP.md`'s Phase 2 section for the fuller writeup. (13) Asked to implement
+  `ROADMAP.md`'s Phase 3 (presets & cost tracking) — the first phase to touch the backend, but
+  by design reusing M9's exact stock-boards CRUD pattern (SQLite table + `GET`/`POST`/`PUT`/
+  `DELETE`) rather than new architecture. **Named parameter presets**: a new `presets` table
+  (`backend/storage.py`) storing everything `ParamsPanel.tsx` controls except stock/parts
+  (target, margin, kerf, tool Ø, part spacing, allow-rotation, waste strategy) — stored flat
+  (matching `stock_boards`' existing column convention) but exposed over the wire with `margin`
+  nested as `{top,right,bottom,left}` like the rest of the JSON contract; two new `api.py`
+  helpers (`_preset_to_dict`/`_preset_kwargs_from_payload`) are the only place that reshapes
+  between the two. New `PresetLibrary.tsx` deliberately has no separate add-form fields the way
+  `StockBoardLibrary.tsx` does — a preset just names and persists whatever's already set in
+  `ParamsPanel.tsx`, so saving only asks for a name. **Cost-per-board tracking**: `cost_per_board`
+  column added to `stock_boards` via a real `ALTER TABLE` migration (`storage._migrate()`) since
+  a pre-existing local DB file won't retroactively gain a column from `CREATE TABLE IF NOT
+  EXISTS` — verified directly against this session's own real dev DB file, not just a fresh one.
+  Cost is deliberately display-only and never reaches the optimizer: the backend's core
+  `StockBoard` dataclass (used by `/optimize`/`/export/*`) is untouched, and the frontend's new
+  `StockBoardWithCost` type is a strict superset that `App.tsx`'s `currentRequest()` strips back
+  down to plain `StockBoard` before any backend call, since the dataclass would reject the
+  unexpected field outright. New `frontend/src/costUtils.ts` computes material cost and waste
+  cost (board cost × wasted fraction) purely client-side, matched by `(material, thickness)`;
+  both figures hide entirely rather than showing "$0.00" when no board has a cost entered, so
+  "not configured" is never confused with "confirmed zero waste." Surfaced in `Summary.tsx` (a
+  new stat row) and Phase 2's `MaterialBreakdown.tsx` (a per-material `$` figure). Covered by 18
+  new backend tests (134 total, up from 116): `test_storage.py` + `test_api_persistence.py` CRUD
+  and validation tests for both features — verified the preset validation tests have teeth by
+  temporarily gutting `_validate_preset_fields`, rerunning, confirming both failed, restoring.
+  Verified end-to-end in a real headless browser: added a stock board with a cost to the library,
+  set a cost directly on the job's own stock table, saved current parameters as a named preset,
+  changed the kerf, clicked "Use" on the preset, confirmed kerf reset to the saved value, ran
+  optimize and confirmed both new Summary stat cards showed real dollar figures. One real, if
+  minor, finding along the way: a transient `500` from `GET /presets` turned out to be a **stale
+  long-running `uvicorn --reload` process** (running for hours across many hot-reloads this
+  session) rather than an application bug — confirmed by querying the same DB file directly via
+  `storage.py` and via a fresh in-process `TestClient` (both returned correct data), then
+  restarting the dev server, after which the live endpoint also returned correctly; not a code
+  fix, just a dev-environment artifact worth knowing about for future sessions with a
+  long-running backend. `tsc -b`/lint/build all clean. See `ROADMAP.md`'s Phase 3 section for the
+  fuller writeup. (14) Asked to change currency to **₹** and make the cost unit selectable
+  (₹/board or ₹/sqft, "more units we can add later"). `stock_boards`' `cost_per_board` column
+  renamed to `cost` plus a new `cost_unit` column, via a real migration handling both a DB that
+  predates cost entirely and one still on the single-unit `cost_per_board` column from earlier in
+  pass (13) — verified against both starting states, including confirming real pre-migration data
+  survives the rename. `VALID_COST_UNITS`/frontend `CostUnit` are plain extensible
+  tuples/unions on purpose, so a future unit is a one-line addition, not a schema change.
+  `costUtils.ts` gained a normalization step: ₹/sqft is scaled by the sheet's own area before
+  entering the same cost sums Summary/MaterialBreakdown already had; ₹/board passes through
+  unchanged. **A real, unrelated bug was found and fixed along the way**: re-verifying end-to-end
+  surfaced an intermittent `sqlite3.ProgrammingError: SQLite objects created in a thread can only
+  be used in that same thread` on `GET /presets` — this time against a *freshly restarted*
+  backend, ruling out pass (13)'s stale-reload explanation. Root cause: `api.py`'s `get_db()` is a
+  sync generator dependency, and FastAPI runs sync dependencies/endpoints via anyio's threadpool,
+  which doesn't guarantee the connection's creation and its use land on the same OS worker
+  thread — a latent issue since M9 first introduced SQLite, not something this pass introduced,
+  just exposed by unlucky thread scheduling. Fixed with `check_same_thread=False` on
+  `storage.get_connection()`'s `sqlite3.connect()` call — safe since a connection is still only
+  ever driven by one thread at a time in sequence, never concurrently. New regression test
+  creates a real-file connection, queries it from a second `threading.Thread`, asserts no
+  exception — verified it has teeth (reverted, reran, reproduced the exact real error message,
+  restored). Full suite: 136→137. Verified end-to-end in a real headless browser against a freshly
+  restarted backend: added a ₹/sqft-priced board and confirmed the formatted rate; confirmed the
+  job stock table's per-row unit selector defaults to ₹/board; ran optimize and confirmed both
+  Summary cost stat cards show ₹ with no stray `$`; zero console/network errors, including the
+  specific `GET /presets` call that had failed before the fix. `tsc -b`/lint/build all clean. See
+  `ROADMAP.md`'s Phase 3 section for the fuller writeup. (15) `Updates/update_006.md` asked for
+  a new capability, not a roadmap phase item: "ability to load optimization from existing
+  Nanxing nesting xml file." Rather than write a new parser, `backend/tests/fcc_golden.py` —
+  a test-only helper written back in the M5/M6/M11 XML work to feed a real machine-cut FccRoot
+  XML into `generate_fcc_xml` for round-trip testing — turned out to already do almost exactly
+  this: parse a real golden XML straight into `OptResult`-shaped sheets/placed-parts, bypassing
+  the optimizer entirely. Promoted that logic into a new production module,
+  `optimizer/import_xml.py` (`parse_fcc_xml`), with `fcc_golden.py` now a thin wrapper around it
+  instead of a duplicate copy — so a future refinement to the XML-format understanding benefits
+  the test fixture and the real feature together rather than the two silently drifting apart. Two
+  real gaps closed on the way: `utilizationPct` had been hardcoded to `0.0` (fine for a
+  byte-comparison round-trip test that never displayed it, wrong for a real viewer) — now
+  computed with the exact same formula `saw_packing.py`/`nanxing_packing.py` use (usable area =
+  board dims minus margin, not raw board area) — and malformed/wrong-root-element input now
+  raises a clean `InvalidFccXmlError` instead of a raw `AttributeError`/`TypeError` traceback.
+  New `POST /import/xml` (`api.py`) accepts raw XML text (mirroring `/parse`'s existing
+  `csv_text` embed-body convention) and returns the same sheet shape `/optimize` does, plus the
+  file's own margin/tool-diameter/part-spacing and a stock list derived from the sheets'
+  (material, thickness) pairs — deliberately omits `parts`/`cuts`, since this app has no way to
+  re-export a *given* result (`/export/*` always re-runs the optimizer from `parts`+`stock`+
+  params, it doesn't re-serialize an already-placed layout) and returning `parts` would invite a
+  broken "Adjust parameters → Run optimize" path that silently produced a different layout than
+  the one actually loaded. Frontend: new `XmlImport.tsx` (a plain file-picker button, not a
+  `CsvUpload.tsx`-style dropzone — this is a secondary, less-common path) sits below the CSV
+  upload card; picking a file jumps straight to the results view, skipping map/configure
+  entirely, with a new `isImported` flag in `App.tsx` gating off Download PDF/XML, "Adjust
+  parameters," and the waste-strategy comparison (all three would otherwise silently run against
+  an empty `parts` list) behind a plain explanatory note — `SheetPreview`/`Summary`/
+  `UtilizationChart`/`MaterialBreakdown` all still work unchanged, since they only ever needed
+  `OptResult`+`stock`+`margin`, never `parts`. Covered by 24 new backend tests (161 total, up
+  from 137): `test_import_xml.py` (real-golden-file parsing across all 4 non-empty golden files,
+  the one legitimately-empty golden file per M5's own Appendix A.8 degenerate case, and the new
+  error paths) and `test_api_import.py` (HTTP-level via `TestClient`) — verified both new error
+  paths have teeth by temporarily removing each check, rerunning, confirming the raw
+  traceback/wrong-shape response returned instead of the clean 400, restoring. Verified
+  end-to-end in a real headless browser against a freshly restarted backend, importing a real
+  golden XML (`26Y111T1F1 (1 FLOOR BEDROOM)`): jumped straight to results with the file's real 9
+  sheets / 42.4% utilization / 55 parts, the imported-layout note appeared, Download/Adjust/
+  Compare were all correctly hidden, the utilization chart still rendered, and "Start Over"
+  correctly reset back to the upload step. Zero console/network errors. `tsc -b`/lint/build all
+  clean. Before all fifteen: Phases A/B/C of
   `~/.claude/plans/delegated-moseying-robin.md` complete, plus follow-on M6, M7, and
   Nanxing-packer-efficiency passes (same plan file, rewritten fresh for each pass), prompted by
   `update_001` (a user-supplied real-world comparison against the actual Nanxing machine
@@ -283,7 +388,7 @@ M3's cut-sequence overlay was deliberately not built (see M3 row).
   → `uvicorn api:app --reload --host 127.0.0.1 --port 8000`. `backend/.venv` has the `dev`
   extra installed (`pip install -e ".[dev]"`, now including `pypdf` for PDF-export test
   assertions and `httpx` for FastAPI `TestClient` HTTP tests) — `pytest -q` from `backend/` runs
-  116 tests, all green. New runtime dependency: a SQLite file at `backend/nesting_pro.db`
+  161 tests, all green. New runtime dependency: a SQLite file at `backend/nesting_pro.db`
   (gitignored, auto-created on first request via `storage.get_connection()` — no manual setup
   step, but a fresh clone's first `/stock-boards` or `/settings` call creates it).
 - **Frontend entry point:** `frontend/` (Vite + React + TypeScript), `npm run dev` serves on

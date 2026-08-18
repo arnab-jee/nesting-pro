@@ -1,11 +1,11 @@
-import type { Margin, StockBoard, TargetMachine, WasteStrategy } from "../types";
+import type { CostUnit, Margin, StockBoardWithCost, TargetMachine, WasteStrategy } from "../types";
 
 interface Props {
   target: TargetMachine;
   margin: Margin;
   onMarginChange: (margin: Margin) => void;
-  stock: StockBoard[];
-  onStockChange: (stock: StockBoard[]) => void;
+  stock: StockBoardWithCost[];
+  onStockChange: (stock: StockBoardWithCost[]) => void;
   kerf: number;
   onKerfChange: (kerf: number) => void;
   toolDiameter: number;
@@ -39,7 +39,7 @@ export function ParamsPanel({
   showCutLines,
   onShowCutLinesChange,
 }: Props) {
-  function updateStockDim(index: number, field: "length" | "width", value: number) {
+  function updateStockField<K extends keyof StockBoardWithCost>(index: number, field: K, value: StockBoardWithCost[K]) {
     const next = stock.slice();
     next[index] = { ...next[index], [field]: value };
     onStockChange(next);
@@ -121,6 +121,8 @@ export function ParamsPanel({
               <th>Thickness</th>
               <th>Length</th>
               <th>Width</th>
+              <th>Cost (₹)</th>
+              <th>Cost unit</th>
             </tr>
           </thead>
           <tbody>
@@ -129,10 +131,19 @@ export function ParamsPanel({
                 <td>{board.material}</td>
                 <td>{board.thickness}</td>
                 <td>
-                  <input type="number" value={board.length} onChange={(e) => updateStockDim(i, "length", Number(e.target.value))} />
+                  <input type="number" value={board.length} onChange={(e) => updateStockField(i, "length", Number(e.target.value))} />
                 </td>
                 <td>
-                  <input type="number" value={board.width} onChange={(e) => updateStockDim(i, "width", Number(e.target.value))} />
+                  <input type="number" value={board.width} onChange={(e) => updateStockField(i, "width", Number(e.target.value))} />
+                </td>
+                <td>
+                  <input type="number" min="0" step="0.01" value={board.cost} onChange={(e) => updateStockField(i, "cost", Number(e.target.value))} />
+                </td>
+                <td>
+                  <select value={board.costUnit} onChange={(e) => updateStockField(i, "costUnit", e.target.value as CostUnit)}>
+                    <option value="board">₹ per board</option>
+                    <option value="sqft">₹ per sqft</option>
+                  </select>
                 </td>
               </tr>
             ))}
