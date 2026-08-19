@@ -2,11 +2,13 @@ from __future__ import annotations
 
 from .model import Margin, OptResult, Part, Sheet, StockBoard, WasteStrategy
 from .nanxing_packing import place_parts_on_board
+from .placement import DEFAULT_PLACEMENT_CORNER, PlacementCorner, mirror_sheet
 
 
 def optimize(
     request_parts: list[Part], stock: list[StockBoard], margin: Margin, spacing: float,
-    waste_strategy: WasteStrategy = "balanced",
+    waste_strategy: WasteStrategy = "balanced", placement_corner: PlacementCorner = DEFAULT_PLACEMENT_CORNER,
+    allow_rotation: bool = True,
 ) -> OptResult:
     sheets: list[Sheet] = []
     unplaced: list[Part] = []
@@ -20,12 +22,11 @@ def optimize(
         for grain in sorted({part.grain for part in board_parts}):
             remaining = [part for part in board_parts if part.grain == grain]
             while remaining:
-                # allow_rotation=True: Nanxing has no global rotation override, placement is
-                # always gated purely by part.can_rotate() (grain), matching prior behavior
-                sheet, still_remaining = place_parts_on_board(remaining, board, margin, spacing, True, sheet_index, waste_strategy)
+                sheet, still_remaining = place_parts_on_board(remaining, board, margin, spacing, allow_rotation, sheet_index, waste_strategy)
                 if not sheet.placed:
                     unplaced.extend(still_remaining)
                     break
+                sheet = mirror_sheet(sheet, board, margin, placement_corner)
                 sheets.append(sheet)
                 sheet_index += 1
                 remaining = still_remaining

@@ -14,6 +14,7 @@ from optimizer.guillotine import optimize as saw_optimize
 from optimizer.import_xml import InvalidFccXmlError, parse_fcc_xml
 from optimizer.model import Margin, OptRequest, OptResult, Part, StockBoard
 from optimizer.nanxing import optimize as nanxing_optimize
+from optimizer.placement import DEFAULT_PLACEMENT_CORNER
 from optimizer.parser import parse_csv_text
 
 app = FastAPI(title="Nesting Pro Backend")
@@ -224,10 +225,11 @@ def optimize_route(request: dict = Body(...)) -> dict:
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
         waste_strategy = request.get("wasteStrategy", "balanced")
+        placement_corner = request.get("placementCorner", DEFAULT_PLACEMENT_CORNER)
         if request.get("target") == "saw":
-            result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True), waste_strategy=waste_strategy)
+            result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True), waste_strategy=waste_strategy, placement_corner=placement_corner)
         else:
-            result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=waste_strategy)
+            result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=waste_strategy, placement_corner=placement_corner, allow_rotation=request.get("allowRotation", True))
         return {
             "sheets": [
                 {
@@ -255,10 +257,11 @@ def export_pdf(request: dict = Body(...)) -> Response:
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
         waste_strategy = request.get("wasteStrategy", "balanced")
+        placement_corner = request.get("placementCorner", DEFAULT_PLACEMENT_CORNER)
         if request.get("target") == "saw":
-            result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True), waste_strategy=waste_strategy)
+            result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True), waste_strategy=waste_strategy, placement_corner=placement_corner)
         else:
-            result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=waste_strategy)
+            result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=waste_strategy, placement_corner=placement_corner, allow_rotation=request.get("allowRotation", True))
         show_cut_lines = request.get("showCutLines", False)
         pdf_data = render_layout_pdf(result, margin, show_cut_lines=show_cut_lines)
         return Response(content=pdf_data, media_type="application/pdf")
@@ -271,7 +274,8 @@ def export_xml(request: dict = Body(...)) -> Response:
         margin = Margin(**request.get("margin", {}))
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
-        result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=request.get("wasteStrategy", "balanced"))
+        placement_corner = request.get("placementCorner", DEFAULT_PLACEMENT_CORNER)
+        result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=request.get("wasteStrategy", "balanced"), placement_corner=placement_corner, allow_rotation=request.get("allowRotation", True))
         parts_by_id = {part.id: part for part in parts}
         xml_data = generate_fcc_xml(
             result,

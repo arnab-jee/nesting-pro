@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<FccRoot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="2" DataValid="5" CreateG="false" RefreshCuttingOrder="false" OptCreateFile="true">
+  <Patterns Index="1" ID="1" Name="CP_MDF17_8016_OS_8134" Length="2440" Width="1220" Thickness="17" Grain="L">
+    <Pattern Index="1" LayoutOrigin="2" WorkpieceSpace="6.1" X="0" Y="0" ToolName="80" ToolDiameter="6" CutOddmentsFlg="2" Margin="0,10,10,5">
+      <Workpieces>
+        <Workpiece ID="3" WorkpieceId="26YDEMOT1F1A2_1018" CuttingOrderNo="3" Qty="1" Name="Door Left" Material="CP_MDF17_8016_OS_8134" Length="303" Width="216" Thickness="17" CutLength="297" CutWidth="210" MachiningPoint="3" Grain="N" ProdutionNo="03.26YDEMOT1F1A2_1018" ProductionName="Door Left" Customer="DEMO" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_110119_CAPPUCCIONO_2mm" EBL2="RE_110119_CAPPUCCIONO_2mm" EBW1="RE_110119_CAPPUCCIONO_2mm" EBW2="RE_110119_CAPPUCCIONO_2mm" IsIntersectsWith="false" RotateAngle="90" Info1="210" Info2="297">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="1823.85" Y="993.95" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="1823.85" Y="993.95" Angle="0" />
+              <Point Index="2" X="2126.85" Y="993.95" Angle="0" />
+              <Point Index="3" X="2126.85" Y="1209.95" Angle="0" />
+              <Point Index="4" X="1823.85" Y="1209.95" Angle="0" />
+              <Point Index="5" X="1823.85" Y="993.95" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="1" ToolPointList="2056.85,993.95,0$;2126.85,1139.95,1$;1893.85,1209.95,2$;1823.85,1063.95,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="1823.85" Y="993.95" Angle="0" />
+              <Point Index="2" X="2126.85" Y="993.95" Angle="0" />
+              <Point Index="3" X="2126.85" Y="1209.95" Angle="0" />
+              <Point Index="4" X="1823.85" Y="1209.95" Angle="0" />
+              <Point Index="5" X="1823.85" Y="993.95" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="297" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="297" Y="210" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="210" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="297" ProWidth="210" />
+        </Workpiece>
+        <Workpiece ID="2" WorkpieceId="26YDEMOT1F1A2_1011" CuttingOrderNo="1" Qty="1" Name="Door Right" Material="CP_MDF17_8016_OS_8134" Length="303" Width="216" Thickness="17" CutLength="297" CutWidth="210" MachiningPoint="3" Grain="N" ProdutionNo="02.26YDEMOT1F1A2_1011" ProductionName="Door Right" Customer="DEMO" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_110119_CAPPUCCIONO_2mm" EBL2="RE_110119_CAPPUCCIONO_2mm" EBW1="RE_110119_CAPPUCCIONO_2mm" EBW2="RE_110119_CAPPUCCIONO_2mm" RotateAngle="90" Info1="210" Info2="297">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="2126.95" Y="777.85" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="2126.95" Y="777.85" Angle="0" />
+              <Point Index="2" X="2429.95" Y="777.85" Angle="0" />
+              <Point Index="3" X="2429.95" Y="993.85" Angle="0" />
+              <Point Index="4" X="2126.95" Y="993.85" Angle="0" />
+              <Point Index="5" X="2126.95" Y="777.85" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="2" ToolPointList="2359.95,777.85,0$;2429.95,923.85,1$;2196.95,993.85,2$;2126.95,847.85,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="2126.95" Y="777.85" Angle="0" />
+              <Point Index="2" X="2429.95" Y="777.85" Angle="0" />
+              <Point Index="3" X="2429.95" Y="993.85" Angle="0" />
+              <Point Index="4" X="2126.95" Y="993.85" Angle="0" />
+              <Point Index="5" X="2126.95" Y="777.85" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="297" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="297" Y="210" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="210" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="297" ProWidth="210" />
+        </Workpiece>
+        <Workpiece ID="1" WorkpieceId="26YDEMOT1F1A2_1012" CuttingOrderNo="2" Qty="1" Name="Door Left" Material="CP_MDF17_8016_OS_8134" Length="303" Width="216" Thickness="17" CutLength="297" CutWidth="210" MachiningPoint="3" Grain="N" ProdutionNo="02.26YDEMOT1F1A2_1012" ProductionName="Door Left" Customer="DEMO" HasFace5="false" HasFace6="false" OnlyHasFace6="false" EBL1="RE_110119_CAPPUCCIONO_2mm" EBL2="RE_110119_CAPPUCCIONO_2mm" EBW1="RE_110119_CAPPUCCIONO_2mm" EBW2="RE_110119_CAPPUCCIONO_2mm" RotateAngle="90" Info1="210" Info2="297">
+          <EdgeGroup X1="0" Y1="0">
+            <Edge Face="3" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="4" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="2" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+            <Edge Face="1" Thickness="0" Pre_Milling="0" X="0" Y="0" CentralAngle="0" />
+          </EdgeGroup>
+          <Lineament RotationAngle="0" X="2126.95" Y="993.95" ProOffsetX="3" ProOffsetY="3">
+            <Points>
+              <Point Index="1" X="2126.95" Y="993.95" Angle="0" />
+              <Point Index="2" X="2429.95" Y="993.95" Angle="0" />
+              <Point Index="3" X="2429.95" Y="1209.95" Angle="0" />
+              <Point Index="4" X="2126.95" Y="1209.95" Angle="0" />
+              <Point Index="5" X="2126.95" Y="993.95" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true" ToolPoint="3" ToolPointList="2359.95,993.95,0$;2429.95,1139.95,1$;2196.95,1209.95,2$;2126.95,1063.95,3$">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+          <Lineament2>
+            <Points>
+              <Point Index="1" X="2126.95" Y="993.95" Angle="0" />
+              <Point Index="2" X="2429.95" Y="993.95" Angle="0" />
+              <Point Index="3" X="2429.95" Y="1209.95" Angle="0" />
+              <Point Index="4" X="2126.95" Y="1209.95" Angle="0" />
+              <Point Index="5" X="2126.95" Y="993.95" Angle="0" />
+            </Points>
+          </Lineament2>
+          <FccOutline>
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="297" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="297" Y="210" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="210" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+            <FccOutlinePoint X="0" Y="0" Angle="0" EdgeThickness="0" EdgePreMilling="0" />
+          </FccOutline>
+          <BenchmarkInfo ProLength="297" ProWidth="210" />
+        </Workpiece>
+      </Workpieces>
+      <OddmentsList>
+        <Oddments Index="1" Type="0" Length="1817.85" Width="436.15">
+          <Lineament RotationAngle="0" X="0" Y="777.85">
+            <Points>
+              <Point Index="1" X="0" Y="777.85" Angle="0" />
+              <Point Index="2" X="1823.85" Y="777.85" Angle="0" />
+              <Point Index="3" X="1823.85" Y="1220" Angle="0" />
+              <Point Index="4" X="0" Y="1220" Angle="0" />
+              <Point Index="5" X="0" Y="777.85" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="2" Type="0" Length="610.15" Width="-5.9">
+          <Lineament RotationAngle="0" X="1823.85" Y="993.85">
+            <Points>
+              <Point Index="1" X="1823.85" Y="993.85" Angle="0" />
+              <Point Index="2" X="2440" Y="993.85" Angle="0" />
+              <Point Index="3" X="2440" Y="993.95" Angle="0" />
+              <Point Index="4" X="1823.85" Y="993.95" Angle="0" />
+              <Point Index="5" X="1823.85" Y="993.85" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="3" Type="0" Length="4.05" Width="210">
+          <Lineament RotationAngle="0" X="2429.95" Y="777.85">
+            <Points>
+              <Point Index="1" X="2429.95" Y="777.85" Angle="0" />
+              <Point Index="2" X="2440" Y="777.85" Angle="0" />
+              <Point Index="3" X="2440" Y="993.85" Angle="0" />
+              <Point Index="4" X="2429.95" Y="993.85" Angle="0" />
+              <Point Index="5" X="2429.95" Y="777.85" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="4" Type="0" Length="4.05" Width="210">
+          <Lineament RotationAngle="0" X="2429.95" Y="993.95">
+            <Points>
+              <Point Index="1" X="2429.95" Y="993.95" Angle="0" />
+              <Point Index="2" X="2440" Y="993.95" Angle="0" />
+              <Point Index="3" X="2440" Y="1209.95" Angle="0" />
+              <Point Index="4" X="2429.95" Y="1209.95" Angle="0" />
+              <Point Index="5" X="2429.95" Y="993.95" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="5" Type="0" Length="-5.9" Width="220.05">
+          <Lineament RotationAngle="0" X="2126.85" Y="993.95">
+            <Points>
+              <Point Index="1" X="2126.85" Y="993.95" Angle="0" />
+              <Point Index="2" X="2126.95" Y="993.95" Angle="0" />
+              <Point Index="3" X="2126.95" Y="1220" Angle="0" />
+              <Point Index="4" X="2126.85" Y="1220" Angle="0" />
+              <Point Index="5" X="2126.85" Y="993.95" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="6" Type="0" Length="297" Width="4.05">
+          <Lineament RotationAngle="0" X="1823.85" Y="1209.95">
+            <Points>
+              <Point Index="1" X="1823.85" Y="1209.95" Angle="0" />
+              <Point Index="2" X="2126.85" Y="1209.95" Angle="0" />
+              <Point Index="3" X="2126.85" Y="1220" Angle="0" />
+              <Point Index="4" X="1823.85" Y="1220" Angle="0" />
+              <Point Index="5" X="1823.85" Y="1209.95" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="7" Type="0" Length="307.05" Width="4.05">
+          <Lineament RotationAngle="0" X="2126.95" Y="1209.95">
+            <Points>
+              <Point Index="1" X="2126.95" Y="1209.95" Angle="0" />
+              <Point Index="2" X="2440" Y="1209.95" Angle="0" />
+              <Point Index="3" X="2440" Y="1220" Angle="0" />
+              <Point Index="4" X="2126.95" Y="1220" Angle="0" />
+              <Point Index="5" X="2126.95" Y="1209.95" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="8" Type="0" Length="2434" Width="771.85">
+          <Lineament RotationAngle="0" X="0" Y="0">
+            <Points>
+              <Point Index="1" X="0" Y="0" Angle="0" />
+              <Point Index="2" X="2440" Y="0" Angle="0" />
+              <Point Index="3" X="2440" Y="777.85" Angle="0" />
+              <Point Index="4" X="0" Y="777.85" Angle="0" />
+              <Point Index="5" X="0" Y="0" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="false">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="9" Type="0" Length="-5.9" Width="210">
+          <Lineament RotationAngle="0" X="2126.85" Y="777.85">
+            <Points>
+              <Point Index="1" X="2126.85" Y="777.85" Angle="0" />
+              <Point Index="2" X="2126.95" Y="777.85" Angle="0" />
+              <Point Index="3" X="2126.95" Y="993.85" Angle="0" />
+              <Point Index="4" X="2126.85" Y="993.85" Angle="0" />
+              <Point Index="5" X="2126.85" Y="777.85" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+        <Oddments Index="10" Type="0" Length="297" Width="210">
+          <Lineament RotationAngle="0" X="1823.85" Y="777.85">
+            <Points>
+              <Point Index="1" X="1823.85" Y="777.85" Angle="0" />
+              <Point Index="2" X="2126.85" Y="777.85" Angle="0" />
+              <Point Index="3" X="2126.85" Y="993.85" Angle="0" />
+              <Point Index="4" X="1823.85" Y="993.85" Angle="0" />
+              <Point Index="5" X="1823.85" Y="777.85" Angle="0" />
+            </Points>
+            <CutInfos SamllWorkpieceFlg="true">
+              <CutInfo CutNo="1" ToolDirection="0" SlopeLen="70" />
+            </CutInfos>
+          </Lineament>
+        </Oddments>
+      </OddmentsList>
+    </Pattern>
+  </Patterns>
+</FccRoot>

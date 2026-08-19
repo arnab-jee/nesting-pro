@@ -1,4 +1,4 @@
-import type { CostUnit, Margin, StockBoardWithCost, TargetMachine, WasteStrategy } from "../types";
+import type { CostUnit, Margin, PlacementCorner, StockBoardWithCost, TargetMachine, WasteStrategy } from "../types";
 
 interface Props {
   target: TargetMachine;
@@ -18,6 +18,8 @@ interface Props {
   onWasteStrategyChange: (v: WasteStrategy) => void;
   showCutLines: boolean;
   onShowCutLinesChange: (v: boolean) => void;
+  placementCorner: PlacementCorner;
+  onPlacementCornerChange: (v: PlacementCorner) => void;
 }
 
 export function ParamsPanel({
@@ -38,6 +40,8 @@ export function ParamsPanel({
   onWasteStrategyChange,
   showCutLines,
   onShowCutLinesChange,
+  placementCorner,
+  onPlacementCornerChange,
 }: Props) {
   function updateStockField<K extends keyof StockBoardWithCost>(index: number, field: K, value: StockBoardWithCost[K]) {
     const next = stock.slice();
@@ -51,17 +55,26 @@ export function ParamsPanel({
 
       <fieldset className="params-section">
         <legend className="params-section__title">Margin (mm)</legend>
-        <div className="field-grid field-grid--4">
-          {(["top", "right", "bottom", "left"] as const).map((side) => (
-            <label className="field" key={side}>
-              <span className="field__label">{side}</span>
-              <input
-                type="number"
-                value={margin[side]}
-                onChange={(e) => onMarginChange({ ...margin, [side]: Number(e.target.value) })}
-              />
-            </label>
-          ))}
+        <div className="margin-layout">
+          <label className="margin-layout__field margin-layout__field--top">
+            <span className="field__label">Top</span>
+            <input type="number" value={margin.top} onChange={(e) => onMarginChange({ ...margin, top: Number(e.target.value) })} />
+          </label>
+          <label className="margin-layout__field margin-layout__field--left">
+            <span className="field__label">Left</span>
+            <input type="number" value={margin.left} onChange={(e) => onMarginChange({ ...margin, left: Number(e.target.value) })} />
+          </label>
+          <div className="margin-layout__board" aria-hidden="true">
+            Board
+          </div>
+          <label className="margin-layout__field margin-layout__field--right">
+            <span className="field__label">Right</span>
+            <input type="number" value={margin.right} onChange={(e) => onMarginChange({ ...margin, right: Number(e.target.value) })} />
+          </label>
+          <label className="margin-layout__field margin-layout__field--bottom">
+            <span className="field__label">Bottom</span>
+            <input type="number" value={margin.bottom} onChange={(e) => onMarginChange({ ...margin, bottom: Number(e.target.value) })} />
+          </label>
         </div>
       </fieldset>
 
@@ -95,18 +108,31 @@ export function ParamsPanel({
               <span className="field__label">Part spacing (mm)</span>
               <input type="number" value={partSpacing} onChange={(e) => onPartSpacingChange(Number(e.target.value))} />
             </label>
+            <label className="field field--checkbox">
+              <input type="checkbox" checked={allowRotation} onChange={(e) => onAllowRotationChange(e.target.checked)} />
+              <span className="field__label">Allow rotation (grain-free parts only)</span>
+            </label>
           </div>
         </fieldset>
       )}
 
       <fieldset className="params-section">
-        <legend className="params-section__title">Wastage</legend>
+        <legend className="params-section__title">Layout</legend>
         <div className="field-grid field-grid--2">
           <label className="field">
             <span className="field__label">Waste placement</span>
             <select value={wasteStrategy} onChange={(e) => onWasteStrategyChange(e.target.value as WasteStrategy)}>
               <option value="balanced">Balanced (tightest local fit)</option>
               <option value="edge">Push wastage to edges</option>
+            </select>
+          </label>
+          <label className="field">
+            <span className="field__label">Board corner</span>
+            <select value={placementCorner} onChange={(e) => onPlacementCornerChange(e.target.value as PlacementCorner)}>
+              <option value="bottom-left">Bottom-left</option>
+              <option value="bottom-right">Bottom-right</option>
+              <option value="top-left">Top-left</option>
+              <option value="top-right">Top-right</option>
             </select>
           </label>
         </div>

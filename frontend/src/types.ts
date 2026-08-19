@@ -59,6 +59,12 @@ export interface Margin {
   left: number;
 }
 
+// Which board corner the layout's fill origin sits in — "bottom-left" (the packer's native fill
+// origin) is a no-op; the other three are a rigid mirror of the same layout (Issues/issues_005.md
+// — a real dry-run cut one axis short prompted testing whether table position, not software,
+// explains it, which needs the exact same layout reproducible in a different board corner).
+export type PlacementCorner = "bottom-left" | "bottom-right" | "top-left" | "top-right";
+
 export interface OptRequest {
   parts: Part[];
   stock: StockBoard[];
@@ -70,6 +76,7 @@ export interface OptRequest {
   target: TargetMachine;
   wasteStrategy: WasteStrategy;
   showCutLines: boolean;
+  placementCorner: PlacementCorner;
 }
 
 export interface PlacedPart {

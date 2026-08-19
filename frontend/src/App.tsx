@@ -14,7 +14,7 @@ import { Summary } from "./components/Summary";
 import { UtilizationChart } from "./components/UtilizationChart";
 import { WasteStrategyComparison } from "./components/WasteStrategyComparison";
 import { XmlImport } from "./components/XmlImport";
-import type { ImportXmlResult, Margin, OptRequest, OptResult, Part, Preset, StockBoardWithCost, TargetMachine, WasteStrategy } from "./types";
+import type { ImportXmlResult, Margin, OptRequest, OptResult, Part, PlacementCorner, Preset, StockBoardWithCost, TargetMachine, WasteStrategy } from "./types";
 
 export type Step = "upload" | "map" | "configure" | "results";
 
@@ -45,6 +45,7 @@ function App() {
   const [allowRotation, setAllowRotation] = useState(true);
   const [wasteStrategy, setWasteStrategyState] = useState<WasteStrategy>("balanced");
   const [showCutLines, setShowCutLines] = useState(false);
+  const [placementCorner, setPlacementCorner] = useState<PlacementCorner>("bottom-left");
 
   // Load the persisted default once on mount, then keep it "sticky": every change the user
   // makes gets saved back as the new default for next time (Updates/update_004.md).
@@ -83,7 +84,7 @@ function App() {
     // fields and would reject an unexpected kwarg, so they're stripped here rather than carried
     // through to /optimize or /export/*.
     const backendStock = stock.map(({ cost: _cost, costUnit: _costUnit, ...board }) => board);
-    return { parts, stock: backendStock, kerf, toolDiameter, partSpacing, margin, allowRotation, target, wasteStrategy, showCutLines };
+    return { parts, stock: backendStock, kerf, toolDiameter, partSpacing, margin, allowRotation, target, wasteStrategy, showCutLines, placementCorner };
   }
 
   function applyPreset(preset: Preset) {
@@ -216,6 +217,8 @@ function App() {
             onWasteStrategyChange={setWasteStrategy}
             showCutLines={showCutLines}
             onShowCutLinesChange={setShowCutLines}
+            placementCorner={placementCorner}
+            onPlacementCornerChange={setPlacementCorner}
           />
           <StockBoardLibrary onUse={(board) => setStock((prev) => [...prev, board])} />
           <PresetLibrary

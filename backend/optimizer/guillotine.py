@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from .model import CutInstruction, Margin, OptResult, Part, Sheet, StockBoard, WasteStrategy
+from .placement import DEFAULT_PLACEMENT_CORNER, PlacementCorner, mirror_sheet
 from .saw_packing import place_parts_on_board
 
 
@@ -26,7 +27,7 @@ def build_cuts_for_sheet(sheet: Sheet, board: StockBoard, margin: Margin) -> lis
 
 def optimize(
     request_parts: list[Part], stock: list[StockBoard], margin: Margin, kerf: float, allow_rotation: bool,
-    waste_strategy: WasteStrategy = "balanced",
+    waste_strategy: WasteStrategy = "balanced", placement_corner: PlacementCorner = DEFAULT_PLACEMENT_CORNER,
 ) -> OptResult:
     sheets: list[Sheet] = []
     unplaced: list[Part] = []
@@ -46,6 +47,10 @@ def optimize(
                     # nothing fit on a fresh, empty board — these parts are genuinely unplaceable
                     unplaced.extend(still_remaining)
                     break
+                # mirrored *after* placement decisions are final — build_cuts_for_sheet below
+                # reads sheet.placed, so the cut list comes out consistent with wherever the
+                # mirrored parts actually ended up.
+                sheet = mirror_sheet(sheet, board, margin, placement_corner)
                 sheets.append(sheet)
                 cuts.extend(build_cuts_for_sheet(sheet, board, margin))
                 sheet_index += 1
