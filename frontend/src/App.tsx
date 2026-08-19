@@ -23,7 +23,7 @@ function deriveDefaultStock(parts: Part[]): StockBoardWithCost[] {
   for (const p of parts) {
     const key = `${p.material}__${p.thickness}`;
     if (!seen.has(key)) {
-      seen.set(key, { material: p.material, length: 2440, width: 1220, thickness: p.thickness, grain: "none", cost: 0, costUnit: "board" });
+      seen.set(key, { material: p.material, length: 2440, width: 1220, thickness: p.thickness, grain: "none", cost: 0, costUnit: "board", density: 0, quantity: 0 });
     }
   }
   return Array.from(seen.values());
@@ -80,10 +80,10 @@ function App() {
   const projectName = parts[0]?.customer?.replace(/\s+/g, "-") ?? "nesting-job";
 
   function currentRequest(): OptRequest {
-    // cost/costUnit are display-only (Phase 3) — the backend's StockBoard dataclass has no such
-    // fields and would reject an unexpected kwarg, so they're stripped here rather than carried
-    // through to /optimize or /export/*.
-    const backendStock = stock.map(({ cost: _cost, costUnit: _costUnit, ...board }) => board);
+    // cost/costUnit/density/quantity are display-only — the backend's StockBoard dataclass has
+    // none of these fields and would reject an unexpected kwarg, so they're stripped here rather
+    // than carried through to /optimize or /export/*.
+    const backendStock = stock.map(({ cost: _cost, costUnit: _costUnit, density: _density, quantity: _quantity, ...board }) => board);
     return { parts, stock: backendStock, kerf, toolDiameter, partSpacing, margin, allowRotation, target, wasteStrategy, showCutLines, placementCorner };
   }
 
@@ -117,7 +117,7 @@ function App() {
     setMargin(imported.margin);
     setToolDiameter(imported.toolDiameter);
     setPartSpacing(imported.partSpacing);
-    setStock(imported.stock.map((board) => ({ ...board, cost: 0, costUnit: "board" as const })));
+    setStock(imported.stock.map((board) => ({ ...board, cost: 0, costUnit: "board" as const, density: 0, quantity: 0 })));
     setParts([]);
     setOptResult({ sheets: imported.sheets, unplaced: imported.unplaced, cuts: imported.cuts });
     setIsImported(true);
@@ -220,7 +220,9 @@ function App() {
             placementCorner={placementCorner}
             onPlacementCornerChange={setPlacementCorner}
           />
-          <StockBoardLibrary onUse={(board) => setStock((prev) => [...prev, board])} />
+          <StockBoardLibrary
+            onUse={({ id: _id, ...board }) => setStock((prev) => [...prev, board])}
+          />
           <PresetLibrary
             current={{ target, margin, kerf, toolDiameter, partSpacing, allowRotation, wasteStrategy }}
             onApply={applyPreset}

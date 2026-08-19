@@ -43,13 +43,17 @@ export interface StockBoard {
 // backend VALID_COST_UNITS tuple (storage.py), not a schema change.
 export type CostUnit = "board" | "sqft";
 
-// The job-config and stock-board-library shape adds a display-only cost (Phase 3, ROADMAP.md)
-// that's never sent to /optimize or /export/* — the backend's StockBoard dataclass has no such
-// field and would reject it. App.tsx strips cost/costUnit back down to plain StockBoard when
-// building an OptRequest. cost === 0 means "not entered" (waste-cost figures hide, not show ₹0).
+// The job-config and stock-board-library shape adds display-only fields (cost/costUnit, Phase 3;
+// density/quantity, To DOs.md) that are never sent to /optimize or /export/* — the backend's
+// StockBoard dataclass has none of these and would reject them. App.tsx strips all four back
+// down to plain StockBoard when building an OptRequest. cost === 0 means "not entered"
+// (waste-cost figures hide, not show ₹0); density/quantity are plain metadata (kg/m³, sheet
+// count on hand) with no derived figures depending on them yet, so 0 is just "not entered".
 export interface StockBoardWithCost extends StockBoard {
   cost: number;
   costUnit: CostUnit;
+  density: number;
+  quantity: number;
 }
 
 export interface Margin {

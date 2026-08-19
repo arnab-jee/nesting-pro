@@ -118,6 +118,29 @@ def test_create_stock_board_invalid_cost_unit_returns_400(client):
     assert resp.status_code == 400
 
 
+def test_create_stock_board_defaults_density_and_quantity_to_zero(client):
+    created = client.post("/stock-boards", json={"material": "MDF", "length": 2440, "width": 1220, "thickness": 18})
+    assert created.json()["density"] == 0.0
+    assert created.json()["quantity"] == 0
+
+
+def test_create_and_update_stock_board_density_and_quantity(client):
+    created = client.post(
+        "/stock-boards",
+        json={"material": "MDF", "length": 2440, "width": 1220, "thickness": 18, "density": 720.0, "quantity": 15},
+    )
+    board = created.json()
+    assert board["density"] == 720.0
+    assert board["quantity"] == 15
+
+    updated = client.put(
+        f"/stock-boards/{board['id']}",
+        json={"material": "MDF", "length": 2440, "width": 1220, "thickness": 18, "grain": "none", "density": 680.0, "quantity": 8},
+    )
+    assert updated.json()["density"] == 680.0
+    assert updated.json()["quantity"] == 8
+
+
 def test_list_presets_starts_empty(client):
     resp = client.get("/presets")
     assert resp.status_code == 200

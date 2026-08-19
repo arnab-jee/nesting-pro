@@ -45,6 +45,8 @@ def create_stock_board(payload: dict = Body(...), db: sqlite3.Connection = Depen
             grain=payload.get("grain", "none"),
             cost=float(payload.get("cost", 0.0)),
             cost_unit=payload.get("costUnit", storage.DEFAULT_COST_UNIT),
+            density=float(payload.get("density", 0.0)),
+            quantity=int(payload.get("quantity", 0)),
         )
     except (KeyError, ValueError, TypeError) as exc:
         raise HTTPException(status_code=400, detail=[str(exc)])
@@ -64,6 +66,8 @@ def update_stock_board(board_id: int, payload: dict = Body(...), db: sqlite3.Con
             grain=payload.get("grain", "none"),
             cost=float(payload.get("cost", 0.0)),
             cost_unit=payload.get("costUnit", storage.DEFAULT_COST_UNIT),
+            density=float(payload.get("density", 0.0)),
+            quantity=int(payload.get("quantity", 0)),
         )
     except (KeyError, ValueError, TypeError) as exc:
         raise HTTPException(status_code=400, detail=[str(exc)])

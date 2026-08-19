@@ -158,7 +158,12 @@ export function ParamsPanel({
           </thead>
           <tbody>
             {stock.map((board, i) => (
-              <tr key={`${board.material}-${board.thickness}`}>
+              // Keyed by index, not material+thickness: "Use" in the Stock Board Library can
+              // legitimately add a second row for the same (material, thickness) pair — e.g. to
+              // override cost/density with a different library entry — which previously
+              // collided on a material+thickness key (React "two children with the same key").
+              // Rows are only ever edited/appended here, never reordered, so index is stable.
+              <tr key={i}>
                 <td>{board.material}</td>
                 <td>{board.thickness}</td>
                 <td>

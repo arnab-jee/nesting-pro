@@ -3,8 +3,8 @@
 ## Feature Add/Remove
 
 - [ ] Add to `STOCK BOARD LIBRARY`, parameters:
-  - `Density` or `Board Density`
-  - `Quantity` to the stock board library.
+  - `Density` or `Board Density` with selecteable units `kg/m^3`(default), `g/cm^3` and `lb/ft^3`. 
+  - `Quantity` with unit `NOS` to the stock board library.
 
 ## Bug Fixes
 

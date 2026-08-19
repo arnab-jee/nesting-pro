@@ -19,7 +19,9 @@ CREATE TABLE IF NOT EXISTS stock_boards (
     thickness REAL NOT NULL,
     grain TEXT NOT NULL DEFAULT 'none',
     cost REAL NOT NULL DEFAULT 0,
-    cost_unit TEXT NOT NULL DEFAULT 'board'
+    cost_unit TEXT NOT NULL DEFAULT 'board',
+    density REAL NOT NULL DEFAULT 0,
+    quantity INTEGER NOT NULL DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS settings (
@@ -85,6 +87,13 @@ def _migrate(conn: sqlite3.Connection) -> None:
     if "cost_unit" not in columns:
         conn.execute(f"ALTER TABLE stock_boards ADD COLUMN cost_unit TEXT NOT NULL DEFAULT '{DEFAULT_COST_UNIT}'")
         conn.commit()
+    columns = {row["name"] for row in conn.execute("PRAGMA table_info(stock_boards)")}
+    if "density" not in columns:
+        conn.execute("ALTER TABLE stock_boards ADD COLUMN density REAL NOT NULL DEFAULT 0")
+        conn.commit()
+    if "quantity" not in columns:
+        conn.execute("ALTER TABLE stock_boards ADD COLUMN quantity INTEGER NOT NULL DEFAULT 0")
+        conn.commit()
 
 
 def get_connection(db_path: str | None = None) -> sqlite3.Connection:
@@ -112,11 +121,14 @@ class PersistedStockBoard:
     grain: str
     cost: float = 0.0
     costUnit: str = DEFAULT_COST_UNIT
+    density: float = 0.0
+    quantity: int = 0
 
 
 def list_stock_boards(conn: sqlite3.Connection) -> list[PersistedStockBoard]:
     rows = conn.execute(
-        "SELECT id, material, length, width, thickness, grain, cost, cost_unit AS costUnit FROM stock_boards ORDER BY id"
+        "SELECT id, material, length, width, thickness, grain, cost, cost_unit AS costUnit, "
+        "density, quantity FROM stock_boards ORDER BY id"
     ).fetchall()
     return [PersistedStockBoard(**dict(row)) for row in rows]
 
@@ -124,34 +136,38 @@ def list_stock_boards(conn: sqlite3.Connection) -> list[PersistedStockBoard]:
 def create_stock_board(
     conn: sqlite3.Connection, material: str, length: float, width: float, thickness: float,
     grain: str = "none", cost: float = 0.0, cost_unit: str = DEFAULT_COST_UNIT,
+    density: float = 0.0, quantity: int = 0,
 ) -> PersistedStockBoard:
     _validate_cost_unit(cost_unit)
     cur = conn.execute(
-        "INSERT INTO stock_boards (material, length, width, thickness, grain, cost, cost_unit) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        (material, length, width, thickness, grain, cost, cost_unit),
+        "INSERT INTO stock_boards (material, length, width, thickness, grain, cost, cost_unit, density, quantity) "
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+        (material, length, width, thickness, grain, cost, cost_unit, density, quantity),
     )
     conn.commit()
     return PersistedStockBoard(
         id=cur.lastrowid, material=material, length=length, width=width, thickness=thickness,
-        grain=grain, cost=cost, costUnit=cost_unit,
+        grain=grain, cost=cost, costUnit=cost_unit, density=density, quantity=quantity,
     )
 
 
 def update_stock_board(
     conn: sqlite3.Connection, board_id: int, material: str, length: float, width: float, thickness: float,
     grain: str, cost: float = 0.0, cost_unit: str = DEFAULT_COST_UNIT,
+    density: float = 0.0, quantity: int = 0,
 ) -> PersistedStockBoard | None:
     _validate_cost_unit(cost_unit)
     cur = conn.execute(
-        "UPDATE stock_boards SET material=?, length=?, width=?, thickness=?, grain=?, cost=?, cost_unit=? WHERE id=?",
-        (material, length, width, thickness, grain, cost, cost_unit, board_id),
+        "UPDATE stock_boards SET material=?, length=?, width=?, thickness=?, grain=?, cost=?, cost_unit=?, "
+        "density=?, quantity=? WHERE id=?",
+        (material, length, width, thickness, grain, cost, cost_unit, density, quantity, board_id),
     )
     conn.commit()
     if cur.rowcount == 0:
         return None
     return PersistedStockBoard(
         id=board_id, material=material, length=length, width=width, thickness=thickness,
-        grain=grain, cost=cost, costUnit=cost_unit,
+        grain=grain, cost=cost, costUnit=cost_unit, density=density, quantity=quantity,
     )
 
 

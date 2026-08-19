@@ -118,6 +118,24 @@ def test_create_stock_board_invalid_cost_unit_raises(conn):
         storage.create_stock_board(conn, material="MDF", length=2440, width=1220, thickness=18, cost_unit="sqm")
 
 
+def test_create_stock_board_defaults_density_and_quantity_to_zero(conn):
+    board = storage.create_stock_board(conn, material="MDF", length=2440, width=1220, thickness=18)
+    assert board.density == 0.0
+    assert board.quantity == 0
+
+
+def test_create_and_update_stock_board_density_and_quantity(conn):
+    board = storage.create_stock_board(conn, material="MDF", length=2440, width=1220, thickness=18, density=720.0, quantity=15)
+    assert board.density == 720.0
+    assert board.quantity == 15
+    updated = storage.update_stock_board(
+        conn, board.id, material="MDF", length=2440, width=1220, thickness=18, grain="none", density=680.0, quantity=8,
+    )
+    assert updated.density == 680.0
+    assert updated.quantity == 8
+    assert storage.list_stock_boards(conn) == [updated]
+
+
 def test_list_presets_starts_empty(conn):
     assert storage.list_presets(conn) == []
 

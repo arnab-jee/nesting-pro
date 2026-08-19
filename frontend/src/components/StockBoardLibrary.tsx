@@ -3,13 +3,28 @@ import { ApiError, createStockBoard, deleteStockBoard, listStockBoards, type Per
 import { formatRate } from "../costUtils";
 import { SortableTh } from "./SortableTh";
 import { useTableControls } from "../hooks/useTableControls";
-import type { CostUnit, Grain, StockBoardWithCost } from "../types";
+import type { CostUnit, Grain } from "../types";
 
 interface Props {
-  onUse: (board: StockBoardWithCost) => void;
+  // Passes the full PersistedStockBoard (carries `id`) — the type here previously said
+  // StockBoardWithCost, which structurally allowed this call to typecheck without complaint
+  // even though `id` rides along at runtime; App.tsx's onUse is responsible for stripping it
+  // before the board enters the job's own stock list, since a stray `id` makes /optimize and
+  // /export/* 400 (the backend's StockBoard dataclass rejects unexpected kwargs).
+  onUse: (board: PersistedStockBoard) => void;
 }
 
-const EMPTY_FORM = { material: "", length: "", width: "", thickness: "", grain: "none" as Grain, cost: "", costUnit: "board" as CostUnit };
+const EMPTY_FORM = {
+  material: "",
+  length: "",
+  width: "",
+  thickness: "",
+  grain: "none" as Grain,
+  cost: "",
+  costUnit: "board" as CostUnit,
+  density: "",
+  quantity: "",
+};
 
 const BOARD_SORTERS: Record<string, (a: PersistedStockBoard, b: PersistedStockBoard) => number> = {
   material: (a, b) => a.material.localeCompare(b.material),
@@ -18,6 +33,8 @@ const BOARD_SORTERS: Record<string, (a: PersistedStockBoard, b: PersistedStockBo
   thickness: (a, b) => a.thickness - b.thickness,
   grain: (a, b) => a.grain.localeCompare(b.grain),
   cost: (a, b) => a.cost - b.cost,
+  density: (a, b) => a.density - b.density,
+  quantity: (a, b) => a.quantity - b.quantity,
 };
 
 export function StockBoardLibrary({ onUse }: Props) {
@@ -47,6 +64,8 @@ export function StockBoardLibrary({ onUse }: Props) {
         grain: form.grain,
         cost: form.cost ? Number(form.cost) : 0,
         costUnit: form.costUnit,
+        density: form.density ? Number(form.density) : 0,
+        quantity: form.quantity ? Number(form.quantity) : 0,
       });
       setBoards((prev) => [...prev, board]);
       setForm(EMPTY_FORM);
@@ -98,6 +117,8 @@ export function StockBoardLibrary({ onUse }: Props) {
                   <SortableTh label="Thickness" sortKey="thickness" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
                   <SortableTh label="Grain" sortKey="grain" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
                   <SortableTh label="Cost" sortKey="cost" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
+                  <SortableTh label="Density" sortKey="density" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
+                  <SortableTh label="Quantity" sortKey="quantity" activeKey={boardTable.sortKey} dir={boardTable.sortDir} onSort={boardTable.toggleSort} />
                   <th></th>
                 </tr>
               </thead>
@@ -110,6 +131,8 @@ export function StockBoardLibrary({ onUse }: Props) {
                     <td>{board.thickness}</td>
                     <td>{board.grain}</td>
                     <td>{board.cost > 0 ? formatRate(board.cost, board.costUnit) : "—"}</td>
+                    <td>{board.density > 0 ? `${board.density} kg/m³` : "—"}</td>
+                    <td>{board.quantity}</td>
                     <td>
                       <button type="button" className="btn btn--quiet" onClick={() => onUse(board)}>
                         Use
@@ -162,6 +185,14 @@ export function StockBoardLibrary({ onUse }: Props) {
             <option value="board">₹ per board</option>
             <option value="sqft">₹ per sqft</option>
           </select>
+        </label>
+        <label className="field">
+          <span className="field__label">Density (kg/m³)</span>
+          <input type="number" min="0" value={form.density} onChange={(e) => setForm({ ...form, density: e.target.value })} />
+        </label>
+        <label className="field">
+          <span className="field__label">Quantity</span>
+          <input type="number" min="0" step="1" value={form.quantity} onChange={(e) => setForm({ ...form, quantity: e.target.value })} />
         </label>
       </div>
       <button type="button" className="btn btn--secondary" onClick={handleAdd} disabled={saving}>
