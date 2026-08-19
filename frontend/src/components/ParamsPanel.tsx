@@ -54,7 +54,12 @@ export function ParamsPanel({
       <h2>Parameters</h2>
 
       <fieldset className="params-section">
-        <legend className="params-section__title">Margin (mm)</legend>
+        {/* Same underlying Margin value/behavior for both machines (optimizer/saw_packing.py
+            and nanxing_packing.py use it identically) — only the label differs. Nanxing
+            operators know this concept as "Trim" (confirmed against Fin China's own "Board
+            triming" field, whose value matches our Margin XML attribute byte-for-byte). Panel
+            Saw keeps "Margin" per the project owner's own workflow terminology. */}
+        <legend className="params-section__title">{target === "nanxing" ? "Trim (mm)" : "Margin (mm)"}</legend>
         <div className="margin-layout">
           <label className="margin-layout__field margin-layout__field--top">
             <span className="field__label">Top</span>
@@ -127,7 +132,7 @@ export function ParamsPanel({
             </select>
           </label>
           <label className="field">
-            <span className="field__label">Board corner</span>
+            <span className="field__label">Datum point</span>
             <select value={placementCorner} onChange={(e) => onPlacementCornerChange(e.target.value as PlacementCorner)}>
               <option value="bottom-left">Bottom-left</option>
               <option value="bottom-right">Bottom-right</option>
