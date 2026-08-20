@@ -5,6 +5,12 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
+    // Listen on all interfaces, not just localhost, so the dev server is reachable from other
+    // devices on the same (private) network -- e.g. over Tailscale, for factory-floor access.
+    // allowedHosts: true skips Vite's Host-header allowlist check, which otherwise rejects
+    // requests arriving via a non-localhost hostname (like a Tailscale MagicDNS name).
+    host: true,
+    allowedHosts: true,
     proxy: {
       '/api': {
         target: 'http://127.0.0.1:8000',

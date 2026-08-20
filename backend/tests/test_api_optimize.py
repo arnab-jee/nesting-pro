@@ -26,13 +26,16 @@ def _request_body(parts, target="saw"):
     }
 
 
-def test_optimize_defaults_to_bottom_left_placement(saw_parts):
+def test_optimize_defaults_to_top_right_placement(saw_parts):
+    # Locks in the current default (Issues/issues_005.md's corner/datum finding): a request
+    # that omits placementCorner entirely must match an explicit "top-right", not the packer's
+    # native "bottom-left" fill origin.
     body = _request_body(saw_parts)
     resp = client.post("/optimize", json=body)
     assert resp.status_code == 200
     without_corner = resp.json()
 
-    body_explicit = {**body, "placementCorner": "bottom-left"}
+    body_explicit = {**body, "placementCorner": "top-right"}
     with_default_corner = client.post("/optimize", json=body_explicit).json()
     assert without_corner["sheets"] == with_default_corner["sheets"]
 

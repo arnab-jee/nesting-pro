@@ -14,10 +14,19 @@ from optimizer.guillotine import optimize as saw_optimize
 from optimizer.import_xml import InvalidFccXmlError, parse_fcc_xml
 from optimizer.model import Margin, OptRequest, OptResult, Part, StockBoard
 from optimizer.nanxing import optimize as nanxing_optimize
-from optimizer.placement import DEFAULT_PLACEMENT_CORNER
 from optimizer.parser import parse_csv_text
 
 app = FastAPI(title="Nesting Pro Backend")
+
+# The corner a request gets when it omits `placementCorner` entirely -- not the same thing as
+# optimizer/placement.py's DEFAULT_PLACEMENT_CORNER ("bottom-left"), which is a structural fact
+# about the packer's own native fill origin that mirror_sheet() relies on to know when *not* to
+# mirror. This one is purely a UI/API preference and is free to change independently. Set to
+# top-right per real-world confirmation: the factory's machine has its job-area datum fixed at
+# top-right, and every job run from that corner (both nesting-pro's and Fin China's own output)
+# has come back within normal machining tolerance, while bottom-left was the corner behind the
+# original ~6-7mm shortfall (Issues/issues_005.md).
+UI_DEFAULT_PLACEMENT_CORNER = "top-right"
 
 
 def get_db() -> Iterator[sqlite3.Connection]:
@@ -229,7 +238,7 @@ def optimize_route(request: dict = Body(...)) -> dict:
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
         waste_strategy = request.get("wasteStrategy", "balanced")
-        placement_corner = request.get("placementCorner", DEFAULT_PLACEMENT_CORNER)
+        placement_corner = request.get("placementCorner", UI_DEFAULT_PLACEMENT_CORNER)
         if request.get("target") == "saw":
             result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True), waste_strategy=waste_strategy, placement_corner=placement_corner)
         else:
@@ -261,7 +270,7 @@ def export_pdf(request: dict = Body(...)) -> Response:
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
         waste_strategy = request.get("wasteStrategy", "balanced")
-        placement_corner = request.get("placementCorner", DEFAULT_PLACEMENT_CORNER)
+        placement_corner = request.get("placementCorner", UI_DEFAULT_PLACEMENT_CORNER)
         if request.get("target") == "saw":
             result = saw_optimize(parts, stock, margin, kerf=request.get("kerf", 0.0), allow_rotation=request.get("allowRotation", True), waste_strategy=waste_strategy, placement_corner=placement_corner)
         else:
@@ -278,7 +287,7 @@ def export_xml(request: dict = Body(...)) -> Response:
         margin = Margin(**request.get("margin", {}))
         stock = [StockBoard(**s) for s in request.get("stock", [])]
         parts = [Part(**part) for part in request.get("parts", [])]
-        placement_corner = request.get("placementCorner", DEFAULT_PLACEMENT_CORNER)
+        placement_corner = request.get("placementCorner", UI_DEFAULT_PLACEMENT_CORNER)
         result = nanxing_optimize(parts, stock, margin, spacing=request.get("partSpacing", request.get("toolDiameter", 6.0)), waste_strategy=request.get("wasteStrategy", "balanced"), placement_corner=placement_corner, allow_rotation=request.get("allowRotation", True))
         parts_by_id = {part.id: part for part in parts}
         xml_data = generate_fcc_xml(

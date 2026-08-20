@@ -45,7 +45,7 @@ function App() {
   const [allowRotation, setAllowRotation] = useState(true);
   const [wasteStrategy, setWasteStrategyState] = useState<WasteStrategy>("balanced");
   const [showCutLines, setShowCutLines] = useState(false);
-  const [placementCorner, setPlacementCorner] = useState<PlacementCorner>("bottom-left");
+  const [placementCorner, setPlacementCorner] = useState<PlacementCorner>("top-right");
 
   // Load the persisted default once on mount, then keep it "sticky": every change the user
   // makes gets saved back as the new default for next time (Updates/update_004.md).
